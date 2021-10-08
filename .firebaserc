@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "destack360": {
+      "hosting": {
+        "destack360-version5": [
+          "destack360"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,108 @@
+<!----------------*ngIf="(user | async)?.accountType !== 'admin' && (user | async)?.accountType !== 'endUser'; "-->
+
+<div >
+    <body class="text-center">
+        <main class="form-signin">
+         
+                <div class="mt-4">
+                    <img class="mb-4" src="/assets/imagens/65ab872f-fa8e-4b2b-bdd4-376c93f02752_uploads_destacklogo.png" alt="Destack 360" style="margin-right: 19px;">
+               
+    
+                    <h1 class="h3 mb-3 fw-normal">Área Restrita</h1>
+            
+                    <form [formGroup]="loginForm" (ngSubmit)="loginUser()" type="">
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email</mat-label>
+                                <input autocomplete="off" formControlName="email" type="email" matInput placeholder="Email">
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Password</mat-label>
+                                <input autocomplete="off" formControlName="password" type="password" matInput placeholder="Password">
+                            </mat-form-field>
+                        </p>
+                        <div *ngIf="firebaseErrorMessage != ''" class="error-style">
+                            <span>{{ firebaseErrorMessage }}</span>
+                        </div>
+                
+                        <button mat-raised-button color="primary">Login</button>
+                    </form>
+                    <br>
+                    <!---------------<p>Esqueceu a senha?</p>------->
+                    <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+                </div>
+        </main>   
+    </body>
+    
+</div>
+
+
+<div *ngIf="(user | async)?.accountType == 'admin';">
+    <router-outlet>
+        <app-admin-dashboard></app-admin-dashboard>
+    </router-outlet>
+    
+    <br>
+</div>
+    <div *ngIf="(user | async)?.accountType == 'endUser';">
+        <router-outlet>
+            <app-dashboard></app-dashboard>
+        </router-outlet>
+
+       
+    </div>
+
+
+<!--------------
+
+Home
+
+<section>
+    <button mat-raised-button color="primary" routerLink="/login">
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+    </button>
+    <button mat-raised-button color="primary" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Log out</span>
+    </button>
+    <button mat-raised-button color="primary" routerLink="/signup">
+        <mat-icon>person_add</mat-icon>
+        <span>Sign up</span>
+    </button>
+    <button mat-raised-button color="primary" routerLink="/forgot-password">
+        <mat-icon>help_outline</mat-icon>
+        <span>Forgot password</span>
+    </button>
+    <button mat-raised-button color="primary" routerLink="/verify-email">
+        <mat-icon>help_outline</mat-icon>
+        <span>Resend email verification</span>
+    </button>
+</section>
+
+<br>
+
+<section>
+    <button mat-raised-button color="primary" routerLink="/dashboard">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+    </button>
+    <button mat-raised-button color="primary" routerLink="/admin">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>Admin Dashboard</span>
+    </button>
+</section>
+
+<br>
+
+<mat-card *ngIf="(afAuth.user | async)">
+    <mat-icon>check_circle</mat-icon>
+    <span>User is logged in</span>
+</mat-card>
+<mat-card *ngIf="!(afAuth.user | async)">
+    <mat-icon>do_not_disturb</mat-icon>
+    <span>User is not logged in</span>
+</mat-card>------>
+
