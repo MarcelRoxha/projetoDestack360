@@ -14,15 +14,14 @@ import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
 
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'admin', component: AdminDashboardComponent, canActivate: [AuthGuard] },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
-    { path: 'verify-email', component: VerifyEmailComponent },
-    { path: '**', component: HomeComponent },
+    { path: 'verify-email', component: VerifyEmailComponent },    
 
 
 ];

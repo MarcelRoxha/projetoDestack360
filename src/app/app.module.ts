@@ -56,6 +56,8 @@ import { Firestore } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 // import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
+import { HeaderComponent } from './header/header.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 
 @NgModule({
@@ -67,7 +69,9 @@ import { environment } from '../environments/environment';
     ForgotPasswordComponent,
     VerifyEmailComponent,
     DashboardComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    HeaderComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,

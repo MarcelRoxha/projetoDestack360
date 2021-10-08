@@ -1,0 +1,14 @@
+.log{
+    text-align: center;
+    padding: 2.6rem 1rem;
+}
+.logo img{
+   width: 270px;
+  
+}
+
+mat-nav-list{
+   background-color: black;
+   height: 800px;
+  
+}
