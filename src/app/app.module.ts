@@ -58,6 +58,17 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
+
+
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -78,6 +89,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatAutocompleteModule, 
+    RouterModule, 
     AngularFireModule.initializeApp(environment.firebase), 
     MatBadgeModule,
     MatButtonModule,
