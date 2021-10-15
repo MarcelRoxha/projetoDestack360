@@ -1,3 +1,6 @@
+import { LancarSaidaComponent } from './lancar-saida/lancar-saida.component';
+import { LancarEntradaComponent } from './lancar-entrada/lancar-entrada.component';
+import { EftLanceComponent } from './eft-lance/eft-lance.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -21,7 +24,9 @@ const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
-    { path: 'verify-email', component: VerifyEmailComponent },    
+    { path: 'verify-email', component: VerifyEmailComponent },  
+    { path: 'lancarEntrada', component: LancarEntradaComponent },  
+    { path: 'lancarSaida', component: LancarSaidaComponent },   
 
 
 ];

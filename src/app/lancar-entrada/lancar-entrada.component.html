@@ -1,0 +1,83 @@
+<body class="text-center-home">
+    <nav class="navbar navbar-expand navbar-dark" style="background: black">
+      <div class="container-fluid">
+        <div class="logo">
+            <img src="../../assets/imagens/65ab872f-fa8e-4b2b-bdd4-376c93f02752_uploads_destacklogo.png" width="170px" alt="Destack 360">
+            </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="menu_topo_admin">
+          <ul class="navbar-nav me-auto  mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="../../assets/imagens/icone_pequeno.jpg" width="20" height="20">
+                {{ (user | async)?.displayName }}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="#">Clientes</a></li>
+                <li><a class="dropdown-item" href="#">Fornecedores</a></li>
+                <li><a class="dropdown-item"(click)="logout()">Sair</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="d-flex">
+        <div class="check-menu">
+          <input type="checkbox" id="chec">
+          <label for="chec"><mat-icon (click)="toggle()">menu</mat-icon> </label>
+          <nav class="menu-lateral">
+            <ul class="list-unstyled">
+             <li><a class="pagina-selecionada"(click)="telaDashboard()" >DASHBOARD</a></li>
+              <li>
+              
+              <!--------------
+              <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
+      
+              <li class="cliente-nav dropdown"> 
+                    <a class="dropdown-toggle" href="#" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    LANÇAMENTOS
+                    </a>     
+                  <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                    <!-----------<li><a class="dropdown-item" href="#">AREA DO CLIENTE</a></li>------->
+                    <li><a class="dropdown-item" (click)="efetuarLancamentoEntrada()">LANÇAR ENTRADA</a></li>
+                    <li><a class="dropdown-item"(click)="efetuarLancamentoSaida()">LANÇAR SAÍDA</a>                                
+                    </li>
+                    <!----------- <li><a class="dropdown-item" href="#">EDITAR</a></li>  ------>             
+                  </ul>
+                </li>
+          
+              <li><a ></a></li>
+              <li><a >CONTAS</a></li>
+              <li><a >CONSULTAR</a></li>
+            </ul>
+          </nav>
+        </div>
+      <!------------ *ngIf="clickEfetuarLancamento == true" -->
+        
+                      <div [@childAnimation]="isOpen ? 'open' : 'closed'"
+                      class="open-close-container"> 
+                      <div class="text-center">
+                        <h2 style="color: blue;">EFETUAR LANÇAMENTO DE ENTRADA</h2>
+                        <br>
+
+                        <form>
+                          <div>
+                            <h4>Informe a data de lançamento</h4>
+                            <input id="datalancamentoentrada" type="date" >
+                          </div>
+                          <br>
+                          <div>
+                            <h4>Informe o valor do lançamento:</h4>
+                            <input id="valorlancamentoentrada" formControlName="valorlancamentoentrada" type="text" >
+                          </div>
+                          <br>
+                           <button class="btn btn-primary">CONFIRMAR LANÇAMENTO</button>
+                    
+
+                        </form>
+                       

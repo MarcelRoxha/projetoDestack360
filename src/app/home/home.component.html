@@ -1,4 +1,4 @@
-<!----------------*ngIf="(user | async)?.accountType !== 'admin' && (user | async)?.accountType !== 'endUser'; "-->
+<!----------------*ngIf="(user | async)?.accountType !== 'admin' && (user | async)?.accountType !== 'endUser'; "------->
 
 <div >
     <body class="text-center">
@@ -6,21 +6,19 @@
          
                 <div class="mt-4">
                     <img class="mb-4" src="/assets/imagens/65ab872f-fa8e-4b2b-bdd4-376c93f02752_uploads_destacklogo.png" alt="Destack 360" style="margin-right: 19px;">
-               
-    
                     <h1 class="h3 mb-3 fw-normal">Área Restrita</h1>
             
                     <form [formGroup]="loginForm" (ngSubmit)="loginUser()" type="">
                         <p>
                             <mat-form-field appearance="outline">
                                 <mat-label>Email</mat-label>
-                                <input autocomplete="off" formControlName="email" type="email" matInput placeholder="Email">
+                                <input autocomplete="off" class="form-control" formControlName="email"  placeholder="E-mail">
                             </mat-form-field>
                         </p>
                         <p>
                             <mat-form-field appearance="outline">
                                 <mat-label>Password</mat-label>
-                                <input autocomplete="off" formControlName="password" type="password" matInput placeholder="Password">
+                                <input autocomplete="off"  class="form-control"  formControlName="password" type="password" placeholder="Senha">
                             </mat-form-field>
                         </p>
                         <div *ngIf="firebaseErrorMessage != ''" class="error-style">
@@ -29,15 +27,12 @@
                 
                         <button mat-raised-button color="primary">Login</button>
                     </form>
-                    <!---------------<p>Esqueceu a senha?</p>------->
-                    <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+                    <!---------------<p>Esqueceu a senha?</p>-------->
+                    <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
                 </div>
         </main>   
-    </body>
-    
+    </body>    
 </div>
-
-
 <div *ngIf="(user | async)?.accountType == 'admin';">
     <router-outlet>
         <app-admin-dashboard></app-admin-dashboard>
@@ -54,8 +49,8 @@
     </div>
 
 
-<!--------------
 
+<!-----
 Home
 
 <section>
@@ -103,5 +98,5 @@ Home
 <mat-card *ngIf="!(afAuth.user | async)">
     <mat-icon>do_not_disturb</mat-icon>
     <span>User is not logged in</span>
-</mat-card>------>
-
+</mat-card>
+--->

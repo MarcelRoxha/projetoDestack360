@@ -2,6 +2,7 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;  background: linear-gradient(90deg,  #323232, #01637f, #666666);}
+
 .form-signin {
     background: white;
     
@@ -52,7 +53,33 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;  background
     color: #ecedee;
     background: #354358;
     padding: 20px;
-    font-size: 16px;
+    border-radius: 2px;    
+    cursor: pointer;
+
+  }
+
+  .menu-lancamento{
+    margin-top: -25px;
+    min-width: 200px;
+    max-width: 200px;
+    min-height: calc(100vh - 55px);   
+    transition: all 1.5s;
+    z-index: 1;
+  }
+
+  .menu-lancamento ul li a {
+    display: block;
+    color: black;
+    padding: 15px;
+    text-decoration: none;
+    transition: all 1.5s;
+  }
+  .menu-lancamento  ul li a:hover {
+    color: #ecedee;
+    background: #354358;
+    padding: 20px;
+    border-radius: 2px;    
+    cursor: pointer;
 
   }
 
@@ -77,7 +104,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;  background
     margin-top: -5px;
     z-index: 1;
     margin-top: -20px;
-    margin-left: 154px;
+    margin-left: 200px;
     position: absolute;
     transition: all 1.5s;
    
@@ -88,7 +115,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;  background
     opacity: 15%;
   }
   input[type="checkbox"]:checked ~ label{
-    transform: translateX(-150px);
+    transform: translateX(-200px);
     opacity: 100%;     
   }
 
@@ -100,12 +127,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;  background
     background: red !important;
   }
 
-  label.pgnAdmin{
-    color: white !important;
+  label.pgnAdmin{   
     opacity: 100%;
   }
 
   input[type="checkbox"]:checked ~ section div .teste{
     transform: translateX(-150px);
        
+  }
+  .labelformlancer{
+    color: black !important;
   }

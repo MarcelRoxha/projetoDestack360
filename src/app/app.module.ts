@@ -69,6 +69,12 @@ import {
 
 
 import { RouterModule } from '@angular/router';
+import { MyChartComponent } from './my-chart/my-chart.component';
+import { EftLanceComponent } from './eft-lance/eft-lance.component';
+import { CadClientComponent } from './cad-client/cad-client.component';
+import { LancarEntradaComponent } from './lancar-entrada/lancar-entrada.component';
+import { LancarSaidaComponent } from './lancar-saida/lancar-saida.component';
+
 
 
 @NgModule({
@@ -82,7 +88,12 @@ import { RouterModule } from '@angular/router';
     DashboardComponent,
     AdminDashboardComponent,
     HeaderComponent,
-    SidenavComponent
+    SidenavComponent,
+    MyChartComponent,
+    EftLanceComponent,
+    CadClientComponent,
+    LancarEntradaComponent,
+    LancarSaidaComponent
   ],
   imports: [
     BrowserModule,
@@ -128,6 +139,9 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+
+    
+    
  
 
       

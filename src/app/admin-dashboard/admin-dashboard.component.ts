@@ -38,7 +38,8 @@ export class AdminDashboardComponent implements OnInit {
 
   user: Observable<any>; 
   isOpen = false; 
-  isDisabled = false;            // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
+  isDisabled = false;
+  clickCliente = false;            // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
 
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
     this.router.navigate(['/admin']);
@@ -59,4 +60,10 @@ export class AdminDashboardComponent implements OnInit {
 toggle(){
 this.isOpen = !this.isOpen;
 }
+
+clickcliente(){
+return this.clickCliente = !this.clickCliente;
+}
+
+
 }

@@ -1,4 +1,4 @@
-<mat-nav-list>
+<!--------------<mat-nav-list style="width: 250px;">
     <div class="logo py-4">
         <img src="../../assets/imagens/65ab872f-fa8e-4b2b-bdd4-376c93f02752_uploads_destacklogo.png" alt>
         </div>
@@ -13,3 +13,86 @@
 <a mat-list-item routerLink="/clientes" routerLinkActive="list-item-active"><mat-icon>leaderboard</mat-icon>Gráficos
 </a>
 </mat-nav-list>
+---------->
+
+
+<body class="text-center-home">
+
+<div class="d-flex">
+    <div class="check-menu">
+      <input type="checkbox" id="chec">
+      <label for="chec"><mat-icon (click)="toggle()">menu</mat-icon></label>
+      <nav class="menu-lateral">
+        <ul class="list-unstyled">
+         <!-------------- <li><a class="pagina-selecionada" >DASHBOARD</a></li>----------->
+          <li><a class="dropdown-item" (click)="acessarInicio()">
+            INICIO
+            </a></li>
+          
+          <!--------------
+          <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
+  
+          <li class="cliente-nav dropdown"> 
+              
+                <a class="dropdown-toggle" href="#" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                LANÇAMENTOS
+                </a>     
+              <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                <!-----------<li><a class="dropdown-item" href="#">AREA DO CLIENTE</a></li>------->
+                <li><a class="dropdown-item" (click)="efetuarLancamentoEntrada()">LANÇAR ENTRADA</a></li>
+                <li><a class="dropdown-item"(click)="efetuarLancamentoSaida()">LANÇAR SAÍDA</a>                                
+                </li>
+                <!----------- <li><a class="dropdown-item" href="#">EDITAR</a></li>  ------>             
+              </ul>
+            </li>
+      
+          <li><a ></a></li>
+          <li><a >CONTAS</a></li>
+          <li><a >CONSULTAR</a></li>
+        </ul>
+      </nav>
+    </div>
+  <!------------ *ngIf="clickEfetuarLancamento == true" -->
+     
+                  <div>
+                    </div>             
+                  <div> 
+
+                  <div class="d-flex" *ngIf="clickEfetuarLancamentoEntrada == true" >
+                    <div class="check-menu"  style="margin-left: 35px; margin-right: 10px;">
+                    
+                      <div [@childAnimation]="isOpen ? 'open' : 'closed'"
+                      class="open-close-container">
+                      <h3> EFETUAR LANÇAMENTO ENTRADA<h3>
+                        <div style="margin-left: 80%;">
+                          <button (click)="retornarData()" mat-raised-button color="primary">SALVAR LANÇAMENTO</button></div>   
+                                  <!--------------------------------------------- EFETUAR LANÇAMENTO --------------------------------------------->                    
+                                 
+                                 <form>
+                                        <div style="margin-top: 2%;">                                
+                                          <br>
+                                         <h3>Escolha uma data:</h3>
+                                         <input formControlName="dataEscolhida" type="date">                                   
+                                        </div>
+                                        <br>
+                                        <div>   <h3 style="color: red;">VALOR</h3>
+                                                <input formControlName="valor" type="text"placeholder="Valor R$">
+                                        </div>  
+                                        <br>                                                  
+                                <nav class="menu-lancamento">
+                                  <ul class="navbar-nav">
+                                    <li class="nav-item dropdown">
+                                      <p style="color: black; text-decoration: none; margin-top: 3%;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                       ESCOLHA O FORNECEDOR
+                                      </p>                            
+                                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="#">FORNCEDOR1</a></li>
+                                        <li><a class="dropdown-item" href="#">FORNCEDOR2</a></li>
+                                        <li><a class="dropdown-item" href="#">FORNCEDOR3</a></li>
+                                        <li><a class="dropdown-item">FORNCEDOR4</a></li>
+                                      </ul>
+                                    </li>
+                                  </ul>
+                                  <input formControlName="fornecedorEscolhido" type="text"placeholder="Valor R$">
+                                </nav>                     
+                              </form>   

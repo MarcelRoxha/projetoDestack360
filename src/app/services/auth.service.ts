@@ -3,7 +3,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router   } from '@angular/router';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -64,6 +63,21 @@ export class AuthService {
 
     })
 }
+
+eftLancer(lancamento: any): Promise<any> {
+
+
+  return this.afs.collection('lancamentos').doc().set({
+    data : lancamento.data,    
+    valor: lancamento.valor,
+    codentrada: lancamento.codentrada,
+    codsaida: lancamento.codsaida, 
+    obs: lancamento.obs    
+  }).then(resultado =>{
+    console.log("Resultado: ", resultado);
+  })
+}
+
   resetPassword(email: string, password: string): Promise<any>{
     return this.afAuth.sendPasswordResetEmail(email)
     .then(()=>{

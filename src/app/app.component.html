@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<div *ngIf="verificaUserLogado == false">
+    <router-outlet></router-outlet>
+</div>
+
+<div *ngIf="verificaUserLogado == true">
+    <app-sidenav></app-sidenav>
+    <router-outlet></router-outlet>
+    <app-header></app-header>
+</div>
+

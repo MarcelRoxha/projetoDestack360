@@ -1,13 +1,15 @@
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'app-sidenav',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.css'],
+  selector: 'app-lancar-saida',
+  templateUrl: './lancar-saida.component.html',
+  styleUrls: ['./lancar-saida.component.css'],
 
   animations:[
     trigger('childAnimation', [
@@ -34,7 +36,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ]),
   ]
 })
-export class SidenavComponent implements OnInit {
+export class LancarSaidaComponent implements OnInit {
 
   user: Observable<any>;  
   loginForm: FormGroup; 
@@ -47,37 +49,43 @@ export class SidenavComponent implements OnInit {
   clickEfetuarLancamentoEntrada = false;
   dataRecuperada : string;
 
- 
-  constructor(private router : Router) {
-   
-  }
+  constructor(public afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) { }
 
   ngOnInit(): void {
-  }
+    this.afAuth.authState.subscribe(user => {
+      console.log('Dashboard: user', user);
 
+      if (user) {
+          let emailLower = user.email.toLowerCase();
+          this.user = this.firestore.collection('users').doc(emailLower).valueChanges();                   
+      }
+  });
+ 
+    
+  }
 
   toggle(){
     this.isOpen = !this.isOpen;
     }
 
-    efetuarLancamentoSaida(){  
-      this.clickEfetuarLancamentoEntrada = !this.clickEfetuarLancamentoEntrada;        
-     return this.clickEfetuarLancamentoSaida = !this.clickEfetuarLancamentoSaida;
-           
-    }
+  logout(): void {
+    this.afAuth.signOut();
+}
 
-    efetuarLancamentoEntrada(){
-      return this.router.navigate(['/lancar'])
-     
-    }
-
-    retornarData(){
-      console.log(this.lancerForm.value) 
-    }
-
-    acessarInicio(){
-      return this.router.navigate(['/dashboard'])
-    }
+efetuarLancamentoSaida(){  
+  this.router.navigate(['/lancarSaida'])
+ 
   
+}
+
+efetuarLancamentoEntrada(){
+ this.router.navigate(['/lancarEntrada'])
+ 
+}
+
+telaDashboard(){
+  this.router.navigate(['/dashboard'])
+}
+
 
 }
