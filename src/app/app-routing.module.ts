@@ -20,13 +20,13 @@ const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'admin', component: AdminDashboardComponent, canActivate: [AuthGuard] },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-    { path: 'forgot-password', component: ForgotPasswordComponent },
+    { path: 'forgot-password', component: ForgotPasswordComponent,canActivate: [AuthGuard]  },
     { path: 'home', component: HomeComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'signup', component: SignupComponent },
-    { path: 'verify-email', component: VerifyEmailComponent },  
-    { path: 'lancarEntrada', component: LancarEntradaComponent },  
-    { path: 'lancarSaida', component: LancarSaidaComponent },   
+    { path: 'login', component: LoginComponent, canActivate: [AuthGuard]  },
+    { path: 'signup', component: SignupComponent, },
+    { path: 'verify-email', component: VerifyEmailComponent, },  
+    { path: 'lancarEntrada', component: LancarEntradaComponent, canActivate: [AuthGuard] },  
+    { path: 'lancarSaida', component: LancarSaidaComponent, canActivate: [AuthGuard]},   
 
 
 ];

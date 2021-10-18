@@ -9,6 +9,8 @@ import { Router   } from '@angular/router';
 export class AuthService {
 
   userLoggedIn: boolean;
+  entraAnonimo: any;
+  textoEntraAnonimo: string = "Entrada Anonima";
 
   constructor(private router : Router, private afAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.userLoggedIn = false;
@@ -63,20 +65,56 @@ export class AuthService {
 
     })
 }
+eftLancerAnonimo(lancamento: any, emailUsuario : string, check: boolean): Promise<any> {
+  
 
-eftLancer(lancamento: any): Promise<any> {
+  if(check === true){
+
+    return this.afs.collection('users').doc(emailUsuario).collection('lancamento_entrada').doc().set({
+      data : lancamento.datalancamentoentrada,    
+      valor: lancamento.valorlancamentoentrada,
+      //codentrada: lancamento.codentrada,
+      //codsaida: lancamento.codsaida, 
+      info: "Entrada Anonima" 
+    }).then(resultado =>{
+      console.log("Resultado: ", resultado);
+      console.log(this.textoEntraAnonimo)
+    })
+  }
 
 
-  return this.afs.collection('lancamentos').doc().set({
-    data : lancamento.data,    
-    valor: lancamento.valor,
-    codentrada: lancamento.codentrada,
-    codsaida: lancamento.codsaida, 
-    obs: lancamento.obs    
+  return this.afs.collection('users').doc(emailUsuario).collection('lancamento_entrada').doc().set({
+    data : lancamento.datalancamentoentrada,    
+    valor: lancamento.valorlancamentoentrada,
+    //codentrada: lancamento.codentrada,
+    //codsaida: lancamento.codsaida, 
+    info: this.textoEntraAnonimo.toString  
   }).then(resultado =>{
     console.log("Resultado: ", resultado);
+    console.log(this.textoEntraAnonimo)
   })
 }
+
+eftLancer(lancamento: any, emailUsuario : string, check: boolean): Promise<any> {
+
+ 
+    return this.afs.collection('users').doc(emailUsuario).collection('lancamento_entrada').doc().set({
+      data : lancamento.datalancamentoentrada,    
+      valor: lancamento.valorlancamentoentrada,
+      //codentrada: lancamento.codentrada,
+      //codsaida: lancamento.codsaida, 
+      info: lancamento.infolancamentoentrada    
+    }).then(resultado =>{
+      console.log("Resultado: ", resultado);
+    })
+  
+
+
+  
+
+}
+
+
 
   resetPassword(email: string, password: string): Promise<any>{
     return this.afAuth.sendPasswordResetEmail(email)

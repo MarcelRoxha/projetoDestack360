@@ -28,7 +28,7 @@
 
     <div class="d-flex">
         <div class="check-menu">
-          <input type="checkbox" id="chec">
+          <input type="checkbox" id="chec" class="checkmenu">
           <label for="chec"><mat-icon (click)="toggle()">menu</mat-icon> </label>
           <nav class="menu-lateral">
             <ul class="list-unstyled">
@@ -65,19 +65,38 @@
                         <h2 style="color: blue;">EFETUAR LANÇAMENTO DE ENTRADA</h2>
                         <br>
 
-                        <form>
+                        <form [formGroup]="lancerForm" (ngSubmit)="salvarLancamentoEntrada()">
                           <div>
                             <h4>Informe a data de lançamento</h4>
-                            <input id="datalancamentoentrada" type="date" >
+                          <input name="data" type="date" formControlName="datalancamentoentrada"  matInput [(ngModel)]="dataescolhida">
                           </div>
                           <br>
                           <div>
                             <h4>Informe o valor do lançamento:</h4>
-                            <input id="valorlancamentoentrada" formControlName="valorlancamentoentrada" type="text" >
+                            <input autocomplete="off" type="text" formControlName="valorlancamentoentrada" matInput [(ngModel)]="valorentrada">
                           </div>
                           <br>
-                           <button class="btn btn-primary">CONFIRMAR LANÇAMENTO</button>
-                    
-
-                        </form>
-                       
+                          <div>
+                            <label style="color: black !important; opacity: 100%;">Entrada Anônima </label>
+                            <input (change)="AnonimoClick()" id="checkAnonimo" style="margin-left: 12px; margin-top: 12px;" type="checkbox">                                                            
+                          </div>
+                          <div *ngIf="checkAnonimoEscolha == false"> 
+                            <h4>Informações do lançamento: Ex: Doação...:</h4>
+                            <input autocomplete="off" type="text" matInput formControlName="infolancamentoentrada" [(ngModel)]="infoentrada">                          
+                          </div>
+                         
+                          <br>                          
+                           <button class="btn btn-primary" [disabled]>CONFIRMAR LANÇAMENTO</button> 
+                        
+                        <div>Lançamentos:</div>
+                        <ul>
+                          <li *ngFor="let lancamento_entrada of(lancamentos | async)?.lancamento_entrada">
+                            {{lancamentos}}
+                          </li>
+                        </ul>
+                        
+                        <div >
+                          
+                         
+                      </div>
+                    </form>

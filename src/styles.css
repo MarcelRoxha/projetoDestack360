@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;  background: linear-gradient(90deg,  #323232, #01637f, #666666);}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+   background: linear-gradient(90deg,  #323232, #01637f, #666666);  
+  }
 
 .form-signin {
     background: white;
@@ -88,7 +90,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;  background
     font-size: 48px;
     margin-left: 100%;
   }
-  input[type="checkbox"] {
+  input[type="checkbox"].checkmenu{
     display: none;
     position: absolute;
   }
