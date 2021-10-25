@@ -1,3 +1,8 @@
+import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas-entrada.component';
+import { CadastrarContaEntradaComponent } from './cadastrar-conta-entrada/cadastrar-conta-entrada.component';
+import { CadastrarContaSaidaComponent } from './cadastrar-conta-saida/cadastrar-conta-saida.component';
+import { CadastrarClienteComponent } from './cadastrar-cliente/cadastrar-cliente.component';
+import { ConsultaClienteComponent } from './consulta-cliente/consulta-cliente.component';
 import { LancarSaidaComponent } from './lancar-saida/lancar-saida.component';
 import { LancarEntradaComponent } from './lancar-entrada/lancar-entrada.component';
 import { EftLanceComponent } from './eft-lance/eft-lance.component';
@@ -26,9 +31,12 @@ const routes: Routes = [
     { path: 'signup', component: SignupComponent, },
     { path: 'verify-email', component: VerifyEmailComponent, },  
     { path: 'lancarEntrada', component: LancarEntradaComponent, canActivate: [AuthGuard] },  
-    { path: 'lancarSaida', component: LancarSaidaComponent, canActivate: [AuthGuard]},   
-
-
+    { path: 'lancarSaida', component: LancarSaidaComponent, canActivate: [AuthGuard]},
+    { path: 'consultarClientes', component: ConsultaClienteComponent, canActivate: [AuthGuard]},
+    { path: 'cadastrarCliente', component: CadastrarClienteComponent, canActivate: [AuthGuard]},  
+    { path: 'cadastrarContaSaida', component: CadastrarContaSaidaComponent, canActivate: [AuthGuard]},  
+    { path: 'cadastrarContaEntrada', component: CadastrarContaEntradaComponent, canActivate: [AuthGuard]},
+    { path: 'listarContasEntrada', component: ListaContasEntradaComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

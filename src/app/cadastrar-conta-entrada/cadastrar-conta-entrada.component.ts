@@ -1,15 +1,17 @@
+import { ContaEntrada } from './../models/contaEntradaModel';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { state, trigger, style, transition, animate } from '@angular/animations';
-
+import { ContaEntradaService } from '../services/conta-entrada.service'
 
 @Component({
-  selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css'],
+  selector: 'app-cadastrar-conta-entrada',
+  templateUrl: './cadastrar-conta-entrada.component.html',
+  styleUrls: ['./cadastrar-conta-entrada.component.css'],
   animations:[
     trigger('childAnimation', [
       // ...
@@ -32,17 +34,23 @@ import { state, trigger, style, transition, animate } from '@angular/animations'
       ]),
     ]),
   ],
-
 })
-export class AdminDashboardComponent implements OnInit {
+export class CadastrarContaEntradaComponent implements OnInit {
 
+  formCadastrarContaEntrada: FormGroup;
   user: Observable<any>; 
   isOpen = false; 
   isDisabled = false;
   clickCliente = false;            // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
-    this.router.navigate(['/admin']);
+  constructor(private contaEntradaService: ContaEntradaService, private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
+    this.router.navigate(['/cadastrarContaEntrada']);
+
+    this.formCadastrarContaEntrada = new FormGroup({
+      codigoC: new FormControl('', Validators.required),
+      codigoD: new FormControl('', Validators.required),
+      descricao: new FormControl('', Validators.required),     
+    })
   }
 
   ngOnInit(): void {
@@ -64,6 +72,11 @@ this.isOpen = !this.isOpen;
 clickcliente(){
 return this.clickCliente = !this.clickCliente;
 }
-
-
+cadastrarContaEntrada(){
+  console.log(this.formCadastrarContaEntrada.value);
+  const contaEntrada : ContaEntrada = {...this.formCadastrarContaEntrada.value}
+  this.contaEntradaService.cadastrarContaEntrada(contaEntrada)
+  .subscribe(clienteBanco=>console.log(clienteBanco));
+    
+}
 }

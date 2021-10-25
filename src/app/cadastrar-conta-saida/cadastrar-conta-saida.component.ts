@@ -5,11 +5,10 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { state, trigger, style, transition, animate } from '@angular/animations';
 
-
 @Component({
-  selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css'],
+  selector: 'app-cadastrar-conta-saida',
+  templateUrl: './cadastrar-conta-saida.component.html',
+  styleUrls: ['./cadastrar-conta-saida.component.css'],
   animations:[
     trigger('childAnimation', [
       // ...
@@ -32,9 +31,8 @@ import { state, trigger, style, transition, animate } from '@angular/animations'
       ]),
     ]),
   ],
-
 })
-export class AdminDashboardComponent implements OnInit {
+export class CadastrarContaSaidaComponent implements OnInit {
 
   user: Observable<any>; 
   isOpen = false; 
@@ -42,7 +40,7 @@ export class AdminDashboardComponent implements OnInit {
   clickCliente = false;            // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
 
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/cadastrarContaSaida']);
   }
 
   ngOnInit(): void {
@@ -64,6 +62,4 @@ this.isOpen = !this.isOpen;
 clickcliente(){
 return this.clickCliente = !this.clickCliente;
 }
-
-
 }

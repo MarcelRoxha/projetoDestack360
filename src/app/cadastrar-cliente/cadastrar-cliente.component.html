@@ -1,0 +1,190 @@
+<body class="text-center-home">
+    <!-- Button trigger modal
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal1" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" style="margin-top: 4%;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cadastrar Cliente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input class="form-control" >
+          <input class="form-control" >
+          <input class="form-control" >
+          <input class="form-control" >
+          <input class="form-control" >
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+      <nav class="navbar navbar-expand navbar-dark" style="background: black">
+        <div class="container-fluid">
+          <div class="logo">
+              <img src="../../assets/imagens/65ab872f-fa8e-4b2b-bdd4-376c93f02752_uploads_destacklogo.png" width="170px" alt="Destack 360">
+              </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="menu_topo_admin">
+            <ul class="navbar-nav me-auto  mb-2 mb-lg-0">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="../../assets/imagens/icone_pequeno.jpg" width="20" height="20">
+                  {{ (user | async)?.displayName }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Perfil</a></li>
+                  <li><a class="dropdown-item" href="#">Clientes</a></li>
+                  <li><a class="dropdown-item" href="#">Fornecedores</a></li>
+                  <li><a class="dropdown-item" href="#"(click)="logout()">Sair</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="d-flex">
+        <div class="check-menu">
+          <input type="checkbox" id="chec"  class="checkmenu">
+          <label for="chec"><mat-icon (click)="toggle()">menu</mat-icon> </label>
+          <nav class="menu-lateral">
+            <ul class="list-unstyled">
+              <li><a  routerLink="/admin">DASHBOARD</a></li>
+              <li>
+              
+              <!--------------
+              <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
+      
+              <li class="cliente-nav dropdown"> 
+                <a style="background: red;" class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  CLIENTES
+                </a>                 
+                                   
+                  <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                <li><a class="dropdown-item" routerLink="/dashboard"> AREA DO CLIENTE</a></li>
+  
+                   <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                    <li><a routerLink="/cadastrarCliente">CADASTRAR</a></li>
+                    <li><a class="dropdown-item" routerLink="/consultarClientes">CONSULTAR</a></li>                               
+                  </ul>
+                </li>     
+              <li><a>FORNECEDORES</a></li>
+              <li class="cliente-nav dropdown"> 
+                <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  CONTAS
+                </a>                 
+                                   
+                  <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                    <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA ENTRADA</a></li>
+                   
+  
+                   <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                    <li><a routerLink="/cadastrarContaSaida">CADASTRAR CONTA SAIDA</a></li>  
+                    <li><a class="dropdown-item" routerLink="/listarContasEntrada">CONTAS ENTRADAS CADASTRADAS</a></li>                                            
+                  </ul>
+                </li> 
+              <li><a >CONSULTAR</a></li>
+            </ul>
+          </nav>
+        </div>
+          <section>
+            <label class="pgnAdmin">
+                <div [@childAnimation]="isOpen ? 'open' : 'closed'"
+                class="open-close-container">
+                <div class="container mt-2"> 
+                  <h3 class="text-center"> CADASTRAR CLIENTES<h3>
+                      <hr />        
+                      <form [formGroup]="formCadastrarCliente" (ngSubmit)="cadastrarCliente()">
+                            <div class="container" style="margin-left: 16%;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="form-label" style="opacity: 100%;">
+                                            Razão Social:                                      
+                                        </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                        <input class="form-control" type="text" formControlName="razaoSocial">                                  
+                                    </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                          <label class="form-label" style="opacity: 100%;">
+                                             CNPJ:                                      
+                                          </label>
+                                          </div>
+                                          <div class="col-md-6">
+                                          <input class="form-control" type="text" formControlName="cnpj">                                  
+                                      </div>
+                                      <br>
+                                    </div>
+      
+      
+      
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                          <label class="form-label" style="opacity: 100%;">
+                                             Usuario do Cliente:                                      
+                                          </label>
+                                          </div>
+                                          <div class="col-md-6">
+                                          <input class="form-control" type="text" formControlName="usuariocliente">                                  
+                                      </div>
+                                      <br>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                          <label class="form-label" style="opacity: 100%;">
+                                             E-mail do Cliente:                                      
+                                          </label>
+                                          </div>
+                                          <div class="col-md-6">
+                                          <input class="form-control" type="text" formControlName="emailCliente">                                  
+                                      </div>
+                                      <br>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                          <label class="form-label" style="opacity: 100%;">
+                                             Telefone:                                      
+                                          </label>
+                                          </div>
+                                          <div class="col-md-6">
+                                          <input class="form-control" type="text" formControlName="telefone">                                  
+                                      </div>
+                                      <br>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                          <label class="form-label" style="opacity: 100%;">
+                                             Celular:                                      
+                                          </label>
+                                          </div>
+                                          <div class="col-md-6">
+                                          <input class="form-control" type="text" formControlName="celular">                                  
+                                      </div>
+                                      <br>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-6">
+                                       <button type="submit"  class="btn btn-primary" style="margin-left: 20%; width: 100%;">CADASTRAR INFORMAÇÕES</button>
+                                    </div>
+                            </div>   
+                      </form> 
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="dashboard.js"></script>
+      
+    
+  
+    

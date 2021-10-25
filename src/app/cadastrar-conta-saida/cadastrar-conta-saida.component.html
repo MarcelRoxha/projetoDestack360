@@ -1,48 +1,3 @@
-<!----------Dashboard
-<mat-drawer-container>
-
-    <mat-drawer mode="side" opened="true">
-        <app-sidenav></app-sidenav>
-    </mat-drawer>
-<mat-drawer-container>
-    <app-header></app-header>
-
-    <br>
-    <br>
-    <button mat-raised-button color="primary" routerLink="/home">
-        <mat-icon>home</mat-icon>
-        <span>Home</span>
-    </button>
-    <button mat-raised-button color="primary" (click)="logout()">Sair</button>
-    
-    
-    <mat-list *ngIf="(user | async)">
-        <mat-list-item>Account Type: {{ (user | async)?.accountType }}</mat-list-item>
-        <mat-list-item>Display Name: {{ (user | async)?.displayName }}</mat-list-item>
-        <mat-list-item>Display Name (lower): {{ (user | async)?.displayName_lower }}</mat-list-item>
-        <mat-list-item>Email: {{ (user | async)?.email }}</mat-list-item>
-        <mat-list-item>Email (lower): {{ (user | async)?.email_lower }}</mat-list-item>
-        <mat-list-item>Email Verification Status: {{ (afAuth.user | async)?.emailVerified }}</mat-list-item>
-    </mat-list>
-    
-</mat-drawer-container>
-
-</mat-drawer-container>
-
-<nav>
- 
-    <button (click)="toggle()">Toggle Open/Closed</button>
-  </nav>
-  <div [@.disabled]="isDisabled">
-    <div [@childAnimation]="isOpen ? 'open' : 'closed'"
-      class="open-close-container">
-      <p>The box is now {{ isOpen ? 'Open' : 'Closed' }}!</p>
-    </div>
-  </div>--------->
-
-
-
-
 <body class="text-center-home">
   <!-- Button trigger modal
 <button type="button" class="btn btn-primary" data-bs-toggle="modal1" data-bs-target="#exampleModal">
@@ -142,42 +97,43 @@
           </ul>
         </nav>
       </div>
-      <section>
-        <label class="pgnAdmin">
-            <div [@childAnimation]="isOpen ? 'open' : 'closed'"
-            class="open-close-container">
-                <h3> Pagina Admin<h3>
-                  <div>                   
-                      <input type="text">
-                      <input type="date">
-                   
-                  </div>
-                
-      
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="dashboard.js"></script>
+        <section>
+          <label class="pgnAdmin">
+              <div [@childAnimation]="isOpen ? 'open' : 'closed'"
+              class="open-close-container">
+                  <h3> Pagina Admin<h3>
+                    <div>                   
+                        <input type="text">
+                        <input type="date">
+                     
+                    </div>
+                  
+        
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="dashboard.js"></script>
+    
   
-
-
-<!----------
-
-<br>
-<br>
-<button mat-raised-button color="primary" routerLink="/home">
-    <mat-icon>home</mat-icon>
-    <span>Home</span>
-</button>
-<button mat-raised-button color="primary" (click)="logout()">Sair</button>
-
-<br>
-<br>
-
-<div *ngIf="(user | async)?.accountType == 'admin'; else notAdmin">
-    hello admin!
-    <br>
-    this is a simple test for admin status. a more rigorous test is to edit the auth.guard.ts file :)
-</div>
-
-<ng-template #notAdmin>
-    Not admin
-</ng-template>----------->
+  
+  <!----------
+  
+  <br>
+  <br>
+  <button mat-raised-button color="primary" routerLink="/home">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+  </button>
+  <button mat-raised-button color="primary" (click)="logout()">Sair</button>
+  
+  <br>
+  <br>
+  
+  <div *ngIf="(user | async)?.accountType == 'admin'; else notAdmin">
+      hello admin!
+      <br>
+      this is a simple test for admin status. a more rigorous test is to edit the auth.guard.ts file :)
+  </div>
+  
+  <ng-template #notAdmin>
+      Not admin
+  </ng-template>----------->
+  

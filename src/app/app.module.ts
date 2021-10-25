@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -74,6 +73,11 @@ import { EftLanceComponent } from './eft-lance/eft-lance.component';
 import { CadClientComponent } from './cad-client/cad-client.component';
 import { LancarEntradaComponent } from './lancar-entrada/lancar-entrada.component';
 import { LancarSaidaComponent } from './lancar-saida/lancar-saida.component';
+import { ConsultaClienteComponent } from './consulta-cliente/consulta-cliente.component';
+import { CadastrarClienteComponent } from './cadastrar-cliente/cadastrar-cliente.component';
+import { CadastrarContaSaidaComponent } from './cadastrar-conta-saida/cadastrar-conta-saida.component';
+import { CadastrarContaEntradaComponent } from './cadastrar-conta-entrada/cadastrar-conta-entrada.component';
+import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas-entrada.component';
 
 
 
@@ -93,7 +97,12 @@ import { LancarSaidaComponent } from './lancar-saida/lancar-saida.component';
     EftLanceComponent,
     CadClientComponent,
     LancarEntradaComponent,
-    LancarSaidaComponent
+    LancarSaidaComponent,
+    ConsultaClienteComponent,
+    CadastrarClienteComponent,
+    CadastrarContaSaidaComponent,
+    CadastrarContaEntradaComponent,
+    ListaContasEntradaComponent
   ],
   imports: [
     BrowserModule,

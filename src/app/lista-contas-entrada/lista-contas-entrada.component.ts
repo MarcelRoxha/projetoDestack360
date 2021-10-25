@@ -1,15 +1,18 @@
-import { Router } from '@angular/router';
+import { ContaEntradaService } from './../services/conta-entrada.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { state, trigger, style, transition, animate } from '@angular/animations';
-
+import { Cliente } from '../models/clienteModel';
+import { ClienteService } from '../services/cliente.service';
+import { ContaEntrada } from '../models/contaEntradaModel';
 
 @Component({
-  selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css'],
+  selector: 'app-lista-contas-entrada',
+  templateUrl: './lista-contas-entrada.component.html',
+  styleUrls: ['./lista-contas-entrada.component.css'],
   animations:[
     trigger('childAnimation', [
       // ...
@@ -32,17 +35,17 @@ import { state, trigger, style, transition, animate } from '@angular/animations'
       ]),
     ]),
   ],
-
 })
-export class AdminDashboardComponent implements OnInit {
+export class ListaContasEntradaComponent implements OnInit {
 
+  constasEntradaModels : ContaEntrada[] = [];
   user: Observable<any>; 
   isOpen = false; 
   isDisabled = false;
-  clickCliente = false;            // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
+  clickCliente = false; 
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
-    this.router.navigate(['/admin']);
+  constructor(private contaEntradaService: ContaEntradaService, private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
+    this.router.navigate(['/listarContasEntrada']);
   }
 
   ngOnInit(): void {
@@ -53,6 +56,12 @@ export class AdminDashboardComponent implements OnInit {
                    // get the user's doc in Cloud Firestore
           }
       });
+
+      this.contaEntradaService.listaContasEntradaSalvas().subscribe(clientesCadastradosBanco =>{
+        this.constasEntradaModels = clientesCadastradosBanco;
+      })
+
+
   }
   logout(): void {
     this.afAuth.signOut();

@@ -1,6 +1,3 @@
-
-
-
 <body class="text-center-home">
     <nav class="navbar navbar-expand navbar-dark" style="background: black">
       <div class="container-fluid">
@@ -33,7 +30,8 @@
         <input type="checkbox" id="chec"  class="checkmenu">
         <label for="chec"><mat-icon (click)="toggle()">menu</mat-icon> </label>
         <nav class="menu-lateral">
-          <ul class="list-unstyled">
+          <ul class="list-unstyled">           
+              <li *ngIf="(user | async)?.accountType == 'admin';"><a routerLink="/admin">ADMIN</a></li>
            <li><a class="pagina-selecionada" >DASHBOARD</a></li>
             <li>
             

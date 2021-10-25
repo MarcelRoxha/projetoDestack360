@@ -4,12 +4,13 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { state, trigger, style, transition, animate } from '@angular/animations';
-
-
+import { Cliente } from '../models/clienteModel';
+import { ClienteService } from '../services/cliente.service';
 @Component({
-  selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css'],
+  selector: 'app-consulta-cliente',
+  templateUrl: './consulta-cliente.component.html',
+  styleUrls: ['./consulta-cliente.component.css'],
+
   animations:[
     trigger('childAnimation', [
       // ...
@@ -32,17 +33,17 @@ import { state, trigger, style, transition, animate } from '@angular/animations'
       ]),
     ]),
   ],
-
 })
-export class AdminDashboardComponent implements OnInit {
+export class ConsultaClienteComponent implements OnInit {
 
+  clientes : Cliente[] = [];
   user: Observable<any>; 
   isOpen = false; 
   isDisabled = false;
   clickCliente = false;            // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
-    this.router.navigate(['/admin']);
+  constructor(private clienteservice: ClienteService, private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
+    this.router.navigate(['/consultarClientes']);
   }
 
   ngOnInit(): void {
@@ -53,6 +54,12 @@ export class AdminDashboardComponent implements OnInit {
                    // get the user's doc in Cloud Firestore
           }
       });
+
+      this.clienteservice.listarClientes().subscribe(clientesCadastradosBanco =>{
+        this.clientes = clientesCadastradosBanco;
+      })
+
+
   }
   logout(): void {
     this.afAuth.signOut();
@@ -64,6 +71,5 @@ this.isOpen = !this.isOpen;
 clickcliente(){
 return this.clickCliente = !this.clickCliente;
 }
-
 
 }
