@@ -47,7 +47,7 @@ export class AuthService {
      .then((result)=>{
        let emailLower = user.email.toLowerCase();
        this.afs.collection('users').doc(emailLower).set({ 
-          accountType : 'admin',    
+          accountType : 'endUser',    
           displayName: user.displayName,
           displayName_lower: user.displayName,
           email: user.email, 

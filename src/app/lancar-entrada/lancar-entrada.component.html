@@ -58,45 +58,69 @@
           </nav>
         </div>
       <!------------ *ngIf="clickEfetuarLancamento == true" -->
-        
-                      <div [@childAnimation]="isOpen ? 'open' : 'closed'"
-                      class="open-close-container"> 
-                      <div class="text-center">
-                        <h2 style="color: blue;">EFETUAR LANÇAMENTO DE ENTRADA</h2>
-                        <br>
+      <label class="pgnAdmin">
+        <div [@childAnimation]="isOpen ? 'open' : 'closed'"
+        class="open-close-container">
+        <div class="container mt-2"> 
+          <h3 class="text-center"> EFETUAR LANÇAMENTO DE ENTRADA<h3>
+              <hr />        
+              <form [formGroup]="lancerForm" (ngSubmit)="salvarLancamentoEntrada()">
+                    <div class="container">
+                      
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label" style="opacity: 100%;">
+                                    Informe a data:                                      
+                                </label>
+                                </div>
+                                <div class="col-md-6">
+                                <input class="form-control" type="date" formControlName="dataLancamentoEntrada" [(ngModel)]="dataLancamento">                                  
+                            </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-4">
+                                  <label class="form-label" style="opacity: 100%;">
+                                     Valor do lançamento:                                      
+                                  </label>
+                                  </div>
+                                  <div class="col-md-6">
+                                  <input class="form-control" type="text" formControlName="valorlancamentoentrada" [(ngModel)]="valorLancamento" mask="separator.2" thousandSeparator="." required/>                                  
+                              </div>
+                              
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-4">                                
+                                <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoEntrada()"/>Desejo Digitar
+                                  </div>
+                                  <div class="col-md-4" *ngIf="checkDigitarLancamento == true">
+                                    <input type="text"  class="form-control" formControlName="contaEntrdaSelecionada" [(ngModel)]="descricaoLancamento"/>
+                                    <input type="checkbox" (change)="salvarLancaMentoEntradaDigitada()"/>Salvar para lancamentos futuros
+                                 </div> 
+                                 <br>
+                                  <div class="col-md-6" *ngIf="checkDigitarLancamento == false">
+                                    <select class="form-control" type="text" formControlName="contaEntrdaSelecionada" [(ngModel)]="descricaoLancamento">
+                                      <option>Selecione uma das opções...</option>
+                                      <option *ngFor="let ContaEntrada of listaEntradasCadastradas">
+                                       {{ContaEntrada.descricao}}
+                                      </option>    
+                                    </select>                                    
+                                      <div>    
+                                  </div>
+                              <br>    
+                                                       
+                            </div>                                                     
 
-                        <form [formGroup]="lancerForm" (ngSubmit)="salvarLancamentoEntrada()">
-                          <div>
-                            <h4>Informe a data de lançamento</h4>
-                          <input name="data" type="date" formControlName="datalancamentoentrada"  matInput [(ngModel)]="dataescolhida">
+                            <div class="col-md-6">
+                              <br> 
+                               <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;">LANÇAR INFORMAÇÕES DE ENTRADA</button>
+                            </div>
+                            </div>
                           </div>
-                          <br>
-                          <div>
-                            <h4>Informe o valor do lançamento:</h4>
-                            <input autocomplete="off" type="text" formControlName="valorlancamentoentrada" matInput [(ngModel)]="valorentrada">
-                          </div>
-                          <br>
-                          <div>
-                            <label style="color: black !important; opacity: 100%;">Entrada Anônima </label>
-                            <input (change)="AnonimoClick()" id="checkAnonimo" style="margin-left: 12px; margin-top: 12px;" type="checkbox">                                                            
-                          </div>
-                          <div *ngIf="checkAnonimoEscolha == false"> 
-                            <h4>Informações do lançamento: Ex: Doação...:</h4>
-                            <input autocomplete="off" type="text" matInput formControlName="infolancamentoentrada" [(ngModel)]="infoentrada">                          
-                          </div>
-                         
-                          <br>                          
-                           <button class="btn btn-primary" [disabled]>CONFIRMAR LANÇAMENTO</button> 
+
+
+
+                          </form>
                         
-                        <div>Lançamentos:</div>
-                        <ul>
-                          <li *ngFor="let lancamento_entrada of(lancamentos | async)?.lancamento_entrada">
-                            {{lancamentos}}
-                          </li>
-                        </ul>
-                        
-                        <div >
                           
-                         
-                      </div>
-                    </form>

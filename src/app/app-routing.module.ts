@@ -22,7 +22,7 @@ import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
 
-    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'admin', component: AdminDashboardComponent, canActivate: [AuthGuard] },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'forgot-password', component: ForgotPasswordComponent,canActivate: [AuthGuard]  },

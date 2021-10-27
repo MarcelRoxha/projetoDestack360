@@ -79,7 +79,7 @@ import { CadastrarContaSaidaComponent } from './cadastrar-conta-saida/cadastrar-
 import { CadastrarContaEntradaComponent } from './cadastrar-conta-entrada/cadastrar-conta-entrada.component';
 import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas-entrada.component';
 
-
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -148,12 +148,11 @@ import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxMaskModule.forRoot({
+      dropSpecialCharacters: true
+       })
 
     
-    
- 
-
-      
 
   ],
   providers: [],

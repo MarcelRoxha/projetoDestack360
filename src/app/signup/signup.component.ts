@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
       if (this.authService.userLoggedIn) {                       // if the user's logged in, navigate them to the dashboard (NOTE: don't use afAuth.currentUser -- it's never null)
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/signup']);
       }
 
       this.signupForm = new FormGroup({
