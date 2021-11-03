@@ -11,3 +11,26 @@ input[type="checkbox"]:checked ~ .open-close-container{
 .col-md-2{
     padding: 10px;
 }
+
+.example-small-box, .example-large-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.example-small-box {
+  height: 200px;
+  width: 300px;
+  background-color: aqua;
+}
+
+.example-large-box {
+  height: 300px;
+  width: 300px;
+}
+mat-grid-tile {
+  background: lightblue;
+}

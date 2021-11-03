@@ -61,22 +61,108 @@
          
       <div [@childAnimation]="isOpen ? 'open' : 'closed'"
       class="open-close-container"> 
-      <div class="text-center">
-        <h2 style="color: red;">EFETUAR LANÇAMENTO DE SAÍDA</h2>
-        <br>
 
-        <form>
-          <div>
-            <h4>Informe a data de lançamento</h4>
-            <input id="datalancamentoentrada" type="date" >
-          </div>
-          <br>
-          <div>
-            <h4>Informe o valor do lançamento:</h4>
-            <input id="valorlancamentoentrada" formControlName="valorlancamentoentrada" type="text" >
-          </div>
-          <br>
-           <button class="btn btn-danger">CONFIRMAR LANÇAMENTO</button>
+
+
+
+      <div class="container mt-2"> 
+        <h3 class="text-center"> EFETUAR LANÇAMENTO DE SAIDA<h3>
+            <hr />        
+            <form [formGroup]="lancerFormSaida" (ngSubmit)="salvarLancamentoSaida()">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-4">
+                          <label class="form-label" style="opacity: 100%;">
+                              Informe a data:                                      
+                          </label>
+                          </div>
+                          <div class="col-md-6">
+                          <input formControlName="datalancamentoSaida" class="form-control" type="date" [(ngModel)]="datalancamentoSaida">                                  
+                      </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" style="opacity: 100%;">
+                               Valor do lançamento:                                      
+                            </label>
+                            </div>
+                            <div class="col-md-6">
+                            <input class="form-control" type="text" formControlName="valorlancamentoSaida" [(ngModel)]="valorlancamentoSaida" mask="separator.2" thousandSeparator="." required/>                                  
+                        </div>
+                        
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-4">                                
+                          <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoSaida()"/>Desejo Digitar
+                            </div>
+                            <div class="col-md-4" *ngIf="checkDigitarLancamento == true">
+                              <input type="text"  class="form-control"  formControlName="descricaoLancamento"  [(ngModel)]="descricaoLancamento"/>
+                              <input type="checkbox" (change)="salvarLancaMentoSaidaDigitada()"/>Salvar para lancamentos futuros
+                           </div> 
+                           <br>
+                            <div class="col-md-6" *ngIf="checkDigitarLancamento == false">
+                              <select class="form-control" type="text" formControlName="contaSaidaLancamento" [(ngModel)]="contaSaidaLancamento">
+                                <option>Selecione uma das opções...</option>  
+                                <option *ngFor=" let ContaSaida of listaSaidasCadastradas">
+                                 {{ContaSaida.fornecedor}}
+                                </option>    
+                              </select>                                    
+                                <div>    
+                            </div>
+                        <br>                         
+                      </div>     
+                      <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" style="opacity: 100%;">
+                               Descrição:                                      
+                            </label>
+                            </div>
+                            <div class="col-md-6">
+                            <input class="form-control" type="text" formControlName="descricaolancamentoSaida" [(ngModel)]="destalhesLancamentoEntrada" placeholder="*Opcional"/>                                  
+                        </div>
+                        
+                      </div>                                                
+              
+                      <div class="col-md-6">
+                        <br> 
+                         <button class="btn btn-primary" style="margin-left: 50%; width: 100%;">LANÇAR INFORMAÇÕES DE SAIDA</button>
+                      </div>
+                      </div>
+                    </div>
+              
+
+
+
+                        </form>
+                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
     
-
-        </form>

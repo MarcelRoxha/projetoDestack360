@@ -65,6 +65,589 @@
                         <h2 class="text-center form-text">VISÃO GERAL</h2>
 
                     </div>
+                    <hr />
+                    <mat-tab-group  dynamicHeight>
+                      <mat-tab label="JANEIRO"> 
+
+                    
+                        <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                            STATUS:
+                            <button>Visualizar</button>
+                     
+                          <mat-grid-tile>
+                            
+                            <div class="example-small-box mat-elevation-z4">
+                              <div class="col-md-8 text-center" >
+                                <p>TOTAL ENTRADAS:</p>
+                             <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperado.valorTotalEntradaMensal}}</h3>  </strong> 
+                            </div>
+                            </div>
+                            
+                            </mat-grid-tile>
+                          <mat-grid-tile>
+                            
+                            <div class="example-small-box mat-elevation-z4">
+                              <div class="col-md-8 text-center" >
+                                <p>TOTAL SAIDAS:</p>
+                                <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperado.valorTotalSaidaMensal}}</h3>  </strong> 
+                            </div>
+                            </div>
+                            
+                          </mat-grid-tile>
+                          <mat-grid-tile>
+                            <div class="example-small-box mat-elevation-z4">
+                              <div class="col-md-8 text-center" >
+                                <p>QUANTIDADE DE ENTRADAS:</p>
+                                <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperado.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                            </div>
+                            </div>
+                            
+                          </mat-grid-tile>
+                          <mat-grid-tile>
+                            <div class="example-small-box mat-elevation-z4">
+                              <div class="col-md-8 text-center" >
+                                <p>QUANTIDADE SAIDAS:</p>
+                                <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperado.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                            </div>
+                            </div>
+                            
+                          </mat-grid-tile>
+                        </mat-grid-list>
+                <!--------------        <div class="row">
+                          <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                            <h3> {{userModelRecuperado.valorTotalEntradaMensal}}</h3>
+                        </div>
+                                                    
+
+                         
+
+                          <div class="col-md-2">
+                             
+                          </div>
+
+
+
+                          </div>    
+                          <div class="example-small-box mat-elevation-z4">                           
+
+
+
+
+
+                          </div>        
+                          <div class="example-small-box mat-elevation-z4">                           
+
+
+
+
+
+                          </div> 
+                        </div>                        
+                              
+</div>  ------>
+                      </mat-tab>
+
+                      <mat-tab label="FEVEREIRO">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoFevereiro.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoFevereiro.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoFevereiro.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoFevereiro.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </mat-tab>
+                      <button label="MARÇO" (click)="testando()">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoMarco.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoMarco.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoMarco.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoMarco.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </button>
+                      <mat-tab label="ABRIL" (click)="testando()">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoAbril.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoAbril.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoAbril.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoAbril.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </mat-tab>
+                      <mat-tab label="MAIO" (click)="testando()">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoMaio.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoMaio.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoMaio.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoMaio.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </mat-tab>
+                      <mat-tab label="JUNHO" (click)="testando()">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoJunho.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoJunho.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoJunho.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoJunho.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </mat-tab>
+                      <mat-tab label="JULHO" (click)="testando()">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoJulho.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoJulho.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoJulho.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoJulho.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </mat-tab>
+                      <mat-tab label="AGOSTO" (click)="testando()">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoAgosto.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoAgosto.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoAgosto.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoAgosto.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </mat-tab>
+                      <mat-tab label="SETEMBRO" (click)="testando()">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoSetembro.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoSetembro.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoSetembro.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoSetembro.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </mat-tab>
+                      <mat-tab label="OUTUBRO" (click)="testando()">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoOutubro.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoOutubro.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoOutubro.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoOutubro.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </mat-tab>
+                      <mat-tab label="NOVEMBRO" (click)="testando()">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoNovembro.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoNovembro.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoNovembro.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoNovembro.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </mat-tab>
+                      <mat-tab label="DEZEMBRO" (click)="testando()">   <mat-grid-list cols="4" rowHeight="2:2">
+                                                 
+
+                        STATUS:
+                        <button>Visualizar</button>
+                 
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL ENTRADAS:</p>
+                         <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoDezembro.valorTotalEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                        </mat-grid-tile>
+                      <mat-grid-tile>
+                        
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>TOTAL SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoDezembro.valorTotalSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE DE ENTRADAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoDezembro.quantidadeTotalLancamentosEntradaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                      <mat-grid-tile>
+                        <div class="example-small-box mat-elevation-z4">
+                          <div class="col-md-8 text-center" >
+                            <p>QUANTIDADE SAIDAS:</p>
+                            <strong><h3 style="font-size: 48px; color: red;"> {{userModelRecuperadoDezembro.quantidadeTotalLancamentosSaidaMensal}}</h3>  </strong> 
+                        </div>
+                        </div>
+                        
+                      </mat-grid-tile>
+                    </mat-grid-list> </mat-tab>
+                     
+                    </mat-tab-group>
                        
 
 

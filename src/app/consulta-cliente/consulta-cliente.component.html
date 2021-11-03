@@ -4,29 +4,314 @@
   Launch demo modal
 </button> -->
 
-<!-- Modal -->
-<div class="modal fade" style="margin-top: 4%;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal informações cliente -->
+<div class="modal fade" style="margin: 1%;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cadastrar Cliente</h5>
+        <h3 class="modal-title " id="exampleModalLabel"><strong> Informações do Cliente</strong></h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <input class="form-control" >
-        <input class="form-control" >
-        <input class="form-control" >
-        <input class="form-control" >
-        <input class="form-control" >
-        ...
+
+        <div class="container">
+          
+          <div class="row">
+            <div class="col-md-4">
+              <h4 style="color: black;"><strong>              
+                Razão Social:
+              </strong></h4>
+            
+            </div>
+            <div class="col-md-8">
+              <h3 style="color: royalblue;"><strong>            
+                {{ razaoSocialInfo }}
+              </strong>
+              </h3>
+            </div>
+          
+          <div class="row">
+            <div class="col-md-4">
+              <h4 style="color: black;">
+                <strong>
+                Nome de Usuario:
+                </strong>
+              </h4>
+            </div>
+            <div class="col-md-8">
+              <h3 style="color: royalblue;"><strong>{{ usuarioclienteInfo }}</strong></h3>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <h4 style="color: black;">
+                  <strong>
+                  CNPJ:
+                  </strong>
+                </h4>
+              </div>
+              <div class="col-md-8">
+                <h3 style="color: royalblue;"><strong> {{ cnpjInfo }} </strong></h3>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <h4  style="color: black;">
+                    <strong>
+                    E-mail:
+                    </strong>                    
+                  </h4>
+                </div>
+                <div class="col-md-8">
+                  <h3 style="color: royalblue;"><strong> {{ emailClienteInfo }} </strong> </h3>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <h4 style="color: black;">
+                      <strong>
+                      Celular:
+                      </strong>                      
+                    </h4>
+                  </div>
+                  <div class="col-md-8">
+                    <h3 style="color: royalblue;"><strong> {{ celularInfo }} </strong></h3>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <h4 style="color: black;">
+                        <strong>
+                        Telefone:
+                        </strong>                      
+                      </h4>
+                    </div>
+                    <div class="col-md-8">
+                      <h3  style="color: royalblue;"><strong> {{ telefoneInfo }} </strong></h3>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <h4 style="color: black;">
+                          <strong>
+                          Cadastrado em:
+                          </strong>                          
+                        </h4>
+                      </div>
+                      <div class="col-md-8">
+                        <h3 style="color: royalblue;  margin-top: 10px;"><strong> {{ createdInfo }} </strong></h3>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <h4 style="color: black;">
+                            <strong>
+                            Última modificação:
+                            </strong>                          
+                          </h4>
+                        </div>
+                        <div class="col-md-8">
+                          <h3 style="color: royalblue; margin-top: 10px;"><strong> {{ modifiedInfo }} </strong></h3>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-4">
+                            <h4 style="color: black;">
+                              <strong>
+                              Observações: 
+                              </strong>
+                            </h4>
+                          </div>
+                          <div style="display: block; background: yellowgreen; border: 1px solid black;">
+                            <h3 style="color: royalblue;"><strong> {{ observacoes }} </strong></h3>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>      
+        </div>
+    
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Modal Lancar entrada cliente -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalLancars" tabindex="-1" aria-labelledby="exampleModalLabelLancarEntrada" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title " id="exampleModalLabelLancarEntrada"><strong> LANÇAR VALOR DE ENTRADA</strong></h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="lancerForm" (ngSubmit)="salvarLancamentoEntrada(cnpjInfo)">
+          <div class="container">
+              
+              <div class="row">
+                  <div class="col-md-4">
+                      <label class="form-label" style="opacity: 100%;">                        
+                          Informe a data:                                      
+                      </label>
+                      </div>
+                      <div class="col-md-6">
+                      <input class="form-control" type="date" formControlName="dataLancamentoEntrada" [(ngModel)]="dataLancamento">                                  
+                  </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-4">
+                        <label class="form-label" style="opacity: 100%;">
+                           Valor do lançamento:                                      
+                        </label>
+                        </div>
+                        <div class="col-md-6">
+                        <input class="form-control" type="text" formControlName="valorlancamentoentrada" [(ngModel)]="valorLancamento" mask="separator.2" thousandSeparator="." required/>                                  
+                    </div>
+                    
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-4">                                
+                      <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoEntrada()"/>Desejo Digitar
+                        </div>
+                        <div class="col-md-4" *ngIf="checkDigitarLancamento == true">
+                          <input type="text"  class="form-control"  [(ngModel)]="descricaoLancamento" formControlName="contaEntrdaSelecionada"/>
+                          <input type="checkbox" (change)="salvarLancaMentoEntradaDigitada()"/>Salvar para lancamentos futuros
+                       </div> 
+                       <br>
+                        <div class="col-md-6" *ngIf="checkDigitarLancamento == false">
+                          <select class="form-control" type="text" formControlName="contaEntrdaSelecionada" [(ngModel)]="descricaoLancamento">
+                            <option>Selecione uma das opções...</option>
+                            <option *ngFor="let ContaEntrada of listaEntradasCadastradas">
+                             {{ContaEntrada.descricao}}
+                            </option>    
+                          </select>                                    
+                            <div>    
+                        </div>
+                    <br>                         
+                  </div>     
+                  <div class="row">
+                    <div class="col-md-4">
+                        <label class="form-label" style="opacity: 100%;">
+                           Descrição:                                      
+                        </label>
+                        </div>
+                        <div class="col-md-6">
+                        <input class="form-control" type="text" formControlName="descricaoLancamento" [(ngModel)]="destalhesLancamentoEntrada" placeholder="*Opcional"/>                                  
+                    </div>
+                    
+                  </div>                                                
+
+                  <div class="col-md-6">
+                    <br> 
+                     <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;">LANÇAR INFORMAÇÕES DE ENTRADA</button>
+                  </div>
+                  </div>
+                </div>
+
+                </form>
+              
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+
+<!-- Modal Lancar saida cliente -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalLancarSaida" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title " id="exampleModalLabelLancarSaida"><strong> LANÇAR VALOR DE SAIDA</strong></h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="lancerFormSaida" (ngSubmit)="salvarLancamentoSaida(cnpjInfo)">
+          <div class="container">
+              
+              <div class="row">
+                  <div class="col-md-4">
+                      <label class="form-label" style="opacity: 100%;">
+                      
+                          Informe a data:                                      
+                      </label>
+                      </div>
+                      <div class="col-md-6">
+                      <input class="form-control" type="date" formControlName="datalancamentoSaida" [(ngModel)]="datalancamentoSaida">                                  
+                  </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-4">
+                        <label class="form-label" style="opacity: 100%;">
+                           Valor do lançamento:                                      
+                        </label>
+                        </div>
+                        <div class="col-md-6">
+                        <input class="form-control" type="text" formControlName="valorlancamentoSaida" [(ngModel)]="valorlancamentoSaida" mask="separator.2" thousandSeparator="." required/>                                  
+                    </div>
+                    
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-4">                                
+                      <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoEntrada()"/>Desejo Digitar
+                        </div>
+                        <div class="col-md-4" *ngIf="checkDigitarLancamento == true">
+                          <input type="text"  class="form-control"  [(ngModel)]="descricaolancamentoSaida" formControlName="contaSaidaLancamento"/>
+                          <input type="checkbox" (change)="salvarLancaMentoEntradaDigitada()"/>Salvar para lancamentos futuros
+                       </div> 
+                       <br>
+                        <div class="col-md-6" *ngIf="checkDigitarLancamento == false">
+                          <select class="form-control" type="text" formControlName="contaSaidaLancamento" [(ngModel)]="descricaolancamentoSaida">
+                            <option>Selecione uma das opções...</option>
+                            <option *ngFor="let ContaEntrada of listaEntradasCadastradas">
+                             {{ContaEntrada.descricao}}
+                            </option>    
+                          </select>                                    
+                            <div>    
+                        </div>
+                    <br>                         
+                  </div>     
+                  <div class="row">
+                    <div class="col-md-4">
+                        <label class="form-label" style="opacity: 100%;">
+                           Descrição:                                      
+                        </label>
+                        </div>
+                        <div class="col-md-6">
+                        <input class="form-control" type="text" formControlName="descricaoLancamentoSaida" [(ngModel)]="destalhesLancamentoEntrada" placeholder="*Opcional"/>                                  
+                    </div>
+                    
+                  </div>                                                
+
+                  <div class="col-md-6">
+                    <br> 
+                     <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;">LANÇAR INFORMAÇÕES DE ENTRADA</button>
+                  </div>
+                  </div>
+                </div>
+                </form>              
+                        </div>
+                      </div>
+                    </div>
+</div>
+              
+              
+  
+      
+
     <nav class="navbar navbar-expand navbar-dark" style="background: black">
       <div class="container-fluid">
         <div class="logo">
@@ -73,7 +358,7 @@
                 <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
                   <li><a class="dropdown-item" href="#">AREA DO CLIENTE</a></li>
 
-                 <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                 <li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR MODAL?</a></li>
                   <li><a routerLink="/cadastrarCliente">CADASTRAR</a></li>
                   <li><a class="dropdown-item" routerLink="/consultarClientes">CONSULTAR</a></li>                               
                 </ul>
@@ -84,8 +369,7 @@
                 CONTAS
               </a>                
                 <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
-                  <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA ENTRADA</a></li>
-                 
+                  <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA ENTRADA</a></li>                 
 
                  <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
                   <li><a routerLink="/cadastrarContaSaida">CADASTRAR CONTA SAIDA</a></li>  
@@ -103,22 +387,46 @@
               <div class="container mt-2"> 
                 <h3 class="text-center"> CONSULTAR CLIENTES<h3>
                   <hr /> 
-                  <div class="row">
+                  <div class="col-md-12 text-center" *ngIf="verificaClientesCadastrados == true">
+                    <h4>Você ainda não tem Clientes cadastrados</h4>
+                  </div>
+
+                  <div class="row" *ngIf="verificaClientesCadastrados == false">
                     <div class="col-md-12">
                         <ul class="list-group">
-                          <li *ngFor="let Cliente of clientes " class="list-group-item d-flex justify-content-between align-items-start">
-                              <p>{{Cliente.razaoSocial}}</p>
-                              <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                  <button type="button" class="btn btn-success">EDITAR</button>
-                                  <button type="button" class="btn btn-primary">INFO</button>
-                                  <button type="button" class="btn btn-danger">EXCLUIR</button>   
+                          <li *ngFor="let Cliente of clientes " class="list-group-item d-flex justify-content-between align-items-start" style="margin: 20px; padding: 33px; border-radius: 33px; background: #8a8688;">
+                            
+                            <div class="container mt-2">
+                              <div class="row">
+                                <div class="col-md-2">
+                                  <p>Razão social: </p>                                                             
                                 </div>
-                            </li>
-                           
+                                <div class="col-md-4 mt-2">
+                                  <p>{{Cliente.razaoSocial}}</p> 
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-md-12">                          
+                                  <div class="btn-group"  role="group" aria-label="Basic mixed styles example">
+                                    <button type="button" class="btn btn-success" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalLancars" (click)="recuperarInformarcoesClientesSelecionado(Cliente.identificador)" >LANÇAR ENTRADA CLIENTE</button>                                    
+                                    <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalLancarSaida" (click)="recuperarInformarcoesClientesSelecionado(Cliente.identificador)">LANÇAR SAIDA CLIENTE</button>                                    
+                                    <button type="button" class="btn btn-info"style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="recuperarInformarcoesClientesSelecionado(Cliente.identificador)">INFO</button>
+                                    <button type="button" class="btn btn-warning" style="margin: 10px;" >EDITAR</button>  
+                                    <button type="button" class="btn btn-danger" style="margin: 10px;" >EXCLUIR</button>  
+                                  </div>
+                                </div>
+
+                              </div>
+                              
+                               
+
+                            </div>
+                            </li>                           
                         </ul>
                     </div>
                 </div>
                     
+                
                    
                   
         

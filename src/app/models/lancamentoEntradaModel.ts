@@ -1,5 +1,5 @@
 export class LancamentoEntrada{
-
+    identificador:string
     emailUserLancandoEntrada: string;
     nomeUserLancandoEntrada: string;
     nomeLancamentoEntrada: string;

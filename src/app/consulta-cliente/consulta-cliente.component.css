@@ -11,3 +11,19 @@ input[type="checkbox"]:checked ~ .open-close-container{
   .col-md-2{
       padding: 10px;
   }
+
+  .example-container {
+  height: 400px;
+  width: 550px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.example-container {
+    height: 400px;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }

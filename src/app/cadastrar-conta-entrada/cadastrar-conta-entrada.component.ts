@@ -77,6 +77,7 @@ cadastrarContaEntrada(){
   const contaEntrada : ContaEntrada = {...this.formCadastrarContaEntrada.value}
   this.contaEntradaService.cadastrarContaEntrada(contaEntrada)
   .subscribe(clienteBanco=>console.log(clienteBanco));
+  this.formCadastrarContaEntrada.reset();
     
 }
 }

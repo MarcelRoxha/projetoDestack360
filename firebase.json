@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/destack360-version5",
+    "public": "dist\\destack360-version5",
     "ignore": [
       "firebase.json",
       "**/.*",

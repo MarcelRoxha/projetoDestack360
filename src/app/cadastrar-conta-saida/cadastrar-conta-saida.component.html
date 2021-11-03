@@ -101,16 +101,67 @@
           <label class="pgnAdmin">
               <div [@childAnimation]="isOpen ? 'open' : 'closed'"
               class="open-close-container">
-                  <h3> Pagina Admin<h3>
-                    <div>                   
-                        <input type="text">
-                        <input type="date">
-                     
-                    </div>
-                  
+                    <h3 class="text-center"> CADASTRAR CONTA DE ENTRADA<h3>
+                      <hr />        
+                      <form [formGroup]="formCadastrarContaSaida" (ngSubmit)="cadastrarContaSaida()">
+                            <div class="container" style="margin-left: 16%;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="form-label" style="opacity: 100%;">
+                                            Fornecedor:                                      
+                                        </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                        <input class="form-control" type="text" formControlName="fornecedor" placeholder="Ex: Sabesp, Marcenaria, Enel, etc...">                                  
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                          <label class="form-label" style="opacity: 100%;">
+                                              Servico:                                      
+                                          </label>
+                                          </div>
+                                          <div class="col-md-6">
+                                          <input class="form-control" type="text" formControlName="servico" placeholder="Ex: Agua/Esgoto, Conta Luz, etc...">                                  
+                                      </div>
+                                      </div>
+                                    
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                          <label class="form-label" style="opacity: 100%;">
+                                             Codigo de Entrada:                                      
+                                          </label>
+                                          </div>
+                                          <div class="col-md-6">
+                                          <input class="form-control" type="text" formControlName="codigoC">                                  
+                                      </div>
+                                      <br>
+                                    </div>
+      
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                          <label class="form-label" style="opacity: 100%;">
+                                              Codigo de Saída:                                      
+                                          </label>
+                                          </div>
+                                          <div class="col-md-6">
+                                          <input class="form-control" type="text" formControlName="codigoD">                                  
+                                      </div>
+                                      <br>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-6">
+                                       <button type="submit" class="btn btn-primary" style="margin-left: 20%; width: 100%;">CADASTRAR CONTA DE SAIDA</button>
+                                    </div>
+                            </div>  
+                            
+                      </form> 
+                        
+              
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="dashboard.js"></script>
+          
         
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-      <script src="dashboard.js"></script>
     
   
   

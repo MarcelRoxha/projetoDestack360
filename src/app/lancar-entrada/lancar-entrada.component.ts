@@ -2,7 +2,7 @@ import { ContaEntradaService } from './../services/conta-entrada.service';
 import { ContaEntrada } from './../models/contaEntradaModel';
 import { LancamentoEntrada } from './../models/lancamentoEntradaModel';
 import { ContaEntradaSalvaFutura } from './../models/lancamentoEntradaSalvoFuturo';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -75,12 +75,22 @@ export class LancarEntradaComponent implements OnInit {
   dataLancamento:string;
   valorLancamento: string;
   descricaoLancamento: string
+  destalhesLancamentoEntrada: string;
+  
 
  
 
   constructor(private contaEntradaService: ContaEntradaService,private fb: FormBuilder, public afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router, public service: AuthService) { 
-    this.router.navigate(['/lancarEntrada']);
+    
     this.contaEntradaInicial = new ContaEntrada();
+
+    this.lancerForm = new FormGroup({
+      'dataLancamentoEntrada': new FormControl(''),
+      'valorlancamentoentrada': new FormControl(''),
+      'contaEntrdaSelecionada' : new FormControl(''),
+      'descricaoLancamento' : new FormControl(''),
+  
+  });
   
   }
  
@@ -103,17 +113,6 @@ export class LancarEntradaComponent implements OnInit {
       }
   });
 
-  this.lancerForm = new FormGroup({
-    'dataLancamentoEntrada': new FormControl('', Validators.required),
-    'valorlancamentoentrada': new FormControl('', [Validators.required]),
-    'contaEntrdaSelecionada' : new FormControl('', Validators.required),
-    'contaEntrdaDigitada' : new FormControl('', Validators.required)
-});
-
-this.firestore.collection('users').doc(this.emailUser).collection('lancamento_entrada').snapshotChanges().subscribe(result =>{
-  let troca = result;
-  troca.indexOf.toString
-});
 
 
 
@@ -150,7 +149,6 @@ telaDashboard(){
 
 salvarLancamentoEntrada(){
 
-
   if(this.salvarParaLancamentosFuturos == true){
     this.contaSalvaParaLancamentosFuturos = new ContaEntradaSalvaFutura();
     this.contaSalvaParaLancamentosFuturos.nomeContaEntradaLancamentoFuturos = this.descricaoLancamento;
@@ -162,10 +160,8 @@ salvarLancamentoEntrada(){
   }
 
 
-  if(this.descricaoLancamento == null ){
-    console.log("Descrição não digitada");
-  }else{
-    console.log("Descrição digitada");
+  if(this.destalhesLancamentoEntrada === "" ){
+    this.destalhesLancamentoEntrada = "Sem descrição"
   }
 
   this.LancamentoEntrada.dataLancamentoEntrada = this.dataLancamento;
@@ -173,6 +169,7 @@ salvarLancamentoEntrada(){
   this.LancamentoEntrada.nomeUserLancandoEntrada = this.nomeUser;
   this.LancamentoEntrada.valorLancamentoEntrada = this.valorLancamento;
   this.LancamentoEntrada.nomeLancamentoEntrada = this.descricaoLancamento;
+  this.LancamentoEntrada.detalhesLancamentoEntrada = this.destalhesLancamentoEntrada;
   
   this.contaEntradaService.lancarEntrada({...this.LancamentoEntrada}).subscribe(resultado=>{
     console.log("Resultado API: ", resultado);
@@ -183,11 +180,15 @@ salvarLancamentoEntrada(){
 
 
   this.lancerForm = new FormGroup({
-    'dataLancamentoEntrada': new FormControl('', Validators.required),
-    'valorlancamentoentrada': new FormControl('', [Validators.required]),
-    'contaEntrdaSelecionada' : new FormControl('', Validators.required)
+    'dataLancamentoEntrada': new FormControl(''),
+    'valorlancamentoentrada': new FormControl(''),
+    'contaEntrdaSelecionada' : new FormControl(''),
+    'descricaoLancamento' : new FormControl(''),
+
 });
 
+//this.router.navigate(['/dashboard'])
+window.location.reload();
 
 }
 declaroAnonimo(){

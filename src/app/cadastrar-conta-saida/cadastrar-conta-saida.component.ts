@@ -1,9 +1,13 @@
+import { ContaSaida } from './../models/contaSaidaModel';
+import { ContaSaidaService } from './../services/conta-saida.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { state, trigger, style, transition, animate } from '@angular/animations';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cadastrar-conta-saida',
@@ -37,10 +41,22 @@ export class CadastrarContaSaidaComponent implements OnInit {
   user: Observable<any>; 
   isOpen = false; 
   isDisabled = false;
-  clickCliente = false;            // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
+  clickCliente = false;    
+  formCadastrarContaSaida: FormGroup
+  msgParaUsuario: string = "";
+  validadorMsgUsuario: boolean = false;
+  
+    // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
 
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
+  constructor(private consaSaidaService: ContaSaidaService, private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
     this.router.navigate(['/cadastrarContaSaida']);
+    
+    this.formCadastrarContaSaida =  new FormGroup({
+      codigoC: new FormControl('', Validators.required),
+      codigoD: new FormControl('', Validators.required),
+      servico: new FormControl('', Validators.required), 
+      fornecedor: new FormControl('', Validators.required),       
+    })
   }
 
   ngOnInit(): void {
@@ -61,5 +77,42 @@ this.isOpen = !this.isOpen;
 
 clickcliente(){
 return this.clickCliente = !this.clickCliente;
+}
+
+cadastrarContaSaida(){
+  console.log(this.formCadastrarContaSaida.value);
+ 
+
+if(this.formCadastrarContaSaida.invalid){
+  Swal.fire('Só é possível salvar conta de saída, se todas as informações estiverem preenchidas, verifique as informações e tente novamente')
+  console.log("Invalido")
+}else{
+  const contaSaida : ContaSaida = {...this.formCadastrarContaSaida.value}
+  this.consaSaidaService.cadastrarContaSaida(contaSaida)
+  .subscribe(clienteBanco=>console.log(clienteBanco));
+
+  if(contaSaida.codigoC !== "" || contaSaida.codigoD !== "" 
+  || contaSaida.identificador !== "" 
+  || contaSaida.fornecedor !== ""
+  || contaSaida.servico !== ""){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Conta de Saída salva com sucesso',
+      showConfirmButton: false,
+      timer: 1000
+    })
+    this.validadorMsgUsuario = true;
+    this.formCadastrarContaSaida.reset();
+  }else{
+    this.validadorMsgUsuario = true;
+    Swal.fire('Erro desconhecido, favor contate o administrador')
+    
+  }
+
+
+  
+}
+
 }
 }

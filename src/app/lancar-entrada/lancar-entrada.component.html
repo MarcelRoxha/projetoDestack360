@@ -95,7 +95,7 @@
                                 <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoEntrada()"/>Desejo Digitar
                                   </div>
                                   <div class="col-md-4" *ngIf="checkDigitarLancamento == true">
-                                    <input type="text"  class="form-control" formControlName="contaEntrdaSelecionada" [(ngModel)]="descricaoLancamento"/>
+                                    <input type="text"  class="form-control"  [(ngModel)]="descricaoLancamento" formControlName="contaEntrdaSelecionada"/>
                                     <input type="checkbox" (change)="salvarLancaMentoEntradaDigitada()"/>Salvar para lancamentos futuros
                                  </div> 
                                  <br>
@@ -108,9 +108,19 @@
                                     </select>                                    
                                       <div>    
                                   </div>
-                              <br>    
-                                                       
-                            </div>                                                     
+                              <br>                         
+                            </div>     
+                            <div class="row">
+                              <div class="col-md-4">
+                                  <label class="form-label" style="opacity: 100%;">
+                                     Descrição:                                      
+                                  </label>
+                                  </div>
+                                  <div class="col-md-6">
+                                  <input class="form-control" type="text" formControlName="descricaoLancamento" [(ngModel)]="destalhesLancamentoEntrada" placeholder="*Opcional"/>                                  
+                              </div>
+                              
+                            </div>                                                
 
                             <div class="col-md-6">
                               <br> 
