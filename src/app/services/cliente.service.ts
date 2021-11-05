@@ -9,7 +9,7 @@ import { UserModel } from '../models/UserModel';
 })
 export class ClienteService {
 
-  apiURL: string = 'http://3672-104-198-233-245.ngrok.io/cadastrarCliente';
+  apiURL: string = 'https://8926-104-198-233-245.ngrok.io/cadastrarCliente';
 
   constructor(
     private http : HttpClient
@@ -21,11 +21,11 @@ export class ClienteService {
   }
 
   recuperarInformacoesCliente(identificardo: string) : Observable<Cliente>{
-    return this.http.post<Cliente>('http://3672-104-198-233-245.ngrok.io/recuperarInformacoesCliente', identificardo)
+    return this.http.post<Cliente>('https://8926-104-198-233-245.ngrok.io/recuperarInformacoesCliente', identificardo)
   }
 
   listarClientes() : Observable<Cliente[]>{
-    return this.http.get<Cliente[]>('http://3672-104-198-233-245.ngrok.io/recuperarClientes');
+    return this.http.get<Cliente[]>('https://8926-104-198-233-245.ngrok.io/recuperarClientes');
 
   }
 

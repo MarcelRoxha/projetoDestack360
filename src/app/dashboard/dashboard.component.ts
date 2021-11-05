@@ -57,6 +57,9 @@ export class DashboardComponent implements OnInit {
   nomeUser: string;
   userModel: UserModel = new UserModel;
 
+  retornor: Observable<any>
+
+
   msgRetorno: string ="";
   
   //Dados Usuarios Firebase
@@ -75,6 +78,9 @@ export class DashboardComponent implements OnInit {
   
   dadosUsuarioRecuperado: Observable<any>;
   suscription: Subscription; 
+  collectionUserName: string;
+  tipotestes: any
+  tipotestess: any
   
 
   //Grafico
@@ -105,6 +111,28 @@ export class DashboardComponent implements OnInit {
           console.log(this.nomeUser);  
           this.userModel.nomeUser = this.nomeUser;
           this.userModel.emailUser = this.emailUser;
+          
+          this.collectionUserName = 'ACUMULADOS_'+this.nomeUser;
+
+          this.firestore.collection('ACUMULADOS').doc('marcel.augusto.roxha@gmail.com').collection('ACUMULADO_MARCEL').doc('ACUMULADO_MES_JANEIRO').get().subscribe(resultado =>{
+
+            this.tipotestess = resultado.get("nomeUser");
+           console.log("Retorno22: " + this.tipotestess)
+
+          })
+
+
+          this.retornor = this.firestore.collection('ACUMULADOS').doc(this.emailUser).collection('ACUMULADO_MARCEL').doc('ACUMULADO_MES_JANEIRO').valueChanges();
+          this.retornor.subscribe(resultadoRetorno =>{
+           this.tipotestes = resultadoRetorno;
+           console.log("Retornooo: " + resultadoRetorno)
+
+          })
+          
+
+
+
+
           this.recuperarInformacoesJaneiro();
           this.recuperarInformacoesFevereiro();
           this.recuperarInformacoesMarco();

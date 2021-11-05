@@ -78,7 +78,6 @@ import { CadastrarClienteComponent } from './cadastrar-cliente/cadastrar-cliente
 import { CadastrarContaSaidaComponent } from './cadastrar-conta-saida/cadastrar-conta-saida.component';
 import { CadastrarContaEntradaComponent } from './cadastrar-conta-entrada/cadastrar-conta-entrada.component';
 import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas-entrada.component';
-
 import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
