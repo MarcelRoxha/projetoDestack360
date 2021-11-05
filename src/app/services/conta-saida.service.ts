@@ -14,7 +14,7 @@ import { ContaSaidaSalvaFutura } from '../models/ContaSaidaSalvaFutura';
 export class ContaSaidaService {
 
   private _refreshNeeded$ = new Subject<void>();
-  apiURL: string = 'http://localhost:8080/cadastrarContaSaida';
+  apiURL: string = 'http://3672-104-198-233-245.ngrok.io/cadastrarContaSaida';
   constructor(
     private http : HttpClient
   ) { }
@@ -29,18 +29,18 @@ export class ContaSaidaService {
   }
 
   listaContasSaidaSalvas():Observable<ContaSaida[]>{
-    return this.http.get<ContaSaida[]>('https://destack360.herokuapp.com/recuperarContasSaida');
+    return this.http.get<ContaSaida[]>('http://3672-104-198-233-245.ngrok.io/recuperarContasSaida');
 
   }
 
   lancaSaida(lancarSaida : LancamentoSaida){
-    return this.http.post<LancamentoEntrada>('https://destack360.herokuapp.com/lancarSaida', lancarSaida).pipe(tap(()=>{
+    return this.http.post<LancamentoEntrada>('http://3672-104-198-233-245.ngrok.io/lancarSaida', lancarSaida).pipe(tap(()=>{
       this._refreshNeeded$.next() 
       
     }));
   }
 
   salvarContaParaLancamentosFuturos(contaSalvaParaLancamentosFuturos : ContaSaidaSalvaFutura){
-    return this.http.post<ContaSaidaSalvaFutura>('https://destack360.herokuapp.com/salvarSugestao', contaSalvaParaLancamentosFuturos);
+    return this.http.post<ContaSaidaSalvaFutura>('http://3672-104-198-233-245.ngrok.io/salvarSugestao', contaSalvaParaLancamentosFuturos);
   }
 }

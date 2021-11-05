@@ -1,13 +1,4 @@
 {
-  "targets": {
-    "destack360": {
-      "hosting": {
-        "destack360-version5": [
-          "destack360"
-        ]
-      }
-    }
-  },
   "projects": {
     "default": "destack360"
   }
