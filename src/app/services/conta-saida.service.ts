@@ -14,7 +14,7 @@ import { ContaSaidaSalvaFutura } from '../models/ContaSaidaSalvaFutura';
 export class ContaSaidaService {
 
   private _refreshNeeded$ = new Subject<void>();
-  apiURL: string = 'https://8926-104-198-233-245.ngrok.io/cadastrarContaSaida';
+  apiURL: string = 'http://localhost:8080/cadastrarContaSaida';
   constructor(
     private http : HttpClient
   ) { }
@@ -29,18 +29,18 @@ export class ContaSaidaService {
   }
 
   listaContasSaidaSalvas():Observable<ContaSaida[]>{
-    return this.http.get<ContaSaida[]>('https://8926-104-198-233-245.ngrok.io/recuperarContasSaida');
+    return this.http.get<ContaSaida[]>('http://localhost:8080/recuperarContasSaida');
 
   }
 
   lancaSaida(lancarSaida : LancamentoSaida){
-    return this.http.post<LancamentoEntrada>('https://8926-104-198-233-245.ngrok.io/lancarSaida', lancarSaida).pipe(tap(()=>{
+    return this.http.post<LancamentoEntrada>('http://localhost:8080/lancarSaida', lancarSaida).pipe(tap(()=>{
       this._refreshNeeded$.next() 
       
     }));
   }
 
   salvarContaParaLancamentosFuturos(contaSalvaParaLancamentosFuturos : ContaSaidaSalvaFutura){
-    return this.http.post<ContaSaidaSalvaFutura>('https://8926-104-198-233-245.ngrok.io/salvarSugestao', contaSalvaParaLancamentosFuturos);
+    return this.http.post<ContaSaidaSalvaFutura>('http://localhost:8080/salvarSugestao', contaSalvaParaLancamentosFuturos);
   }
 }

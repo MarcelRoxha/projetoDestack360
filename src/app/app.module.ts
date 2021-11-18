@@ -79,6 +79,7 @@ import { CadastrarContaSaidaComponent } from './cadastrar-conta-saida/cadastrar-
 import { CadastrarContaEntradaComponent } from './cadastrar-conta-entrada/cadastrar-conta-entrada.component';
 import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas-entrada.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { FornecedorComponent } from './fornecedor/fornecedor.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { NgxMaskModule } from 'ngx-mask';
     CadastrarClienteComponent,
     CadastrarContaSaidaComponent,
     CadastrarContaEntradaComponent,
-    ListaContasEntradaComponent
+    ListaContasEntradaComponent,
+    FornecedorComponent
   ],
   imports: [
     BrowserModule,
@@ -143,6 +145,7 @@ import { NgxMaskModule } from 'ngx-mask';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+    MatInputModule,
 
     FormsModule,
     ReactiveFormsModule,

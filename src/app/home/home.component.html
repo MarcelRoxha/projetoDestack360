@@ -8,26 +8,26 @@
                     <img class="mb-4" src="/assets/imagens/65ab872f-fa8e-4b2b-bdd4-376c93f02752_uploads_destacklogo.png" alt="Destack 360" style="margin-right: 19px;">
                     <h1 class="h3 mb-3 fw-normal">Área Restrita</h1>
             
-                    <form [formGroup]="loginForm" (ngSubmit)="loginUser()" type="">
-                        <p>
-                            <mat-form-field appearance="outline">
-                                <mat-label>Email</mat-label>
+                    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+                        
+                            <div>
+                                <label>Email</label>
                                 <input autocomplete="off" class="form-control" formControlName="email"  placeholder="E-mail">
-                            </mat-form-field>
-                        </p>
-                        <p>
-                            <mat-form-field appearance="outline">
-                                <mat-label>Password</mat-label>
+                            </div>
+                       
+                        
+                            <div>
+                                <label>Password</label>
                                 <input autocomplete="off"  class="form-control"  formControlName="password" type="password" placeholder="Senha">
-                            </mat-form-field>
-                        </p>
+                            </div>
+                        
                         <div *ngIf="firebaseErrorMessage != ''" class="error-style">
                             <span>{{ firebaseErrorMessage }}</span>
                         </div>
                 
                         <button mat-raised-button color="primary">Login</button>
                         <button mat-raised-button color="primary" routerLink="/signup">
-                            <mat-icon>person_add</mat-icon>
+                           
                             <span>Sign up</span>
                         </button>
                     </form>

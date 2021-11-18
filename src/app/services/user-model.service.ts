@@ -21,53 +21,51 @@ export class UserModelService {
 
 
   informacoesJaneiro(userModel: UserModel) : Observable<UserModel>{
-    return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-janeiro', userModel)  
+    return this.http.post<UserModel>('http://localhost:8080/acumulado-janeiro', userModel)  
 }
 
-
-
 informacoesFevereiro(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-fevereiro', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-fevereiro', userModel)  
 }
 
 informacoesMarco(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('http://3672-104-198-233-245.ngrok.io/acumulado-marco', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-marco', userModel)  
 }
 
 informacoesAbril(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-abril', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-abril', userModel)  
 }
 
 informacoesMaio(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-maio', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-maio', userModel)  
 }
 
 informacoesJunho(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-junho', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-junho', userModel)  
 }
 
 informacoesJulho(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-julho', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-julho', userModel)  
 }
 
 informacoesAgosto(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-agosto', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-agosto', userModel)  
 }
 
 informacoesSetembro(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-setembro', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-setembro', userModel)  
 }
 
 informacoesOutubro(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-outubro', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-outubro', userModel)  
 }
 
 informacoesNovembro(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-novembro', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-novembro', userModel)  
 }
 
 informacoesDezembro(userModel: UserModel) : Observable<UserModel>{
-  return this.http.post<UserModel>('https://8926-104-198-233-245.ngrok.io/acumulado-dezembro', userModel)  
+  return this.http.post<UserModel>('http://localhost:8080/acumulado-dezembro', userModel)  
 }
  
 }

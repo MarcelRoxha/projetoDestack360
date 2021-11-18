@@ -1,3 +1,4 @@
+import { FornecedorComponent } from './fornecedor/fornecedor.component';
 import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas-entrada.component';
 import { CadastrarContaEntradaComponent } from './cadastrar-conta-entrada/cadastrar-conta-entrada.component';
 import { CadastrarContaSaidaComponent } from './cadastrar-conta-saida/cadastrar-conta-saida.component';
@@ -37,6 +38,7 @@ const routes: Routes = [
     { path: 'cadastrarContaSaida', component: CadastrarContaSaidaComponent, canActivate: [AuthGuard]},  
     { path: 'cadastrarContaEntrada', component: CadastrarContaEntradaComponent, canActivate: [AuthGuard]},
     { path: 'listarContasEntrada', component: ListaContasEntradaComponent, canActivate: [AuthGuard]},
+    { path: 'fornecedor', component: FornecedorComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

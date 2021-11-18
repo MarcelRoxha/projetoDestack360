@@ -40,6 +40,10 @@ export class HomeComponent implements OnInit {
                  // get the user's doc in Cloud Firestore
         }
     });
+    this.loginForm = new FormGroup({
+        'email': new FormControl('', [Validators.required, Validators.email]),
+        'password': new FormControl('', Validators.required)
+    });
 
   }
 

@@ -101,15 +101,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
 
 
   .mat-icon{
-    font-size: 50px;
-    color: white;    
+    font-size: 50px;     
     margin-top: -5px;
     z-index: 1;
-    margin-top: -20px;
+    margin-top: -10px;
     margin-left: 200px;
     position: absolute;
     transition: all 1.5s;
-   
+    color: white; 
+      
   }
 
   label{
@@ -118,7 +118,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
   }
   input[type="checkbox"]:checked ~ label{
     transform: translateX(-200px);
-    opacity: 100%;     
+    opacity: 100%;
+     
   }
 
   .teste{

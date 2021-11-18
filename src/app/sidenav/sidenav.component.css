@@ -12,3 +12,17 @@ mat-nav-list{
    height: 800px;
   
 }
+
+.open-close-container{
+   margin-top: 2%;
+   margin-left: 5%;
+   border-radius: 30px;
+   opacity: 100%;
+}
+
+input[type="checkbox"]:checked ~ .open-close-container{
+   margin-left: 5%;       
+ }  
+ .col-md-2{
+     padding: 10px;
+ }

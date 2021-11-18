@@ -81,91 +81,19 @@ export class DashboardComponent implements OnInit {
   collectionUserName: string;
   tipotestes: any
   tipotestess: any
-  
+  verificaAcumuladoMes: boolean = false;
 
   //Grafico
   canvas: any;
   ctx: any;
   @ViewChild('myChart') myChart: any;
+  sideBarOpen: boolean;
 
 
       // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
 
     constructor(private contaEntradaService: ContaEntradaService, private cf: ChangeDetectorRef, public userModelService: UserModelService,  public afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
-      this.router.navigate(['/dashboard']); 
-
-      
-      this.afAuth.authState.subscribe(user => {
-        console.log('Dashboard: user', user);
-       
-       
-        if (user) {
-          this.userModelRecuperado = new UserModel();
-          
-          let emailLower = user.email.toLowerCase();
-          
-          this.user = this.firestore.collection('users').doc(emailLower).valueChanges(); 
-          this.emailUser = emailLower;
-          this.user.subscribe(resposta=>{
-          this.nomeUser = resposta.displayName;
-          console.log(this.nomeUser);  
-          this.userModel.nomeUser = this.nomeUser;
-          this.userModel.emailUser = this.emailUser;
-          
-          this.collectionUserName = 'ACUMULADOS_'+this.nomeUser;
-
-          this.firestore.collection('ACUMULADOS').doc('marcel.augusto.roxha@gmail.com').collection('ACUMULADO_MARCEL').doc('ACUMULADO_MES_JANEIRO').get().subscribe(resultado =>{
-
-            this.tipotestess = resultado.get("nomeUser");
-           console.log("Retorno22: " + this.tipotestess)
-
-          })
-
-
-          this.retornor = this.firestore.collection('ACUMULADOS').doc(this.emailUser).collection('ACUMULADO_MARCEL').doc('ACUMULADO_MES_JANEIRO').valueChanges();
-          this.retornor.subscribe(resultadoRetorno =>{
-           this.tipotestes = resultadoRetorno;
-           console.log("Retornooo: " + resultadoRetorno)
-
-          })
-          
-
-
-
-
-          this.recuperarInformacoesJaneiro();
-          this.recuperarInformacoesFevereiro();
-          this.recuperarInformacoesMarco();
-          this.recuperarInformacoesAbril();
-          this.recuperarInformacoesMaio();
-          this.recuperarInformacoesJunho();
-          this.recuperarInformacoesJulho();
-          this.recuperarInformacoesAgosto();
-          this.recuperarInformacoesSetembro();
-          this.recuperarInformacoesOutubro();
-          this.recuperarInformacoesNovembro();
-          this.recuperarInformacoesDezembro();
-         
-
-
-          this.contaEntradaService.refreshNeede$.subscribe(()=>{
-          this.recuperarInformacoesJaneiro();
-          this.recuperarInformacoesFevereiro();
-          this.recuperarInformacoesMarco();
-          this.recuperarInformacoesAbril();
-          this.recuperarInformacoesMaio();
-          this.recuperarInformacoesJunho();
-          this.recuperarInformacoesJulho();
-          this.recuperarInformacoesAgosto();
-          this.recuperarInformacoesSetembro();
-          this.recuperarInformacoesOutubro();
-          this.recuperarInformacoesNovembro();
-          this.recuperarInformacoesDezembro();
-           
-          });              
-        })             
-      }
-  });
+      this.router.navigate(['/dashboard']);
 
     }
 
@@ -187,7 +115,9 @@ export class DashboardComponent implements OnInit {
           console.log(this.nomeUser);  
           this.userModel.nomeUser = this.nomeUser;
           this.userModel.emailUser = this.emailUser;
+          
           this.recuperarInformacoesJaneiro();
+        
           this.recuperarInformacoesFevereiro();
           this.recuperarInformacoesMarco();
           this.recuperarInformacoesAbril();
@@ -226,7 +156,9 @@ export class DashboardComponent implements OnInit {
     logout(): void {
       this.afAuth.signOut();
   }
+  iniciarAcumulado(){
 
+  }
   toggle(){
     this.isOpen = !this.isOpen;
     }
@@ -442,6 +374,10 @@ export class DashboardComponent implements OnInit {
       })
 
     }
+    
+sideBarToggler() {
+  this.sideBarOpen = !this.sideBarOpen;
+}
 
     recuperarInformacoesDezembro(): void{
       this.userModelService.informacoesDezembro({...this.userModel}).subscribe(informacoesJaneiro =>{
