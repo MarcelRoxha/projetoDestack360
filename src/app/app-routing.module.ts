@@ -1,3 +1,4 @@
+import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.component';
 import { FornecedorComponent } from './fornecedor/fornecedor.component';
 import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas-entrada.component';
 import { CadastrarContaEntradaComponent } from './cadastrar-conta-entrada/cadastrar-conta-entrada.component';
@@ -17,7 +18,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
-
 import { AuthGuard } from './services/auth.guard';
 
 
@@ -38,7 +38,8 @@ const routes: Routes = [
     { path: 'cadastrarContaSaida', component: CadastrarContaSaidaComponent, canActivate: [AuthGuard]},  
     { path: 'cadastrarContaEntrada', component: CadastrarContaEntradaComponent, canActivate: [AuthGuard]},
     { path: 'listarContasEntrada', component: ListaContasEntradaComponent, canActivate: [AuthGuard]},
-    { path: 'fornecedor', component: FornecedorComponent, canActivate: [AuthGuard]}
+    { path: 'fornecedor', component: FornecedorComponent, canActivate: [AuthGuard]},
+    { path: 'fornecedorlista', component: FornecedorListaComponent}
 ];
 
 @NgModule({

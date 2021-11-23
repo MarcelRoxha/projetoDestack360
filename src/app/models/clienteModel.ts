@@ -1,7 +1,7 @@
 export class Cliente{
     identificador: string;
-    razaoSocial: string;
-    cnpj: string;
+    nome: string;
+    cpf: string;
     usuariocliente: string;
     emailCliente: string;
     telefone: string;
@@ -9,5 +9,6 @@ export class Cliente{
     created: string;
     modified: string;
     obs: string;
-    status: string;    
+    status: string;
+    quantidadeEmpresaCadastradas: number;    
 }

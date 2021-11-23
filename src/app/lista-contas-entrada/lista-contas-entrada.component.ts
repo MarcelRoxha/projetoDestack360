@@ -1,3 +1,4 @@
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ContaEntradaService } from './../services/conta-entrada.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -44,6 +45,24 @@ export class ListaContasEntradaComponent implements OnInit {
   isDisabled = false;
   clickCliente = false; 
 
+
+  //---------INFORMAÇÕES RECUPERADAS PARA EXIBIR REFERENTE A CONTA DE ENTRADA----------//
+
+  descricaoInfo: string;
+  codigoC: string;
+  codigoD: string;
+
+
+  //---------RECUPERAR INFORMAÇÕES DA CONTA ENTRADA PARA EDITAR------//
+
+  contaEntradaAtualiza: ContaEntrada;
+  contaEdit: ContaEntrada = new ContaEntrada();
+  contaInfor: any = new ContaEntrada();
+
+
+  //-------FORMGROUP------------//
+  formAtualizaContaEntrada: FormGroup;
+
   constructor(private contaEntradaService: ContaEntradaService, private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
     this.router.navigate(['/listarContasEntrada']);
   }
@@ -58,9 +77,14 @@ export class ListaContasEntradaComponent implements OnInit {
       });
 
       this.contaEntradaService.listaContasEntradaSalvas().subscribe(clientesCadastradosBanco =>{
+        console.log("Contas Cadastradas Banco: ", clientesCadastradosBanco )
         this.constasEntradaModels = clientesCadastradosBanco;
       })
-
+      this.formAtualizaContaEntrada = new FormGroup({
+        codigoC: new FormControl('', Validators.required),
+        codigoD: new FormControl('', Validators.required),
+        descricao: new FormControl('', Validators.required),     
+      })
 
   }
   logout(): void {
@@ -72,6 +96,35 @@ this.isOpen = !this.isOpen;
 
 clickcliente(){
 return this.clickCliente = !this.clickCliente;
+}
+
+salvarAlteracoesContaEntrada(identificadorContaEntrada: string){
+
+  this.contaEntradaAtualiza = new ContaEntrada();
+  console.log("Antes de atualizar: ", identificadorContaEntrada);
+  this.contaEntradaAtualiza.identificador = this.contaEdit.codigoC;
+  this.contaEntradaAtualiza.descricao = this.contaEdit.descricao;
+  this.contaEntradaAtualiza.codigoC = this.contaEdit.codigoC;
+  this.contaEntradaAtualiza.codigoD = this.contaEdit.codigoD;
+
+  console.log("depois de atualizar: ", {...this.contaEntradaAtualiza});
+  console.log("Recuperado salvar Alterações:", identificadorContaEntrada);
+  console.log("Recuperado conta entrada:", this.contaEdit.codigoC);
+  console.log("Recuperado Form:", {...this.formAtualizaContaEntrada.value});
+
+}
+
+recuperarInformacoesContaEntrada(identificadorContaEntrada: string){
+ 
+  console.log("Id recuperado ao clicar: ", identificadorContaEntrada)
+this.contaEntradaService.recuperarInformacoesContaEntrada(identificadorContaEntrada).subscribe(resultConta=>{
+  this.descricaoInfo = resultConta.descricao;
+  this.codigoC = resultConta.codigoC;
+  this.codigoD = resultConta.codigoD;
+
+});
+
+  
 }
 
 

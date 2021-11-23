@@ -80,6 +80,7 @@ import { CadastrarContaEntradaComponent } from './cadastrar-conta-entrada/cadast
 import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas-entrada.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { FornecedorComponent } from './fornecedor/fornecedor.component';
+import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import { FornecedorComponent } from './fornecedor/fornecedor.component';
     CadastrarContaSaidaComponent,
     CadastrarContaEntradaComponent,
     ListaContasEntradaComponent,
-    FornecedorComponent
+    FornecedorComponent,
+    FornecedorListaComponent
   ],
   imports: [
     BrowserModule,

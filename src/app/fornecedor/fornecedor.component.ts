@@ -1,13 +1,16 @@
+import { FornecedorService } from './../service/fornecedor.service';
+import { FornecedorModel } from './../model/fornecedor-model';
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from './../models/UserModel';
 import { Router } from '@angular/router';
 import { ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { UserModelService } from '../services/user-model.service'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-fornecedor',
@@ -56,9 +59,29 @@ export class FornecedorComponent implements OnInit {
   nomeUser: string;
   userModel: UserModel = new UserModel;
   userModelRecuperado: UserModel;
+  formCadastrarFornecedor: FormGroup;
+  forncedorModel: FornecedorModel;
+  validadorMsgUsuario: boolean;
 
 
-  constructor(private cf: ChangeDetectorRef, public userModelService: UserModelService,  public afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) { }
+  constructor(private cf: ChangeDetectorRef, public userModelService: UserModelService,  
+    public afAuth: AngularFireAuth, 
+    private firestore: AngularFirestore, 
+    private router : Router, 
+    private fornecedorService: FornecedorService ) {
+
+    this.formCadastrarFornecedor = new FormGroup({
+      razaoSocial: new FormControl('', Validators.required),
+      cnpj: new FormControl('', Validators.required),
+      endereco: new FormControl('', Validators.required),
+      contaBancaria: new FormControl('', Validators.required),
+      formadePagamento: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      contatoTelefonico: new FormControl('', Validators.required),
+      tipoServico: new FormControl('', Validators.required),
+    })
+    this.forncedorModel= new FornecedorModel();
+   }
 
   ngOnInit(): void {
 
@@ -78,8 +101,6 @@ export class FornecedorComponent implements OnInit {
         console.log(this.nomeUser);  
         this.userModel.nomeUser = this.nomeUser;
         this.userModel.emailUser = this.emailUser;
-        
-      
       })             
     }
 });
@@ -91,4 +112,41 @@ export class FornecedorComponent implements OnInit {
     logout(): void {
       this.afAuth.signOut();
   }
+
+  cadastrarFornecedor(){
+
+
+
+
+    console.log("Clicado Cadastrar fornecedor");
+    console.log("informações formControl: ", this.formCadastrarFornecedor.value);
+    console.log("informações forncedor: ", this.forncedorModel);    
+   
+
+    if(this.formCadastrarFornecedor.invalid){
+      this.fornecedorService.cadastrar({...this.forncedorModel})
+      console.log("Dentro else", this.formCadastrarFornecedor.value)
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Conta de Saída salva com sucesso',
+        showConfirmButton: false,
+        timer: 1000, 
+        confirmButtonText:'Ok'
+      })
+      this.formCadastrarFornecedor.reset();
+      this.validadorMsgUsuario = true;
+ 
+    }else{
+      Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Favor Verifique as informações', 
+        confirmButtonText:'Ok'
+      })
+    
+    }
+
+  }
+
 }

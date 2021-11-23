@@ -18,7 +18,7 @@
                 <li><a class="dropdown-item" href="#">Perfil</a></li>
                 <li><a class="dropdown-item" href="#">Clientes</a></li>
                 <li><a class="dropdown-item" href="#">Fornecedores</a></li>
-                <li><a class="dropdown-item"(click)="logout()">Sair</a></li>
+                <li><a class="dropdown-item" href="#"(click)="logout()">Sair</a></li>
               </ul>
             </li>
           </ul>
@@ -27,36 +27,55 @@
     </nav>
     <div class="d-flex">
       <div class="check-menu">
-        <input type="checkbox" id="chec"  class="checkmenu">
-        <label for="chec"><mat-icon (click)="toggle()" style="font-size: 50px;" >menu</mat-icon> </label>
+        <input type="checkbox" id="chec"  class="checkmenu">        
+        <label for="chec" ><mat-icon (click)="toggle()" style="font-size: 50px;">menu</mat-icon></label>
         <nav class="menu-lateral">
-          <ul class="list-unstyled">           
-              <li *ngIf="(user | async)?.accountType == 'admin';">
-                  <a routerLink="/admin">ADMIN</a>
-                </li>
-           <li>
-               <a class="pagina-selecionada" >DASHBOARD</a>
-            </li>
+          <ul class="list-unstyled">
+            <li><a routerLink="/admin">DASHBOARD</a></li>
             <li>
             
             <!--------------
             <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
     
             <li class="cliente-nav dropdown"> 
-                  <a class="dropdown-toggle" href="#" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  LANÇAMENTOS
-                  </a>     
+              <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                CLIENTES
+              </a>                 
+                                 
                 <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
-                  <!-----------<li><a class="dropdown-item" href="#">AREA DO CLIENTE</a></li>------->
-                  <li><a class="dropdown-item">LANÇAR ENTRADA</a></li>
-                  <li><a class="dropdown-item">LANÇAR SAÍDA</a>                                
-                  </li>
-                  <!----------- <li><a class="dropdown-item" href="#">EDITAR</a></li>  ------>             
+                  <li><a class="dropdown-item" routerLink="/dashboard">AREA DO CLIENTE</a></li>
+
+                 <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                  <li><a routerLink="/cadastrarCliente">CADASTRAR</a></li>
+                  <li><a class="dropdown-item" routerLink="/consultarClientes">CONSULTAR</a></li>                               
                 </ul>
-              </li>
-        
-            <li><a ></a></li>
-            <li><a >CONTAS</a></li>
+              </li>     
+            <li class="cliente-nav dropdown">
+              <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: red;" >
+                FORNECEDORES</a>           
+                              
+              <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                <li><a class="dropdown-item" routerLink="/fornecedor">CADASTRAR FONECEDOR</a></li>
+               
+
+               <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                <li><a routerLink="/fornecedorlista">FORNECEDORES CADASTRADOS</a></li>                                                             
+              </ul>            
+            </li>
+            <li class="cliente-nav dropdown"> 
+              <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                CONTAS
+              </a>                 
+                                 
+                <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                  <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA ENTRADA</a></li>
+                 
+
+                 <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                  <li><a routerLink="/cadastrarContaSaida">CADASTRAR CONTA SAIDA</a></li>  
+                  <li><a class="dropdown-item" routerLink="/listarContasEntrada">CONTAS ENTRADAS CADASTRADAS</a></li>                                            
+                </ul>
+              </li> 
             <li><a >CONSULTAR</a></li>
           </ul>
         </nav>
@@ -67,8 +86,108 @@
                       <div [@childAnimation]="isOpen ? 'open' : 'closed'"
                       class="open-close-container">
                       <div>
-                          <h2 class="text-center form-text">VISÃO GERAL</h2>
+                          <h2 class="text-center form-text">CADASTRAR FORNECEDOR</h2>
+                          <hr />  
+                          <div class="container">
+
+                            <form [formGroup]="formCadastrarFornecedor" (ngSubmit)="cadastrarFornecedor()">
+                              <div class="container" style="margin-left: 16%;">
+                                  <div class="row">
+                                      <div class="col-md-2">
+                                          <label class="form-label" style="opacity: 100%;">
+                                              RAZÃO SOCIAL:                                       
+                                          </label>
+                                          </div>
+                                          <div class="col-md-6">
+                                          <input class="form-control" type="text" formControlName="razaoSocial" [(ngModel)]="forncedorModel.razaoSocial">                                  
+                                      </div>
+                                      </div>
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="form-label" style="opacity: 100%;">
+                                               CNPJ:                                      
+                                            </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <input class="form-control" type="text" formControlName="cnpj" [(ngModel)]="forncedorModel.cnpj" mask="CPF_CNPJ">                                  
+                                        </div>                                       
+                                      </div>
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="form-label" style="opacity: 100%;">
+                                               ENDEREÇO:                                      
+                                            </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <input class="form-control" type="text" formControlName="endereco" [(ngModel)]="forncedorModel.endereco">                                  
+                                        </div>                                       
+                                      </div>        
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="form-label" style="opacity: 100%;">
+                                               CONTA BANCÁRIA:                                      
+                                            </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <input class="form-control" type="text" formControlName="contaBancaria" [(ngModel)]="forncedorModel.contaBancaria">                                  
+                                        </div>                                       
+                                      </div>        
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="form-label" style="opacity: 100%;">
+                                               FORMA DE PAGAMENTO:                                      
+                                            </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <input class="form-control" type="text" formControlName="formadePagamento" [(ngModel)]="forncedorModel.formadePagamento">                                  
+                                        </div>                                       
+                                      </div>        
+                                      <br>  
+                                      <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="form-label" style="opacity: 100%;">
+                                              EMAIL-FORNECEDOR:                                      
+                                            </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <input class="form-control" type="text" formControlName="email" [(ngModel)]="forncedorModel.email">                                  
+                                        </div>                                        
+                                      </div>
+                                      <br>
+                                      <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="form-label" style="opacity: 100%;">
+                                               TELEFONE/CELULAR:                                      
+                                            </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <input class="form-control" type="text" formControlName="contatoTelefonico" [(ngModel)]="forncedorModel.contatoTelefonico">                                  
+                                        </div>
+                                      </div>
+                                      <br>                                      
+                                      <div class="row">
+                                        <div class="col-md-2">
+                                            <label class="form-label" style="opacity: 100%;">
+                                               SERVIÇO PRESTADO / cadastro ?:                                      
+                                            </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <input class="form-control" type="text" formControlName="tipoServico" [(ngModel)]="forncedorModel.tipoServico">                                  
+                                            </div>                                      
+                                      </div>
+                                      <br>
+                                      <div class="col-md-6">
+                                         <button type="submit"  class="btn btn-primary" style="margin-left: 20%; width: 100%;">CADASTRAR FORNECEDOR</button>
+                                      </div>
+                              </div>   
+                        </form>                                                  
+                          </div>
+
   
                       </div>
-                      <hr />
+                    
                      

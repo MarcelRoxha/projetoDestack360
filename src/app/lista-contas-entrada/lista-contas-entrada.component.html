@@ -27,6 +27,235 @@
       </div>
     </div>
   </div>
+
+   <!-- Modal Informações conta Entrada-->
+   <div class="modal fade" style="margin-top: 4%;" id="exampleModalInformacoesContaEntrada" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Informações</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <h4 style="color: black;">
+                  <strong>
+                  Descrição:
+                  </strong>
+                </h4>
+              </div>
+              <div class="col-md-6">
+                <h3 style="color: royalblue;"><strong>  
+                 {{ descricaoInfo }}       
+                  
+                </strong>
+                </h3>
+              </div>          
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <h4 style="color: black;">
+                  <strong>
+                  Código conta Banco:
+                  </strong>
+                </h4>
+              </div>
+              <div class="col-md-6">
+                <h3 style="color: royalblue;"><strong>  
+                       
+              {{ codigoC }}
+                </strong>
+                </h3>
+              </div>          
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <h4 style="color: black;">
+                  <strong>
+                  Código conta Caixa:
+                  </strong>
+                </h4>
+              </div>
+              <div class="col-md-6">
+                <h3 style="color: royalblue;"><strong>  
+                       {{ codigoD }}
+              
+                </strong>
+                </h3>
+              </div>          
+            </div>
+
+
+          </div>
+         
+
+        </div>
+      
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Modal Edit conta Entrada-->
+    <div class="modal fade" style="margin-top: 4%;" id="exampleModalEditarContaEntrada" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel">EDITAR CONTA ENTRADA</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container col-md-12">
+
+              <form [formGroup]="formAtualizaContaEntrada">
+
+             
+              <div class="row">
+                <div class="col-md-6">
+                  <h4 style="color: black;">
+                    <strong>
+                    Descrição:
+                    </strong>
+                  </h4>
+                </div>
+                <div class="col-md-6">
+                  <h3 style="color: royalblue;"><strong>  
+                   
+                    <input type="text" value=" {{ contaInfor.descricao }}" [(ngModel)]="contaEdit.descricao" formControlName="descricao">
+                   
+                          
+                    
+                  </strong>
+                  </h3>
+                </div>          
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <h4 style="color: black;">
+                    <strong>
+                    Código conta Banco:
+                    </strong>
+                  </h4>
+                </div>
+                <div class="col-md-6">
+                  <h3 style="color: royalblue;"><strong>  
+                    <input type="text" value=" {{ contaInfor.codigoC }}" [(ngModel)]="contaEdit.codigoC" formControlName="codigoC">
+             
+                  </strong>
+                  </h3>
+                </div>          
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <h4 style="color: black;">
+                    <strong>
+                    Código conta Caixa:
+                    </strong>
+                  </h4>
+                </div>
+                <div class="col-md-6">
+                  <h3 style="color: royalblue;"><strong>  
+                    <input type="text" value=" {{ contaInfor.codigoD }}" [(ngModel)]="contaEdit.codigoD" formControlName="codigoD">
+                  </strong>
+                  </h3>
+                </div>          
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <h4 style="color: black;">
+                   <button class="btn btn-primary" (click)="salvarAlteracoesContaEntrada(contaInfor.codigoC)">
+                    Salvar Alterações
+                   </button>
+                  </h4>
+                </div>          
+              </div>
+  
+            </form>
+            </div>
+           
+  
+          </div>
+        
+        </div>
+      </div>
+    </div>
+
+
+      <!-- Modal Delete conta Entrada-->
+   <div class="modal fade" style="margin-top: 4%;" id="exampleModalInformacoesContaEntrada" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Informações</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <h4 style="color: black;">
+                  <strong>
+                  Descrição:
+                  </strong>
+                </h4>
+              </div>
+              <div class="col-md-6">
+                <h3 style="color: royalblue;"><strong>  
+                 {{ descricaoInfo }}       
+                  
+                </strong>
+                </h3>
+              </div>          
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <h4 style="color: black;">
+                  <strong>
+                  Código conta Banco:
+                  </strong>
+                </h4>
+              </div>
+              <div class="col-md-6">
+                <h3 style="color: royalblue;"><strong>  
+                       
+              {{ codigoC }}
+                </strong>
+                </h3>
+              </div>          
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <h4 style="color: black;">
+                  <strong>
+                  Código conta Caixa:
+                  </strong>
+                </h4>
+              </div>
+              <div class="col-md-6">
+                <h3 style="color: royalblue;"><strong>  
+                       {{ codigoD }}
+              
+                </strong>
+                </h3>
+              </div>          
+            </div>
+
+
+          </div>
+         
+
+        </div>
+      
+      </div>
+    </div>
+  </div>
+
+
+
+
       <nav class="navbar navbar-expand navbar-dark" style="background: black">
         <div class="container-fluid">
           <div class="logo">
@@ -102,7 +331,7 @@
                 <div [@childAnimation]="isOpen ? 'open' : 'closed'"
                 class="open-close-container">
                 <div class="container mt-2"> 
-                  <h3 class="text-center"> CONSULTAR CLIENTES<h3>
+                  <h3 class="text-center">CONTAS ENTRADAS CADASTRADAS<h3>
                     <hr /> 
                     <div class="row">
                       <div class="col-md-12">
@@ -110,9 +339,9 @@
                             <li *ngFor="let ContaEntrada of constasEntradaModels " class="list-group-item d-flex justify-content-between align-items-start">
                                 <p>{{ContaEntrada.descricao}}</p>
                                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                    <button type="button" class="btn btn-success">EDITAR</button>
-                                    <button type="button" class="btn btn-primary">INFO</button>
-                                    <button type="button" class="btn btn-danger">EXCLUIR</button>   
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModalEditarContaEntrada"(click)="recuperarInformacoesContaEntrada(ContaEntrada.codigoC)">EDITAR</button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInformacoesContaEntrada"(click)="recuperarInformacoesContaEntrada(ContaEntrada.codigoC)">INFO</button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalInformacoesContaEntrada"(click)="recuperarInformacoesContaEntrada(ContaEntrada.codigoC)">EXCLUIR</button>   
                                   </div>
                               </li>
                              

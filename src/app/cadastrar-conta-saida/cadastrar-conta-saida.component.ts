@@ -94,7 +94,7 @@ if(this.formCadastrarContaSaida.invalid){
   if(contaSaida.codigoC !== "" || contaSaida.codigoD !== "" 
   || contaSaida.identificador !== "" 
   || contaSaida.fornecedor !== ""
-  || contaSaida.servico !== ""){
+  || contaSaida.descricaoServico !== ""){
     Swal.fire({
       position: 'top-end',
       icon: 'success',

@@ -1,3 +1,4 @@
+import { ContaCaixa } from './../models/contaCaixaModel';
 import { ContaSaidaSalvaFutura } from './../models/ContaSaidaSalvaFutura';
 import { ContaSaidaService } from './../services/conta-saida.service';
 import { UserModelService } from './../services/user-model.service';
@@ -18,6 +19,9 @@ import { ContaEntradaSalvaFutura } from '../models/lancamentoEntradaSalvoFuturo'
 import { ContaEntradaService } from '../services/conta-entrada.service';
 import { LancamentoSaida } from '../models/LancamentoSaidaModel';
 import Swal from 'sweetalert2';
+import { ContaBancoModel } from '../models/contaBancoModel';
+import { EmpresaModel } from '../models/empresaModel';
+import { EmpresaService } from '../service/empresa.service';
 
 
 
@@ -59,28 +63,41 @@ export class ConsultaClienteComponent implements OnInit {
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
+  clienteInfo: any = new Cliente();
 
   //variaveis para informacoes cliente recuperada
 
-  identificadorInfo: string;
-  razaoSocialInfo: string;
-  cnpjInfo: string;
-  usuarioclienteInfo: string;
-  emailClienteInfo: string;
-  telefoneInfo: string;
-  celularInfo: string;
-  createdInfo: string;
-  modifiedInfo: string
-  observacoes: string;
+  identificador: string;
+  nome: string;
+  cpf: string;
+  usuariocliente: string;
+  email: string;
+  telefone: string;
+  celular: string;
+  created: string;
+  modified: string;
+  obs: string;
+  status: string;  
 
 
+  data: Date = new Date();
 
   //
 
   isProgressVisible: boolean;
-  lancerForm: FormGroup;
+
+
+  //-------FORMGROUP------------//
+
+  cadastrarFormEmpresa: FormGroup;
   lancerFormSaida: FormGroup;
   lancerFormControl: FormControl;
+  lancerFormCreditoCaixa: FormGroup;
+
+
+
+  lancerForm: FormGroup;
+ 
   firebaseErrorMessage: string;
   clickDashBoard = false;    
   dataRecuperada : string;
@@ -119,12 +136,74 @@ export class ConsultaClienteComponent implements OnInit {
   contaSaidaLancamento: any;
   descricaolancamentoSaida: any;
 
-  verificaClientesCadastrados: boolean = false;
+  verificaClientesCadastrados: boolean = false ;
+
+  //-------CONTA CAIXA-------//
+
+  contaCaixa: ContaCaixa = new ContaCaixa()
+  identificadorLancamentoEntradaContaCaixa:string;
+  dataLancamentoContaCaixa:string;
+  valorLancamentoContaCaixa: string;
+  descricaoLancamentoContaCaixa: string
+  destalhesLancamentoEntradaContaCaixa: string;
+
+  //-------CONTA BANCO---------///
+
+  contaBanco: ContaBancoModel = new ContaBancoModel()
+  identificadorLancamentoEntradaContaBanco:string;
+  dataLancamentoContaBanco:string;
+  valorLancamentoContaBanco: string;
+  descricaoLancamentoContaBanco: string
+  destalhesLancamentoContaBanco: string;
+
+  //----------CADASTRAR EMPRESA--------//
+
+  empresaCadastrar: any ;
+  identificadorCliente: String ;
+	cnpj: string ;
+	endereco :string ;
+	emailEmpresa :string ;
+	cep : string ;
+	numero :string ;
+	complemento :string ;
+	razaoSocial :string ;
+	nomeEmpresa :string ;
+
+  //----------EMPRESAS CADASTRADAS--------//
+  empresas: EmpresaModel [] = [];
+  identificadorEmpresa: String ;
+	cnpjEmpresa: string ;
+	enderecoEmpresa :string ;
+	emailEmpresaEmpresa :string ;
+	cepEmpresa : string ;
+	numeroEmpresa :string ;
+	complementoEmpresa :string ;
+	razaoSocialEmpresa :string ;
+	nomeEmpresaEmpresa :string ; 
+
+  //----------RECUPERAR INFORMAÇÕES EMPRESA CLIENTE--------//
+  clienteRecuperaEmpresa : any = new Cliente();
+ 
+
+  //-----------INFORMAÇÕES RECUPERADA PARA EFETUAR LANCAMENTO PARA O DEVIDO CLIENTE---------------///
+  identificadorClienteLancaCredito: string;
+  identificadorEmpresaLancaCredito: string;
+
+  identificadorClienteLancaDebito: string;
+  identificadorEmpresaLancaDebito: string;
 
 
 // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
 
-  constructor(private contaSaidaService: ContaSaidaService, private fb: FormBuilder,private contaEntradaService: ContaEntradaService,private _httpClient: HttpClient, private clienteservice: ClienteService, private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
+  constructor(private contaSaidaService: ContaSaidaService, 
+    private fb: FormBuilder,
+    private contaEntradaService: ContaEntradaService,
+    private _httpClient: HttpClient, 
+    private clienteservice: ClienteService, 
+    private afAuth: AngularFireAuth, 
+    private firestore: AngularFirestore, 
+    private router : Router,
+    private serviceEmpresa: EmpresaService) {
     this.router.navigate(['/consultarClientes']);
     this.contaEntradaInicial = new ContaEntrada();
 
@@ -143,9 +222,31 @@ export class ConsultaClienteComponent implements OnInit {
     'contaSaidaLancamento' : new FormControl('', Validators.required),
     'descricaoLancamentoSaida' : new FormControl('', Validators.required)
 });
+
+this.cadastrarFormEmpresa = new FormGroup({
+  'nomeEmpresa': new FormControl('', Validators.required),
+  'razaoSocial': new FormControl('', [Validators.required]),
+  'cnpj' : new FormControl('', Validators.required),
+  'endereco' : new FormControl('', Validators.required),
+  'numero' : new FormControl('', Validators.required),
+  'cep' : new FormControl('', Validators.required),
+  'complemento' : new FormControl('', Validators.required),
+  'email' : new FormControl('', Validators.required)
+});
+
+this.lancerFormCreditoCaixa = new FormGroup({
+  'dataLancamentoEntrada': new FormControl(''),
+  'valorlancamentoentrada': new FormControl(''),
+  'contaEntrdaSelecionada' : new FormControl(''),
+  'descricaoLancamento' : new FormControl(''),
+
+});
+
   }
 
   ngOnInit(): void {
+
+    this.empresaCadastrar = new EmpresaModel();
       this.afAuth.authState.subscribe(user => {                                                   // grab the user object from Firebase Authorization
           if (user) {
               let emailLower = user.email.toLowerCase();
@@ -158,11 +259,35 @@ export class ConsultaClienteComponent implements OnInit {
           }
       });
 
+     
+
       this.clienteservice.listarClientes().subscribe(clientesCadastradosBanco =>{
         this.clientes = clientesCadastradosBanco;
+        this.clienteRecuperaEmpresa = this.clientes;
+      
+     
+       
+       // console.log("Empresas Recuperadas: ",  this.clientes["cpf"])
+        console.log("Clientes Recuperados: ", this.clientes)
         if(clientesCadastradosBanco === null){
+         let cliente : Cliente = new Cliente();
+         
+         cliente.celular = "1111111"
+         cliente.nome = "teste nome"
+         cliente.cpf = "teste cpf"
+         cliente.usuariocliente = "teste usuario"
+         cliente.emailCliente = "teste email"
+         cliente.telefone = "teste telefone"
+         cliente.celular = "teste celular"
+         cliente.created = "teste created"
+         cliente.modified = "teste modified"
+
+         this.clientes.push(cliente);
+
         this.verificaClientesCadastrados = true;
           return;
+        }else{
+          
         }
       })
 
@@ -172,7 +297,19 @@ export class ConsultaClienteComponent implements OnInit {
 this.contaEntradaService.listaContasEntradaSalvas().subscribe(constaEntradaSalva=>{
   this.listaEntradasCadastradas = constaEntradaSalva;
 })
+let cliente : Cliente = new Cliente();
+         
+         cliente.celular = "1111111"
+         cliente.nome = "teste nome"
+         cliente.cpf = "teste cpf"
+         cliente.usuariocliente = "teste usuario"
+         cliente.emailCliente = "teste email"
+         cliente.telefone = "teste telefone"
+         cliente.celular = "teste celular"
+         cliente.created = "teste created"
+         cliente.modified = "teste modified"
 
+         this.clientes.push(cliente);
 
   }
   logout(): void {
@@ -182,27 +319,73 @@ toggle(){
 this.isOpen = !this.isOpen;
 }
 
+
+recuperarinformacoesEmpresa(identificadorCliente : string){
+
+  this.clienteservice.recuperarEmpresaCadastradasCliente(identificadorCliente).subscribe(empresasRecuperadas =>{
+    this.empresas = empresasRecuperadas;
+  })
+
+console.log("Identificador recuperado: ", identificadorCliente);
+console.log("Empresaas recuperadas: ", this.empresas);
+}
+
 clickcliente(){
 return this.clickCliente = !this.clickCliente;
 }
 
+lancarEntradaContaBanco(){
+  this.contaBanco = new ContaBancoModel();
+  this.contaBanco.dataLancamentoContaBanco = this.dataLancamentoContaBanco;
+  this.contaBanco.valorLancamentoContaBanco = this.valorLancamentoContaBanco;
+  this.contaBanco.destalhesLancamentoContaBanco = this.destalhesLancamentoContaBanco;
+  this.contaBanco.descricaoLancamentoContaBanco = this.descricaoLancamentoContaBanco;
+console.log("Lançar conta Banco: ", this.contaBanco);
 
+}
+
+lancarEntradaContaCaixa(){
+  this.contaCaixa = new ContaCaixa();
+  this.contaCaixa.dataLancamentoContaCaixa = this.dataLancamentoContaCaixa;
+  this.contaCaixa.valorLancamentoContaCaixa = this.valorLancamentoContaCaixa;
+  this.contaCaixa.descricaoLancamentoContaCaixa = this.descricaoLancamentoContaCaixa;
+  this.contaCaixa.destalhesLancamentoEntradaContaCaixa = this.destalhesLancamentoEntradaContaCaixa;
+console.log("Lançar conta Banco: ", this.contaCaixa);
+
+}
+
+preparerLancarCreditoCaixa(identificadorCliente:string, identificadorEmpresa: string){
+console.log("Recuperado para caixa: ", identificadorCliente, identificadorEmpresa)
+
+}
+preparerLancarCreditoBanco(identificadorCliente:string, identificadorEmpresa: string){
+  console.log("Recuperado para banco: ", identificadorCliente, identificadorEmpresa)
+}
 
 recuperarInformarcoesClientesSelecionado(idClienteSelecionado: string){
+
+ 
   this.clienteservice.recuperarInformacoesCliente(idClienteSelecionado).subscribe(resultadoInfoCliente=>{
 
-    this.identificadorInfo = resultadoInfoCliente.identificador;
-    this.cnpjInfo = resultadoInfoCliente.cnpj;
-    this.celularInfo = resultadoInfoCliente.celular;
-    this.createdInfo = resultadoInfoCliente.created;
-    this.modifiedInfo = resultadoInfoCliente.modified;
-    this.emailClienteInfo = resultadoInfoCliente.emailCliente;
-    this.razaoSocialInfo = resultadoInfoCliente.razaoSocial;
-    this.telefoneInfo = resultadoInfoCliente.telefone;
-    this.usuarioclienteInfo = resultadoInfoCliente.usuariocliente;
-    this.observacoes = resultadoInfoCliente.obs;
-    console.log("Recuperado foi ", resultadoInfoCliente);
+    this.identificador = resultadoInfoCliente.identificador;
+    this.cpf = resultadoInfoCliente.cpf;
+    this.celular = resultadoInfoCliente.celular;
+    this.created = resultadoInfoCliente.created;
+    this.modified = resultadoInfoCliente.modified;
+    this.email = resultadoInfoCliente.emailCliente;
+    this.nome = resultadoInfoCliente.nome;
+    this.telefone = resultadoInfoCliente.telefone;
+    this.usuariocliente = resultadoInfoCliente.usuariocliente;
+  
   })
+
+
+
+ 
+
+}
+
+efetuarCreditoCaixa(){
 
 }
 acessoDigitarLancamentoEntrada(){  
@@ -251,7 +434,7 @@ declaroAnonimo(){
 
     if(this.salvarParaLancamentosFuturos == true){
       this.contaSalvaParaLancamentosFuturos = new ContaEntradaSalvaFutura();
-      this.contaSalvaParaLancamentosFuturos.identificadorCliente = this.cnpjInfo;
+      this.contaSalvaParaLancamentosFuturos.identificadorCliente = this.cpf;
       this.contaSalvaParaLancamentosFuturos.nomeContaEntradaLancamentoFuturos = this.descricaoLancamento;
       this.contaSalvaParaLancamentosFuturos.emailClienteQueSugeriu = this.emailUser;
         this.contaEntradaService.salvarContaParaLancamentosFuturos({...this.contaSalvaParaLancamentosFuturos}).subscribe(resultado=>{
@@ -266,7 +449,7 @@ declaroAnonimo(){
       this.destalhesLancamentoEntrada = "Sem descrição"
     }
     
-    this.LancamentoEntrada.identificador = this.identificadorInfo;
+    this.LancamentoEntrada.identificador = this.identificador;
     this.LancamentoEntrada.dataLancamentoEntrada = this.dataLancamento;
     this.LancamentoEntrada.emailUserLancandoEntrada = this.emailUser;
     this.LancamentoEntrada.nomeUserLancandoEntrada = this.nomeUser;
@@ -316,7 +499,62 @@ declaroAnonimo(){
   
   }
 
+  cadastrarEmpresaCliente(identificadorCliente: string){
+    this.empresaCadastrar = new EmpresaModel();
+    this.data = new Date();
+
+    this.empresaCadastrar.identificadorCliente = identificadorCliente;
+    this.empresaCadastrar.cnpj = this.cnpj;
+    this.empresaCadastrar.endereco = this.endereco;
+
+    this.empresaCadastrar.email = this.email;
+    this.empresaCadastrar.cep = this.cep;
+    this.empresaCadastrar.numero = this.numero;
+    this.empresaCadastrar.complemento = this.complemento;
+    this.empresaCadastrar.razaoSocial = this.razaoSocial;
+    this.empresaCadastrar.created = this.data.toTimeString();
+    this.empresaCadastrar.modified = "Cliente Sem modificações"
+    this.empresaCadastrar.nomeEmpresa =this.nomeEmpresa;
+
+    if(this.empresaCadastrar){
+      
+
+      this.serviceEmpresa.cadastrarEmpresaClienteAPI(this.empresaCadastrar).subscribe(Resultado=>{
+        console.log("resultado do cadastrar API: ",Resultado)
+      });
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Empresa cadastrada com sucesso!',
+        showConfirmButton: false,
+        timer: 1000
+      })
+      this.nomeEmpresa ="";
+      this.email = "";
+      this.cep = "";
+      this.numero= "";
+      this.complemento ="";
+      this.razaoSocial="";
+      this.cnpj ="";
+      this.endereco ="";
+      console.log("Sucesso ao cadastrar")
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Favor verifique as informações e/ou a conexão e tente novamente, se o problema persistir contate o administrado',
+       
+      })
+      console.log("Erro ao cadastrar")
+    }
+
+    
+  
+  }
+
   salvarLancamentoSaida(identificador: string){
+
+
 
     if(this.salvarParaLancamentosFuturos == true){
       this.contaSaidaFutura = new ContaSaidaSalvaFutura();
@@ -331,7 +569,7 @@ declaroAnonimo(){
       this.destalhesLancamentoEntrada = "Sem descrição"
     }
   
-    this.lancamentoSaida.identificador = this.identificadorInfo;
+    this.lancamentoSaida.identificador = this.identificador;
     this.lancamentoSaida.dataLancamentoSaida = this.datalancamentoSaida;
     this.lancamentoSaida.emailUserLancandoSaida = this.emailUser;
     this.lancamentoSaida.nomeUserLancandoSaida = this.nomeUser;

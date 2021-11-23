@@ -7,7 +7,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { state, trigger, style, transition, animate } from '@angular/animations';
 import { ClienteService } from '../services/cliente.service';
-import {} from '../models/clienteModel';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cadastrar-cliente',
@@ -51,8 +51,8 @@ export class CadastrarClienteComponent implements OnInit {
     this.router.navigate(['/cadastrarCliente']);
     
     this.formCadastrarCliente = new FormGroup({
-      razaoSocial: new FormControl('', Validators.required),
-      cnpj: new FormControl('', Validators.required),
+      nome: new FormControl('', Validators.required),
+      cpf: new FormControl('', Validators.required),
       usuariocliente: new FormControl('', Validators.required),
       emailCliente: new FormControl('', Validators.required),
       telefone: new FormControl('', Validators.required),
@@ -83,14 +83,24 @@ return this.clickCliente = !this.clickCliente;
 
 cadastrarCliente(){
   console.log(this.formCadastrarCliente.value);
+
+
   const cliente : Cliente = {...this.formCadastrarCliente.value}
-  this.clienteservice.cadastrarCliente(cliente)
-  .subscribe(clienteBanco=>{
-    this.clientes.push(clienteBanco)
-    this.formCadastrarCliente.reset;  
-    this.router.navigate(['/consultarClientes']);
+
+
+
+  this.clienteservice.cadastrarCliente({...this.formCadastrarCliente.value}).then(()=>{
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Conta de Saída salva com sucesso',
+      showConfirmButton: false,
+      timer: 1000, 
+      confirmButtonText:'Ok'
+    })
+    this.formCadastrarCliente.reset();
   })
-    
+  
 }
 
 }

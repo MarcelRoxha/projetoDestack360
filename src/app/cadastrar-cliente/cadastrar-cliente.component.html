@@ -27,6 +27,35 @@
       </div>
     </div>
   </div>
+  <body class="text-center-home">
+    <!-- Button trigger modal
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal1" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" style="margin-top: 4%;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cadastrar Cliente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input class="form-control" >
+          <input class="form-control" >
+          <input class="form-control" >
+          <input class="form-control" >
+          <input class="form-control" >
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
       <nav class="navbar navbar-expand navbar-dark" style="background: black">
         <div class="container-fluid">
           <div class="logo">
@@ -55,8 +84,8 @@
       </nav>
       <div class="d-flex">
         <div class="check-menu">
-          <input type="checkbox" id="chec"  class="checkmenu">
-          <label for="chec"><mat-icon (click)="toggle()">menu</mat-icon> </label>
+          <input type="checkbox" id="chec"  class="checkmenu">        
+          <label for="chec" ><mat-icon (click)="toggle()" style="font-size: 50px;">menu</mat-icon></label>
           <nav class="menu-lateral">
             <ul class="list-unstyled">
               <li><a  routerLink="/admin">DASHBOARD</a></li>
@@ -66,19 +95,30 @@
               <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
       
               <li class="cliente-nav dropdown"> 
-                <a style="background: red;" class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: red;">
                   CLIENTES
                 </a>                 
                                    
                   <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
-                <li><a class="dropdown-item" routerLink="/dashboard"> AREA DO CLIENTE</a></li>
+                    <li><a class="dropdown-item" routerLink="/dashboard">AREA DO CLIENTE</a></li>
   
                    <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
                     <li><a routerLink="/cadastrarCliente">CADASTRAR</a></li>
                     <li><a class="dropdown-item" routerLink="/consultarClientes">CONSULTAR</a></li>                               
                   </ul>
                 </li>     
-              <li><a>FORNECEDORES</a></li>
+              <li class="cliente-nav dropdown">
+                <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                  FORNECEDORES</a>           
+                                
+                <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                  <li><a class="dropdown-item" routerLink="/fornecedor">CADASTRAR FONECEDOR</a></li>
+                 
+  
+                 <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                  <li><a class="dropdown-item" routerLink="/fornecedorlista">FORNECEDORES CADASTRADOS</a></li>                                                             
+                </ul>            
+              </li>
               <li class="cliente-nav dropdown"> 
                 <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   CONTAS
@@ -102,29 +142,29 @@
                 <div [@childAnimation]="isOpen ? 'open' : 'closed'"
                 class="open-close-container">
                 <div class="container mt-2"> 
-                  <h3 class="text-center"> CADASTRAR CLIENTES<h3>
+                  <h3 class="text-center"> CADASTRAR CLIENTE<h3>
                       <hr />        
                       <form [formGroup]="formCadastrarCliente" (ngSubmit)="cadastrarCliente()">
                             <div class="container" style="margin-left: 16%;">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <label class="form-label" style="opacity: 100%;">
-                                            Razão Social:                                      
+                                            Nome:                                      
                                         </label>
                                         </div>
                                         <div class="col-md-6">
-                                        <input class="form-control" type="text" formControlName="razaoSocial">                                  
+                                        <input class="form-control" type="text" formControlName="nome">                                  
                                     </div>
                                     </div>
                                     
                                     <div class="row">
                                       <div class="col-md-2">
                                           <label class="form-label" style="opacity: 100%;">
-                                             CNPJ:                                      
+                                             CPF:                                      
                                           </label>
                                           </div>
                                           <div class="col-md-6">
-                                          <input class="form-control" type="text" formControlName="cnpj" mask="CPF_CNPJ">                                  
+                                          <input class="form-control" type="text" formControlName="cpf" mask="CPF_CNPJ">                                  
                                       </div>
                                       <br>
                                     </div>
@@ -145,7 +185,7 @@
                                     <div class="row">
                                       <div class="col-md-2">
                                           <label class="form-label" style="opacity: 100%;">
-                                             E-mail do Cliente:                                      
+                                             E-mail:                                      
                                           </label>
                                           </div>
                                           <div class="col-md-6">

@@ -7,6 +7,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { state, trigger, style, transition, animate } from '@angular/animations';
 import { ContaEntradaService } from '../services/conta-entrada.service'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cadastrar-conta-entrada',
@@ -76,7 +77,20 @@ cadastrarContaEntrada(){
   console.log(this.formCadastrarContaEntrada.value);
   const contaEntrada : ContaEntrada = {...this.formCadastrarContaEntrada.value}
   this.contaEntradaService.cadastrarContaEntrada(contaEntrada)
-  .subscribe(clienteBanco=>console.log(clienteBanco));
+  .subscribe(clienteBanco=>{
+
+    if(clienteBanco == null){
+      Swal.fire('É possível que esses dados já tenham sido cadastrados, favor verifique e tente novamente')
+    }else{
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Conta de Saída salva com sucesso',
+        showConfirmButton: false,
+        timer: 1000
+      })
+    }
+    console.log(clienteBanco)});
   this.formCadastrarContaEntrada.reset();
     
 }
