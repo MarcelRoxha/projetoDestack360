@@ -246,6 +246,28 @@
                             <input class="form-control" type="text" formControlName="email" [(ngModel)]="email" placeholder="*Opcional"/>                                  
                         </div>                        
                       </div>  
+
+                      <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" style="opacity: 100%;">
+                               SALDO CAIXA:                                      
+                            </label>
+                            </div>
+                            <div class="col-md-6">
+                            <input class="form-control" type="text" formControlName="saldoCaixa" [(ngModel)]="saldoCaixa" placeholder="Ex..Casa 1, Bloco A,"/>                                  
+                        </div>                        
+                      </div>  
+                      <br>    
+                      <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label" style="opacity: 100%;">
+                               SALDO BANCO:                                      
+                            </label>
+                            </div>
+                            <div class="col-md-6">
+                            <input class="form-control" type="text" formControlName="saldoBanco" [(ngModel)]="saldoBanco" placeholder="*Opcional"/>                                  
+                        </div>                        
+                      </div>
                   <div class="col-md-6">
                     <br> 
                      <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" style="margin-left: 50%; width: 100%;">CADASTRAR EMPRESA</button>
@@ -436,7 +458,7 @@
         <div class="row">
           <div class="col-md-4">
             <br> 
-             <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;" data-bs-toggle="modal" data-bs-target="#modalLancaDebitoContaCaixa" data-bs-dismiss="modal">LANÇAR DÉBITO EM CAIXA</button>
+             <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;" data-bs-toggle="modal" data-bs-target="#modalLancaDebitoContaCaixa" data-bs-dismiss="modal" >LANÇAR DÉBITO EM CAIXA</button>
           </div>
           <div class="col-md-4">
             <br> 
@@ -644,9 +666,61 @@
                       </div>
                     </div>
 </div>
+
+
+
+
+
+
+
   
 
-<!-- Modal Verifica qual empresa vai ser lançado o credito  -->
+<!-- Modal Verifica qual empresa vai ser lançado o débito -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalQualEmpresaLancaDebito" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title " id="exampleModalLabelLancarSaida"><strong>ESCOLHA A EMPRESA E A ONDE DESEJA EFETUAR O DÉBITO</strong></h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+       <div class="row">
+         <div class="col-md-12">
+           <ul class="list-group">
+             <li *ngFor="let EmpresaModel of empresas" class="list-group-item d-flex justify-content-between align-items-start" style="margin-bottom: 10px; background: yellow;">
+              <div class="container mt-2 mb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                  <strong><p>NOME EMPRESA:</p></strong>                                                           
+                  </div>
+                  <div class="col-md-6">
+                    <strong><p style="color: blue;">{{EmpresaModel.nomeEmpresa}}</p></strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLancaDebitoCaixa" data-bs-dismiss="modal" (click)="preparerLancarCreditoCaixa(EmpresaModel.identificadorCliente, EmpresaModel.cnpj)">DÉBITO NO CAIXA</button>                                                         
+                  </div>
+                  <div class="col-md-6">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLancaDebitoBanco" data-bs-dismiss="modal" (click)="preparerLancarCreditoBanco(EmpresaModel.identificadorCliente, EmpresaModel.cnpj)">DÉBITO NO BANCO</button>
+                  </div>
+                </div>
+            
+              </div>
+             </li>
+             <br>
+           </ul>
+         </div>
+       </div>
+                
+
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+<!-- Modal Verifica qual empresa vai ser lançado o crédito -->
 <div class="modal fade" style="margin: 1%;" id="exampleModalQualEmpresaLancaCredito" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -691,7 +765,8 @@
                     </div>
 </div>
 
-<!-- Modal lanca Credito Caixa  -->
+
+<!-- Modal lanca Crédito Caixa  -->
 <div class="modal fade" style="margin: 1%;" id="exampleModalLancaCreditoCaixa" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -701,9 +776,175 @@
       </div>
       <div class="modal-body">
         <div class="container mt-2"> 
-          <h3 class="text-center"> EFETUAR LANÇAMENTO DE CRÉDITO NO CAIXA</h3>
+          <h3 class="text-center"> EFETUAR LANÇAMENTO DE CRÉDITO NO <strong style="color: red;"> CAIXA </strong></h3>
               <hr />        
-              <form [formGroup]="lancerFormCreditoCaixa" (onSubmit)="efetuarCreditoCaixa()">
+              <form [formGroup]="lancerFormCreditoCaixa" (ngSubmit)="efetuarCreditoCaixa()">
+                    <div class="container">
+                      
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label" style="opacity: 100%;">
+                                    Informe a data:                                      
+                                </label>
+                                </div>
+                                <div class="col-md-6">
+                                <input class="form-control" type="date" name="dataLancamentoSaida" formControlName="dataLancamentoSaida" [(ngModel)]="datalancamentoSaida">                                  
+                            </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-4">
+                                  <label class="form-label" style="opacity: 100%;">
+                                     Valor do lançamento:                                      
+                                  </label>
+                                  </div>
+                                  <div class="col-md-6">
+                                  <input class="form-control" type="text" name="valorlancamentoSainda" formControlName="valorlancamentoSainda" [(ngModel)]="valorlancamentoSaida" mask="separator.2" thousandSeparator="." required/>                                  
+                              </div>
+                              
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-4">                                
+                                <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoEntrada()"/>Desejo Digitar
+                                  </div>
+
+                                  <div class="col-md-4" *ngIf="checkDigitarLancamento == true && selecionadoServicoEFornecedor == false">
+                                    <input type="text"  class="form-control"  [(ngModel)]="fornecedor" formControlName="fornecedorSelecionado"/>
+                                    <input type="checkbox" (change)="salvarLancaMentoEntradaDigitada()"/>Salvar para lancamentos futuros
+                                 </div> 
+                                 <br>
+                                  <div class="col-md-7" *ngIf="checkDigitarLancamento == false && selecionadoServicoEFornecedor == false">
+                                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalSelecioneFornecedor">ESCOLHA FORNECEDOR</button>
+                              <br>                         
+                            </div> 
+                            <br>    
+                            <div class="row" *ngIf="checkDigitarLancamento == false && selecionadoServicoEFornecedor == true">
+                              <div class="col-md-4">
+                                  <label class="form-label" style="opacity: 100%;">
+                                    <p style="color: blue;"> Fornecedor: </p>{{lancamentoSaidaCompleto.fornecedor}}                                       
+                                  </label>
+                                  <label class="form-label" style="opacity: 100%;">
+                                    <p style="color: blue;"> Serviço: </p>    {{lancamentoSaidaCompleto.servico}}                                   
+                                 </label>
+                                  </div>
+                                  <button class="btn btn-secondary" (click)="selecionarFornecedorEServicoNovamente()">Selecionar novamente</button>
+                            </div>                                                
+
+                            <div class="col-md-6">
+                              <br> 
+                               <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;"   data-bs-toggle="modal" data-bs-target="#exampleModalRecarregarPagina" data-bs-dismiss="modal" (click)="lancarSaidaCompleta()">LANÇAR INFORMAÇÕES DE SAIDA</button>
+                            </div>
+                            </div>
+                          </div>
+
+
+
+                          </form>
+                </div>
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+<!-- Modal lanca Crédito Banco  -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalLancaCreditoBanco" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>CRÉDITO NO BANCO</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container mt-2"> 
+          <h3 class="text-center"> EFETUAR LANÇAMENTO DE CRÉDITO NO <strong style="color: red;"> BANCO </strong></h3>
+              <hr />        
+              <form [formGroup]="lancerFormCreditoBanco" (ngSubmit)="efetuarCreditoCaixa()">
+                    <div class="container">
+                      
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label" style="opacity: 100%;">
+                                    Informe a data:                                      
+                                </label>
+                                </div>
+                                <div class="col-md-6">
+                                <input class="form-control" type="date" formControlName="dataLancamentoEntrada" [(ngModel)]="dataLancamento">                                  
+                            </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-4">
+                                  <label class="form-label" style="opacity: 100%;">
+                                     Valor do lançamento:                                      
+                                  </label>
+                                  </div>
+                                  <div class="col-md-6">
+                                  <input class="form-control" type="text" formControlName="valorlancamentoentrada" [(ngModel)]="valorLancamento" mask="separator.2" thousandSeparator="." required/>                                  
+                              </div>
+                              
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-4">                                
+                                <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoEntrada()"/>Desejo Digitar
+                                  </div>
+                                  <div class="col-md-4" *ngIf="checkDigitarLancamento == true">
+                                    <input type="text"  class="form-control"  [(ngModel)]="descricaoLancamento" formControlName="contaEntrdaSelecionada"/>
+                                    <input type="checkbox" (change)="salvarLancaMentoEntradaDigitada()"/>Salvar para lancamentos futuros
+                                 </div> 
+                                 <br>
+                                  <div class="col-md-8" *ngIf="checkDigitarLancamento == false">                                  
+                                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalSelecioneFornecedor">ESCOLHA FORNECEDOR</button>
+                              <br>                         
+                            </div>                                    
+                                      <div>    
+                                  </div>
+                              <br>                         
+                            </div>     
+                            <div class="row">
+                              <div class="col-md-4">
+                                  <label class="form-label" style="opacity: 100%;">
+                                     Descrição:                                      
+                                  </label>
+                                  </div>
+                                  <div class="col-md-6">
+                                  <input class="form-control" type="text" formControlName="descricaoLancamento" [(ngModel)]="destalhesLancamentoEntrada" placeholder="*Opcional"/>                                  
+                              </div>
+                              
+                            </div>                                                
+
+                            <div class="col-md-6">
+                              <br> 
+                               <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;"   data-bs-toggle="modal" data-bs-target="#exampleModalRecarregarPagina" data-bs-dismiss="modal">LANÇAR INFORMAÇÕES DE ENTRADA</button>
+                            </div>
+                            </div>                         
+
+
+
+
+                          </form>
+                </div>
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+
+
+<!-- Modal lanca Débito Caixa  -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalLancaDebitoCaixa" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>DÉBITO NO CAIXA</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container mt-2"> 
+          <h3 class="text-center"> EFETUAR LANÇAMENTO DE DÉBITO NO <strong style="color: red;"> CAIXA </strong></h3>
+              <hr />        
+              <form [formGroup]="lancerFormDebitoCaixa" (ngSubmit)="efetuarCreditoCaixa()">
                     <div class="container">
                       
                         <div class="row">
@@ -740,7 +981,7 @@
                                  <br>
                                   <div class="col-md-6" *ngIf="checkDigitarLancamento == false">
                                     <select class="form-control" type="text" formControlName="contaEntrdaSelecionada" [(ngModel)]="descricaoLancamento">
-                                      <option>Selecione uma das opções...</option>
+                                      <option>Escolha a Entrada</option>
                                       <option *ngFor="let ContaEntrada of listaEntradasCadastradas">
                                        {{ContaEntrada.descricao}}
                                       </option>    
@@ -763,7 +1004,7 @@
 
                             <div class="col-md-6">
                               <br> 
-                               <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;">LANÇAR INFORMAÇÕES DE ENTRADA</button>
+                               <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;"   data-bs-toggle="modal" data-bs-target="#exampleModalRecarregarPagina" data-bs-dismiss="modal">LANÇAR INFORMAÇÕES DE ENTRADA</button>
                             </div>
                             </div>
                           </div>
@@ -777,22 +1018,381 @@
                     </div>
 </div>
 
-<!-- Modal lanca Credito Banco  -->
-<div class="modal fade" style="margin: 1%;" id="exampleModalLancaCreditoBanco" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+<!-- Modal lanca Débito Banco  -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalLancaDebitoBanco" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>CRÉDITO NO BANCO</strong></h1>
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>DÉBITO NO BANCO</strong></h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 
+        <div class="container mt-2"> 
+          <h3 class="text-center"> EFETUAR LANÇAMENTO DE DÉBITO NO <strong style="color: red;"> BANCO </strong></h3>
+              <hr />        
+              <form [formGroup]="lancerFormCreditoBanco" (ngSubmit)="efetuarCreditoBanco()">
+                    <div class="container">
+                      
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label" style="opacity: 100%;">
+                                    Informe a data:                                      
+                                </label>
+                                </div>
+                                <div class="col-md-6">
+                                <input class="form-control" type="date" formControlName="dataLancamentoEntrada" [(ngModel)]="dataLancamento">                                  
+                            </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-4">
+                                  <label class="form-label" style="opacity: 100%;">
+                                     Valor do lançamento:                                      
+                                  </label>
+                                  </div>
+                                  <div class="col-md-6">
+                                  <input class="form-control" type="text" formControlName="valorlancamentoentrada" [(ngModel)]="valorLancamento" mask="separator.2" thousandSeparator="." required/>                                  
+                              </div>
+                              
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-4">                                
+                                <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoEntrada()"/>Desejo Digitar
+                                  </div>
+                                  <div class="col-md-4" *ngIf="checkDigitarLancamento == true">
+                                    <input type="text"  class="form-control"  [(ngModel)]="descricaoLancamento" formControlName="contaEntrdaSelecionada"/>
+                                    <input type="checkbox" (change)="salvarLancaMentoEntradaDigitada()"/>Salvar para lancamentos futuros
+                                 </div> 
+                                 <br>
+
+
+
+
+                                  <div class="col-md-6" *ngIf="checkDigitarLancamento == false">
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalSelecioneContaEntrada">ESCOLHA A ENTRADA</button>
+
+
+                                    <select class="form-control" type="text" formControlName="contaEntrdaSelecionada" [(ngModel)]="descricaoLancamento">
+                                      <option>Escolha a Entrada</option>
+                                      <option *ngFor="let ContaEntrada of listaEntradasCadastradas">
+                                       {{ContaEntrada.descricao}}
+                                      </option>    
+                                    </select>                                    
+                                      <div>    
+                                  </div>
+                              <br>                         
+                            </div>     
+                            <div class="row">
+                              <div class="col-md-4">
+                                  <label class="form-label" style="opacity: 100%;">
+                                     Descrição:                                      
+                                  </label>
+                                  </div>
+                                  <div class="col-md-6">
+                                  <input class="form-control" type="text" formControlName="descricaoLancamento" [(ngModel)]="destalhesLancamentoEntrada" placeholder="*Opcional"/>                                  
+                              </div>
+                              
+                            </div>                                                
+
+                            <div class="col-md-6">
+                              <br> 
+                               <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;"  data-bs-toggle="modal" data-bs-target="#exampleModalRecarregarPagina" data-bs-dismiss="modal">LANÇAR INFORMAÇÕES DE ENTRADA</button>
+                            </div>
+                            </div>
+                          </div>
+
+
+
+                          </form>
+                </div>
 
                         </div>
                       </div>
                     </div>
 </div>
+
+
+<!-- Modal Recarregar informações depois de lancar debito no caixa  -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalRecarregarPagina" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>LANÇAMENTO EFETUADO COM SUCESSO!</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container mt-2"> 
+          <hr /> 
+          <h3 class="text-center"> VOCÊ ACABA DE EFETUAR UM LANÇAMENTO DE DÉBITO NO <strong style="color: red;"> CAIXA </strong></h3>
+                 <button class="btn btn-success" (click)="recarregarPaginarOkEntendi()">Ok, entendi</button>     
+             
+                </div>
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+<!-- Modal Recarregar informações depois de lancar debito no banco  -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalRecarregarPagina" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>LANÇAMENTO EFETUADO COM SUCESSO!</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container mt-2"> 
+          <hr /> 
+          <h3 class="text-center"> VOCÊ ACABA DE EFETUAR UM LANÇAMENTO DE DÉBITO NO <strong style="color: red;"> BANCO </strong></h3>
+                 <button class="btn btn-success" (click)="recarregarPaginarOkEntendi()">Ok, entendi</button>     
+             
+                </div>
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+<!-- Modal Recarregar informações depois de lancar credito no caixa  -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalRecarregarPagina" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>LANÇAMENTO EFETUADO COM SUCESSO!</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container mt-2"> 
+          <hr /> 
+          <h3 class="text-center"> VOCÊ ACABA DE EFETUAR UM LANÇAMENTO DE CRÉDITO NO <strong style="color: red;"> CAIXA </strong></h3>
+                 <button class="btn btn-success" (click)="recarregarPaginarOkEntendi()">Ok, entendi</button>     
+             
+                </div>
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+
+
+<!-- Modal Recarregar informações depois de lancar credito no banco  -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalRecarregarPagina" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>LANÇAMENTO EFETUADO COM SUCESSO!</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container mt-2"> 
+          <hr /> 
+          <h3 class="text-center"> VOCÊ ACABA DE EFETUAR UM LANÇAMENTO DE CRÉDITO NO <strong style="color: red;"> BANCO </strong></h3>
+                 <button class="btn btn-success" (click)="recarregarPaginarOkEntendi()">Ok, entendi</button>     
+             
+                </div>
+                        </div>
+                      </div>
+                    </div>
+</div>
   
+
+
+
+
+<!-- Modal Selecionar Entrada -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalSelecioneContaEntrada" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title " id="exampleModalLabelLancarSaida"><strong>SELECIONE A ENTRADA</strong></h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+       <div class="row">
+         <div class="col-md-12">
+           <ul class="list-group">
+             <li *ngFor="let EmpresaModel of empresas" class="list-group-item d-flex justify-content-between align-items-start" style="margin-bottom: 10px; background: yellow;">
+              <div class="container mt-2 mb-2">
+                <div class="row">
+                  <div class="col-md-5">
+                  <strong><p>NOME EMPRESA:</p></strong>                                                           
+                  </div>
+                  <div class="col-md-4 ">
+                    <strong><p style="color: blue;">{{EmpresaModel.nomeEmpresa}}</p></strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <strong> <p>RAZÃO SOCIAL: </p>  </strong>                                                           
+                  </div>
+                  <div class="col-md-4 ">
+                    <strong> <p style="color: blue;">{{EmpresaModel.razaoSocial}}</p> </strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <strong> <p>CNPJ: </p></strong>                                                         
+                  </div>
+                  <div class="col-md-4 ">
+                    <strong><p style="color: blue;">{{EmpresaModel.cnpj}}</p></strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                   <strong> <p>ENDERECO: </p> </strong>                                                      
+                  </div>
+                  <div class="col-md-7">
+                    <strong><p style="color: blue;">{{EmpresaModel.endereco}}</p> </strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <strong><p>CEP: </p></strong>                                                     
+                  </div>
+                  <div class="col-md-3">
+                    <strong><p style="color: blue;">{{EmpresaModel.cep}}</p> </strong>
+                  </div>
+                  </div>
+                  <div class="row">
+                  <div class="col-md-5">
+                    <strong> <p>Nº: </p>   </strong>                                                          
+                  </div>
+                  <div class="col-md-3">
+                    <strong><p style="color: blue;">{{EmpresaModel.numero}}</p> </strong>
+                  </div>
+                  </div>
+
+                  <div class="row">
+                  <div class="col-md-5">
+                    <strong> <p>COMPLEMENTO: </p>  </strong>                                                            
+                  </div>
+                  <div class="col-md-4">
+                    <strong><p style="color: blue;">{{EmpresaModel.complemento}}</p> </strong>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-4">
+                    <strong>  <p>E-MAIL: </p>  </strong>                                                           
+                  </div>
+                  <div class="col-md-4">
+                    <strong><p style="color: blue;">{{EmpresaModel.email}}</p></strong>
+                  </div>
+                </div>              
+                <div class="row">
+                  <div class="col-md-2">
+                    <strong><p>CADASTRADO EM:</p>    </strong>                                                         
+                  </div>
+                  <div class="col-md-4 ">
+                    <strong><p style="color: blue;">{{EmpresaModel.created}}</p></strong> 
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <strong><p>ULTIMA MODIFICAÇÃO: </p></strong>                                                             
+                  </div>
+                  <div class="col-md-4">
+                    <strong><p style="color: blue;">{{EmpresaModel.modified}}</p></strong> 
+                  </div>
+                </div>
+              </div>
+             </li>
+             <br>
+           </ul>
+         </div>
+       </div>
+                
+
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+
+<!-- Modal Selecionar Fornecedor -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalSelecioneFornecedor" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title " id="exampleModalLabelLancarSaida"><strong>SELECIONE O FORNECEDOR</strong></h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+       <div class="row">
+         <div class="col-md-12">
+           <ul class="list-group">
+             <li *ngFor="let FornecedorModel of fornecedoresModel" class="list-group-item d-flex justify-content-between align-items-start" style="margin-bottom: 10px; background: yellow;">
+              <div class="container mt-2 mb-2">
+                <div class="row">
+                  <div class="col-md-5">
+                  <strong><p>FORNECEDOR:</p></strong>                                                           
+                  </div>
+                  <div class="col-md-4 ">
+                    <strong><p style="color: blue;">{{FornecedorModel.razaoSocial}}</p></strong>
+                  </div>
+                  <div class="col-md-4 ">
+                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalSelecioneServico"(click)="selecioneiFornecedor(FornecedorModel.cnpj, FornecedorModel.razaoSocial)" data-bs-dismiss="modal">SELECIONAR FORNECEDOR</button>
+                  </div>
+                </div>
+                
+              </div>
+             </li>
+             <br>
+           </ul>
+         </div>
+       </div>
+                
+
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+
+
+<!-- Modal Selecionar Serviço -->
+<div class="modal fade" style="margin: 1%;" id="exampleModalSelecioneServico" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title " id="exampleModalLabelLancarSaida"><strong>SELECIONE SERVIÇO</strong></h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="list-group">
+              <li *ngFor="let ServicoFornecedorModel of listaServicos" class="list-group-item d-flex justify-content-between align-items-start" style="margin-bottom: 10px; background: yellow;">
+               <div class="container mt-2 mb-2">
+                 <div class="row">
+                   <div class="col-md-5">
+                   <strong><p>SERVIÇO:</p></strong>                                                           
+                   </div>
+                   <div class="col-md-4 ">
+                     <strong><p style="color: blue;">{{ServicoFornecedorModel.descricaoServico}}</p></strong>
+                   </div>
+                   <div class="col-md-4 ">
+                     <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalSelecioneServico"(click)="selecioneiServico(ServicoFornecedorModel)" data-bs-dismiss="modal">SELECIONAR FORNECEDOR</button>
+                   </div>
+                 </div>
+                 
+               </div>
+              </li>
+              <br>
+            </ul>
+          </div>
+        </div>
+                
+
+                        </div>
+                      </div>
+                    </div>
+</div>
+
       
 
 <body class="text-center-home">
@@ -950,7 +1550,7 @@
                                   <div class="btn-group"  role="group" aria-label="Basic mixed styles example">
                                     <button type="button" class="btn btn-success" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalLancars" (click)="recuperarInformarcoesClientesSelecionado(Cliente.cpf)" >CADASTRAR EMPRESA</button>                                    
                                     <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalQualEmpresaLancaCredito" (click)="recuperarinformacoesEmpresa(Cliente.cpf)">LANÇAR CRÉDITO</button>
-                                    <button type="button" class="btn btn-secondary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#modalVerificaLancamento" (click)="recuperarInformarcoesClientesSelecionado(Cliente.identificador)">LANÇAR DÉBITO</button>                                     
+                                    <button type="button" class="btn btn-secondary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalQualEmpresaLancaDebito" (click)="recuperarinformacoesEmpresa(Cliente.cpf)">LANÇAR DÉBITO</button>                                     
                                     <button type="button" class="btn btn-info"style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="recuperarInformarcoesClientesSelecionado(Cliente.cpf)">INFO</button>
                                     <button type="button" class="btn btn-warning" style="margin: 10px;" >EDITAR</button>  
                                     <button type="button" class="btn btn-danger" style="margin: 10px;" >EXCLUIR</button>  

@@ -1,3 +1,4 @@
+import { LancamentoSaida } from './../models/LancamentoSaidaModel';
 import { ContaEntradaSalvaFutura } from './../models/lancamentoEntradaSalvoFuturo';
 import { LancamentoEntrada } from './../models/lancamentoEntradaModel';
 import { Injectable } from '@angular/core';
@@ -6,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { ContaEntrada } from '../models/contaEntradaModel';
 import { tap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FornecedorModel } from '../model/fornecedor-model';
+import { ServicoFornecedorModel } from '../models/servicoFornecedorModel';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +36,20 @@ export class ContaEntradaService {
     return this.http.get<ContaEntrada[]>('https://destack360.herokuapp.com/api/recuperarContasEntrada');
 
   }
+
+  listaFornecedoresCadastrados() : Observable<FornecedorModel[]>{
+    return this.http.get<FornecedorModel[]>('http://localhost:8080/api/recuperar-fornecedores-cadastrados');
+
+  }
+
+  recuperarServicosFornecedor(identificadorContaEntrada : string) : Observable<ServicoFornecedorModel[]>{
+    return this.http.post<ServicoFornecedorModel[]>('http://localhost:8080/api/recuperar-servicos-fornecedor-selecionado', identificadorContaEntrada);
+    
+  }
+
+
+
+
   recuperarInformacoesContaEntrada(identificadorContaEntrada : string) : Observable<ContaEntrada>{
     return this.http.post<ContaEntrada>('https://destack360.herokuapp.com/api/recuperarInformacoesContaEntrada', identificadorContaEntrada);
     
@@ -53,7 +70,14 @@ return this.verificaIf;
   }
 
   lancarEntrada(lancamentoContaEtrada : LancamentoEntrada){
-    return this.http.post<LancamentoEntrada>('https://destack360.herokuapp.com/api/lancarEntrada', lancamentoContaEtrada).pipe(tap(()=>{
+    return this.http.post<LancamentoEntrada>('http://localhost:8080/api/lancar-entrada-caixa', lancamentoContaEtrada).pipe(tap(()=>{
+      this._refreshNeeded$.next() 
+      
+    }));
+  }
+
+  lancarEntradaBanco(lancamentoContaEtrada : LancamentoEntrada){
+    return this.http.post<LancamentoEntrada>('http://localhost:8080/api/lancar-entrada-banco', lancamentoContaEtrada).pipe(tap(()=>{
       this._refreshNeeded$.next() 
       
     }));
@@ -61,5 +85,21 @@ return this.verificaIf;
 
   salvarContaParaLancamentosFuturos(contaSalvaParaLancamentosFuturos : ContaEntradaSalvaFutura){
     return this.http.post<ContaEntradaSalvaFutura>('https://destack360.herokuapp.com/api/salvarSugestao', contaSalvaParaLancamentosFuturos);
+  }
+
+
+  
+  lancarSaida(lancamentoSaida : LancamentoSaida){
+    return this.http.post<LancamentoSaida>('http://localhost:8080/api/lancar-saida-caixa', lancamentoSaida).pipe(tap(()=>{
+      this._refreshNeeded$.next() 
+      
+    }));
+  }
+
+  lancarSaidaBanco(lancamentoSaida : LancamentoSaida){
+    return this.http.post<LancamentoSaida>('http://localhost:8080/api/lancar-saida-banco', lancamentoSaida).pipe(tap(()=>{
+      this._refreshNeeded$.next() 
+      
+    }));
   }
 }

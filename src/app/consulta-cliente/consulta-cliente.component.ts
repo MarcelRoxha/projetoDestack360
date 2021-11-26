@@ -1,3 +1,4 @@
+import { FornecedorModel } from './../model/fornecedor-model';
 import { ContaCaixa } from './../models/contaCaixaModel';
 import { ContaSaidaSalvaFutura } from './../models/ContaSaidaSalvaFutura';
 import { ContaSaidaService } from './../services/conta-saida.service';
@@ -22,6 +23,7 @@ import Swal from 'sweetalert2';
 import { ContaBancoModel } from '../models/contaBancoModel';
 import { EmpresaModel } from '../models/empresaModel';
 import { EmpresaService } from '../service/empresa.service';
+import { ServicoFornecedorModel } from '../models/servicoFornecedorModel';
 
 
 
@@ -93,7 +95,9 @@ export class ConsultaClienteComponent implements OnInit {
   lancerFormSaida: FormGroup;
   lancerFormControl: FormControl;
   lancerFormCreditoCaixa: FormGroup;
-
+  lancerFormCreditoBanco: FormGroup;
+  lancerFormDebitoCaixa : FormGroup;
+  lancerFormDebitoBanco : FormGroup;
 
 
   lancerForm: FormGroup;
@@ -120,7 +124,7 @@ export class ConsultaClienteComponent implements OnInit {
   contaEntradaSelecionada : string ;
   salvarParaLancamentosFuturos: boolean = false;
   contaSalvaParaLancamentosFuturos : ContaEntradaSalvaFutura;
-  LancamentoEntrada: LancamentoEntrada = new LancamentoEntrada();
+  LancamentoEntrada: LancamentoEntrada;
   lancamentoSaidaSalvoFuturo: ContaSaidaSalvaFutura = new ContaSaidaSalvaFutura();
   lancamentoSaida: LancamentoSaida = new LancamentoSaida();
 
@@ -130,13 +134,19 @@ export class ConsultaClienteComponent implements OnInit {
   descricaoLancamento: string
   destalhesLancamentoEntrada: string;
   contaSaidaFutura: ContaSaidaSalvaFutura;
+  codigoCredito: string;
+  codigoDebito: string;
+
   //lancamentoSaida: any;
-  datalancamentoSaida: any;
-  valorlancamentoSaida: any;
+  datalancamentoSaida: string;
+  valorlancamentoSaida: string;
   contaSaidaLancamento: any;
   descricaolancamentoSaida: any;
 
+  //-------------Verificações------------------//
+
   verificaClientesCadastrados: boolean = false ;
+  selecionadoServicoEFornecedor: boolean = false;
 
   //-------CONTA CAIXA-------//
 
@@ -155,6 +165,12 @@ export class ConsultaClienteComponent implements OnInit {
   valorLancamentoContaBanco: string;
   descricaoLancamentoContaBanco: string
   destalhesLancamentoContaBanco: string;
+
+
+
+  //---------------FORNECEDOR--------------------//
+
+  listaServicos: ServicoFornecedorModel [] =[];
 
   //----------CADASTRAR EMPRESA--------//
 
@@ -179,11 +195,40 @@ export class ConsultaClienteComponent implements OnInit {
 	numeroEmpresa :string ;
 	complementoEmpresa :string ;
 	razaoSocialEmpresa :string ;
-	nomeEmpresaEmpresa :string ; 
+	nomeEmpresaEmpresa :string ;
+  saldoBanco: string;
+  saldoCaixa: string; 
 
   //----------RECUPERAR INFORMAÇÕES EMPRESA CLIENTE--------//
   clienteRecuperaEmpresa : any = new Cliente();
  
+
+  //------------PREPARER DADOS CLIENTE EMPRESA PARA EFETUAR LANCAMENTO DE ENTRADA----------//
+
+  identificadorRecuperadoClienteLancaEntrada: string;
+  identificadorEmpresaClienteRecuperadoLancaEntrada: string;
+
+
+  //---------------------LANÇAR CRÉDITO EMPRESA CLIENTE----------------//
+
+  identificadorClientePreparer: string;
+  identificadorEmpresaPreparer: string;
+
+
+  //---------------------LANÇAR SAIDA ----------------------------------//
+  fornecedor: string;
+  fornecedoresModel: FornecedorModel [] = [];
+  lancamentoSaidaCompleto: LancamentoSaida; 
+  nomeFornecedorSelecionado: string;
+  nomeServicoSelecionado: string;
+  codigoCreditoSelecionado: string;
+  codigoDebitoSelecionado: string; 
+  valorSaidaDigitado:string;
+  contaSaidaDigitada: string;
+  dataSelecionada: string;
+  
+
+
 
   //-----------INFORMAÇÕES RECUPERADA PARA EFETUAR LANCAMENTO PARA O DEVIDO CLIENTE---------------///
   identificadorClienteLancaCredito: string;
@@ -205,6 +250,7 @@ export class ConsultaClienteComponent implements OnInit {
     private router : Router,
     private serviceEmpresa: EmpresaService) {
     this.router.navigate(['/consultarClientes']);
+    this.fornecedoresModel = [];
     this.contaEntradaInicial = new ContaEntrada();
 
     this.lancerForm = new FormGroup({
@@ -234,13 +280,60 @@ this.cadastrarFormEmpresa = new FormGroup({
   'email' : new FormControl('', Validators.required)
 });
 
+
+//---------------------FORMULARIO CREDITO CAIXA -----------------//
+
 this.lancerFormCreditoCaixa = new FormGroup({
+  'dataLancamentoSaida': new FormControl('', Validators.required),
+  'valorlancamentoSainda': new FormControl('', Validators.required),
+  'contaEntrdaSelecionada' : new FormControl('', Validators.required),
+  'fornecedor' : new FormControl( this.fornecedor),
+  'servico' : new FormControl(this.nomeServicoSelecionado, Validators.required),
+  'codigoCredito' : new FormControl('', Validators.required),
+  'codigoDebito' : new FormControl('', Validators.required),
+  
+
+});
+
+//---------------------FORMULARIO DEBITO CAIXA -----------------//
+
+
+this.lancerFormDebitoCaixa = new FormGroup({
+  'dataLancamentoEntrada': new FormControl('', Validators.required),
+  'valorlancamentoentrada': new FormControl('' , Validators.required),
+  'contaEntrdaSelecionada' : new FormControl('' , Validators.required),
+  'descricaoLancamento' : new FormControl('' , Validators.required),
+
+});
+this.lancerForm = new FormGroup({
   'dataLancamentoEntrada': new FormControl(''),
   'valorlancamentoentrada': new FormControl(''),
   'contaEntrdaSelecionada' : new FormControl(''),
   'descricaoLancamento' : new FormControl(''),
 
 });
+
+//---------------------FORMULARIO DEBITO BANCO -----------------//
+
+this.lancerFormDebitoBanco = new FormGroup({
+  'dataLancamentoEntrada': new FormControl(''),
+  'valorlancamentoentrada': new FormControl(''),
+  'contaEntrdaSelecionada' : new FormControl(''),
+  'descricaoLancamento' : new FormControl(''),
+
+});
+
+//---------------------FORMULARIO CREDITO BANCO -----------------//
+
+
+this.lancerFormCreditoBanco = new FormGroup({
+  'dataLancamentoEntrada': new FormControl(''),
+  'valorlancamentoentrada': new FormControl(''),
+  'contaEntrdaSelecionada' : new FormControl(''),
+  'descricaoLancamento' : new FormControl(''),
+
+});
+
 
   }
 
@@ -297,6 +390,16 @@ this.lancerFormCreditoCaixa = new FormGroup({
 this.contaEntradaService.listaContasEntradaSalvas().subscribe(constaEntradaSalva=>{
   this.listaEntradasCadastradas = constaEntradaSalva;
 })
+
+this.contaEntradaService.listaFornecedoresCadastrados().subscribe(resultadoFornecedores=>{
+  this.fornecedoresModel = resultadoFornecedores;
+  console.log("Forncedores recuperados: ",this.fornecedoresModel)
+})
+
+console.log("Resulrado valor: ", this.lancerFormCreditoCaixa.value('valorlancamentoSainda') )
+
+
+
 let cliente : Cliente = new Cliente();
          
          cliente.celular = "1111111"
@@ -322,6 +425,7 @@ this.isOpen = !this.isOpen;
 
 recuperarinformacoesEmpresa(identificadorCliente : string){
 
+  this.identificadorClientePreparer = identificadorCliente;
   this.clienteservice.recuperarEmpresaCadastradasCliente(identificadorCliente).subscribe(empresasRecuperadas =>{
     this.empresas = empresasRecuperadas;
   })
@@ -334,6 +438,10 @@ clickcliente(){
 return this.clickCliente = !this.clickCliente;
 }
 
+recuperarInformacoesEmpresaClienteLancaDebitoCaixa(identificadorCliente: string, identificaorEmpresa: string){
+
+}
+
 lancarEntradaContaBanco(){
   this.contaBanco = new ContaBancoModel();
   this.contaBanco.dataLancamentoContaBanco = this.dataLancamentoContaBanco;
@@ -342,6 +450,10 @@ lancarEntradaContaBanco(){
   this.contaBanco.descricaoLancamentoContaBanco = this.descricaoLancamentoContaBanco;
 console.log("Lançar conta Banco: ", this.contaBanco);
 
+}
+
+selecionarFornecedor(identificadorFornecedor: string){
+console.log("identificador fornecedor recuperado: ", identificadorFornecedor)
 }
 
 lancarEntradaContaCaixa(){
@@ -355,11 +467,20 @@ console.log("Lançar conta Banco: ", this.contaCaixa);
 }
 
 preparerLancarCreditoCaixa(identificadorCliente:string, identificadorEmpresa: string){
-console.log("Recuperado para caixa: ", identificadorCliente, identificadorEmpresa)
+
+  this.identificadorRecuperadoClienteLancaEntrada = identificadorCliente;
+  this.identificadorEmpresaClienteRecuperadoLancaEntrada = identificadorEmpresa;
+
+
+
+  
+ 
 
 }
 preparerLancarCreditoBanco(identificadorCliente:string, identificadorEmpresa: string){
-  console.log("Recuperado para banco: ", identificadorCliente, identificadorEmpresa)
+  this.identificadorRecuperadoClienteLancaEntrada = identificadorCliente;
+  this.identificadorEmpresaClienteRecuperadoLancaEntrada = identificadorEmpresa;
+
 }
 
 recuperarInformarcoesClientesSelecionado(idClienteSelecionado: string){
@@ -386,10 +507,85 @@ recuperarInformarcoesClientesSelecionado(idClienteSelecionado: string){
 }
 
 efetuarCreditoCaixa(){
+  this.LancamentoEntrada = new LancamentoEntrada();
+
+  if(this.destalhesLancamentoEntrada === "" ){
+    this.destalhesLancamentoEntrada = "Sem descrição"
+  }
+
+  this.LancamentoEntrada.dataLancamentoEntrada = this.dataLancamento;
+  this.LancamentoEntrada.emailUserLancandoEntrada = this.emailUser;
+  this.LancamentoEntrada.nomeUserLancandoEntrada = this.nomeUser;
+  this.LancamentoEntrada.valorLancamentoEntrada = this.valorLancamento;
+  this.LancamentoEntrada.nomeLancamentoEntrada = this.descricaoLancamento;
+  this.LancamentoEntrada.detalhesLancamentoEntrada = this.destalhesLancamentoEntrada;
+  this.LancamentoEntrada.identificador = this.identificadorRecuperadoClienteLancaEntrada;
+  this.LancamentoEntrada.identificadorEmpresa = this.identificadorEmpresaClienteRecuperadoLancaEntrada;
+  
+  this.contaEntradaService.lancarEntrada({...this.LancamentoEntrada}).subscribe(resultado=>{
+    console.log("Resultado API: ", resultado);
+  })  
+
+  console.log("Resultado ngModel", {...this.LancamentoEntrada});
+  console.log("Resultado form", {...this.lancerFormCreditoCaixa.value})
+
+
+  this.lancerFormDebitoCaixa = new FormGroup({
+    'dataLancamentoEntrada': new FormControl(''),
+    'valorlancamentoentrada': new FormControl(''),
+    'contaEntrdaSelecionada' : new FormControl(''),
+    'descricaoLancamento' : new FormControl(''),
+
+});
+
+
 
 }
-acessoDigitarLancamentoEntrada(){  
+
+recarregarPaginarOkEntendi(){
+  window.location.reload();
+}
+
+efetuarCreditoBanco(){
+
+  this.LancamentoEntrada = new LancamentoEntrada();
+
+  if(this.destalhesLancamentoEntrada === "" ){
+    this.destalhesLancamentoEntrada = "Sem descrição"
+  }
+
+  this.LancamentoEntrada.dataLancamentoEntrada = this.dataLancamento;
+  this.LancamentoEntrada.emailUserLancandoEntrada = this.emailUser;
+  this.LancamentoEntrada.nomeUserLancandoEntrada = this.nomeUser;
+  this.LancamentoEntrada.valorLancamentoEntrada = this.valorLancamento;
+  this.LancamentoEntrada.nomeLancamentoEntrada = this.descricaoLancamento;
+  this.LancamentoEntrada.detalhesLancamentoEntrada = this.destalhesLancamentoEntrada;
+  this.LancamentoEntrada.identificador = this.identificadorRecuperadoClienteLancaEntrada;
+  this.LancamentoEntrada.identificadorEmpresa = this.identificadorEmpresaClienteRecuperadoLancaEntrada;
+  
+  this.contaEntradaService.lancarEntradaBanco({...this.LancamentoEntrada}).subscribe(resultado=>{
+    console.log("Resultado API: ", resultado);
+  })  
+
+  console.log("Resultado ngModel", {...this.LancamentoEntrada});
+  console.log("Resultado form", {...this.lancerFormDebitoCaixa.value})
+
+
+  this.lancerFormDebitoCaixa = new FormGroup({
+    'dataLancamentoEntrada': new FormControl(''),
+    'valorlancamentoentrada': new FormControl(''),
+    'contaEntrdaSelecionada' : new FormControl(''),
+    'descricaoLancamento' : new FormControl(''),
+
+});
+
+  
+}
+acessoDigitarLancamentoEntrada(){ 
+  this.selecionadoServicoEFornecedor = false; 
   this.checkDigitarLancamento = !this.checkDigitarLancamento;
+  this.codigoCredito = "17";
+  this.codigoCredito = "06";
  
  if(this.checkDigitarLancamento == true){
    this.descricaoLancamento = '';
@@ -399,6 +595,42 @@ this.contaEntradaService.listaContasEntradaSalvas().subscribe(constaEntradaSalva
   this.listaEntradasCadastradas = constaEntradaSalva;
 })
  
+}
+
+selecioneiFornecedor(identificadorFornecedor:string, nomeFornecedor: string){  
+
+  this.contaEntradaService.recuperarServicosFornecedor(identificadorFornecedor).subscribe(listaServicos=>{
+      this.listaServicos = listaServicos;
+      this.lancamentoSaidaCompleto.fornecedor = nomeFornecedor;
+      console.log("Recuperado identificador fornecedor: ", identificadorFornecedor);
+  })
+  
+  
+
+ 
+}
+
+selecionarFornecedorEServicoNovamente(){
+  this.lancamentoSaidaCompleto.fornecedor = "";
+  this.lancamentoSaidaCompleto.servico = "";
+  this.lancamentoSaidaCompleto.codigoContaCredito = "";
+  this.lancamentoSaidaCompleto.codigoContaDebito = "";
+  this.selecionadoServicoEFornecedor = false;
+  console.log("Resetado os dados: ", this.lancamentoSaidaCompleto)
+
+}
+
+selecioneiServico(servico: ServicoFornecedorModel){
+  this.selecionadoServicoEFornecedor = true
+
+  this.nomeServicoSelecionado = servico.descricaoServico;
+  this.lancamentoSaidaCompleto.servico = servico.descricaoServico;
+  this.codigoCredito = servico.codigoContaCredito;
+  this.codigoDebito = servico.codigoContaDebito;
+  console.log("identificador servivo recuperado: ", this.lancamentoSaidaCompleto);
+
+
+  this.selecionadoServicoEFornecedor = true
 }
 
 contaEntradaSalvaSelecionada(descricaoContaEntrada : string){
@@ -418,6 +650,63 @@ contaEntradaSalvaSelecionada(descricaoContaEntrada : string){
 salvarLancaMentoEntradaDigitada(){
   this.salvarParaLancamentosFuturos = !this.salvarParaLancamentosFuturos;
   }
+
+
+  lancarSaidaCompleta(){
+    
+  
+
+    if(this.checkDigitarLancamento){
+
+      this.lancamentoSaidaCompleto.fornecedor = this.fornecedor;
+      this.lancamentoSaidaCompleto.codigoContaCredito = this.codigoCredito
+      this.lancamentoSaidaCompleto.codigoContaDebito = this.codigoDebito
+
+      this.lancamentoSaidaCompleto.valorLancamentoSaida = this.valorlancamentoSaida;
+      this.lancamentoSaidaCompleto.dataLancamentoSaida = this.datalancamentoSaida;
+      this.lancamentoSaidaCompleto.emailUserLancandoSaida = this.emailUser;
+      this.lancamentoSaidaCompleto.nomeUserLancandoSaida = this.nomeUser;
+      this.lancamentoSaidaCompleto.servico = this.fornecedor;
+      this.contaEntradaService.lancarSaida(this.lancamentoSaidaCompleto).subscribe(resultado=>{
+        console.log("Recuperado Banco: ", resultado)
+      })
+      console.log("Informações check true: ", this.lancamentoSaidaCompleto);
+      this.lancamentoSaidaCompleto = new LancamentoSaida ();
+
+    }else{
+
+
+      this.lancamentoSaidaCompleto = new LancamentoSaida (); 
+
+      this.lancamentoSaidaCompleto.valorLancamentoSaida = this.valorlancamentoSaida;
+      this.lancamentoSaidaCompleto.dataLancamentoSaida = this.datalancamentoSaida
+      this.lancamentoSaidaCompleto.codigoContaDebito = this.codigoDebito;
+      this.lancamentoSaidaCompleto.codigoContaCredito = this.codigoCredito;
+      this.lancamentoSaidaCompleto.emailUserLancandoSaida = this.emailUser;
+      this.lancamentoSaidaCompleto.nomeUserLancandoSaida = this.nomeUser;
+      
+      
+      this.contaEntradaService.lancarSaida(this.lancamentoSaidaCompleto).subscribe(resultado=>{
+        console.log("Recuperado Banco: ", resultado)
+      })
+
+      console.log("Informações check false: ", this.lancamentoSaidaCompleto);
+      console.log("Informações check false form: ", {...this.lancerFormCreditoCaixa.value});
+      
+      this.lancamentoSaidaCompleto = new LancamentoSaida ();
+    }
+       
+    
+    
+    
+
+ 
+
+  }
+
+
+
+
 
   salvarLancaMentoSaidaDigitada(){
     this.salvarParaLancamentosFuturos = !this.salvarParaLancamentosFuturos;
@@ -456,6 +745,8 @@ declaroAnonimo(){
     this.LancamentoEntrada.valorLancamentoEntrada = this.valorLancamento;
     this.LancamentoEntrada.nomeLancamentoEntrada = this.descricaoLancamento;
     this.LancamentoEntrada.detalhesLancamentoEntrada = this.destalhesLancamentoEntrada;
+    this.LancamentoEntrada.codigoContaCredito = this.codigoCredito;
+    this.LancamentoEntrada.codigoContaDebito = this.codigoDebito;
     
     this.contaEntradaService.lancarEntrada({...this.LancamentoEntrada}).subscribe(resultado=>{
       
@@ -607,6 +898,12 @@ declaroAnonimo(){
   
 
 
+  }
+
+  confirmarFornecedor(identificadorFornecedor: string){
+
+
+    console.log("cnpj recuperado: ", identificadorFornecedor)
   }
 
 }

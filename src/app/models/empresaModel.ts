@@ -12,5 +12,7 @@ export class EmpresaModel{
 	modified: string;
 	telefone: string;
 	celular: string;
+	saldoCaixa: string;
+	saldoBanco: string;
 
 }

@@ -4,5 +4,5 @@ export class ContaSaida{
     codigoC: string;
     codigoD: string;
     fornecedor: string;  
-    descricaoServico: string;    
+    descricaoServico: string;  
 }

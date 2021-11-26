@@ -11,6 +11,7 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -148,7 +149,7 @@ import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.co
     MatTooltipModule,
     MatTreeModule,
     MatInputModule,
-
+    
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

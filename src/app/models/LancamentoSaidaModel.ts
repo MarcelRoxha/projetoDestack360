@@ -7,4 +7,10 @@ export class LancamentoSaida{
     dataLancamentoSaida: string;
     valorLancamentoSaida: string;
     detalhesLancamentoSaida: string;
+    codigoContaCredito: string;
+    codigoContaDebito: string;
+    fornecedor: string;
+    servico: string;
+
+
 }

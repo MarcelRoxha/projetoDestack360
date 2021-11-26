@@ -22,6 +22,7 @@ export class FornecedorService {
         console.log(resultado.key);
     })
 
+
   }
 
   atualizar(fornecedor: FornecedorModel, key: string){

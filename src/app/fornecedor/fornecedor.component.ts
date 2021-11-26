@@ -115,9 +115,6 @@ export class FornecedorComponent implements OnInit {
 
   cadastrarFornecedor(){
 
-
-
-
     console.log("Clicado Cadastrar fornecedor");
     console.log("informações formControl: ", this.formCadastrarFornecedor.value);
     console.log("informações forncedor: ", this.forncedorModel);    

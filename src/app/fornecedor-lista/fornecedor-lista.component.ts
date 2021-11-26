@@ -173,7 +173,7 @@ export class FornecedorListaComponent implements OnInit {
       this.afAuth.signOut();
   }
 
-  cadastrarContaSaida(){
+  cadastrarContaSaida(identificadorSaida: string){
     console.log(this.formCadastrarContaSaida.value);
    
   
@@ -190,8 +190,8 @@ export class FornecedorListaComponent implements OnInit {
       contaSaida.fornecedor = this.nomeFornecedorCadastroServico;
       contaSaida.identificador = this.identificadorFornecedor;
       console.log("conta depois de receber identificador e fornecedor: ", contaSaida);
-      this.firebase.collection('FORNECEDORES').doc(this.identificadorFornecedor).collection("SERVIÇOS").add({...this.formCadastrarContaSaida.value})
-
+      this.firebase.collection('FORNECEDORES').doc(this.identificadorFornecedor).collection("SERVIÇOS").doc(identificadorSaida).set({...this.formCadastrarContaSaida.value})
+      console.log("Imprimindo formulario completo fornecedor servico: ", this.formCadastrarContaSaida.value)
       Swal.fire({
         position: 'top-end',
         icon: 'success',
@@ -199,7 +199,11 @@ export class FornecedorListaComponent implements OnInit {
         showConfirmButton: false,
         timer: 1000
       })
-     
+      console.log("Entrou no cadastrarServico Fornecedor cadastrar conta Saida: ", contaSaida)
+      this.firebase.collection("CONTAS_SAIDA")
+      .doc(identificadorSaida)
+      .set(contaSaida)
+
       this.formCadastrarContaSaida.reset();
     }else{
       
@@ -228,7 +232,10 @@ export class FornecedorListaComponent implements OnInit {
       .collection(this.nomeFornecedorCadastroServico)
       .add({...this.contaSaida})
     
-
+      console.log("Entrou no cadastrarServico Fornecedor cadastrar conta Saida: ", {...this.contaSaida})
+      this.firebase.collection("CONTAS_SAIDA")
+      .doc(this.contaSaida.codigoC)
+      .set({...this.contaSaida})
     
 
   }
