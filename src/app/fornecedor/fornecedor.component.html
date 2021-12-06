@@ -1,4 +1,186 @@
+<!-- Modal informações Fornecedor -->
+<div class="modal fade" #conteudo style="margin: 1%;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="verificaModal === true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title " id="exampleModalLabel"><strong>CONFIRMAÇÃO DAS INFORMAÇÕES INSERIDAS</strong></h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <div class="container">
+  <div class="row g-3">
+
+            <div class="col-md-6">            
+  
+              <label  class="form-label"> <strong><span style="color: black;">NOME FONECEDOR</span></strong></label>
+              <strong style="color: blue;">                          
+                <h3>
+                  {{fornecedorInformacoes.nomeFornecedor}}
+                </h3>
+                </strong>
+            </div>           
+                      
+            
+                      <div class="col-6">
+                        <label class="form-label"><strong><span style="color: black;">CNPJ</span></strong></label>
+                        <strong style="color: blue;">                          
+                          <h3>
+                            {{fornecedorInformacoes.cnpj}}
+                          </h3>
+                          </strong>
+                        
+                      </div>
+            
+                      <div class="col-12">
+                        <label  class="form-label"><strong><span style="color: black;">E-MAIL:</span></strong></label>
+                        <strong style="color: blue;">                          
+                          <h3>
+                            {{fornecedorInformacoes.email}}
+                          </h3>
+                          </strong>
+                      </div>
+            
+                      <div class="col-4">
+                        <label class="form-label"><strong><span style="color: black;">TELEFONE</span></strong></label>
+                        <strong style="color: blue;">                          
+                          <h3>
+                            {{fornecedorInformacoes.telefone}}
+                          </h3>
+                          </strong>
+                      </div>
+            
+                      <div class="col-4">           
+                        <label  class="form-label"><strong><span style="color: black;">CELULAR</span></strong></label> 
+                            <strong style="color: blue;">                          
+                          <h3>
+                            {{fornecedorInformacoes.celular}}
+                          </h3>
+                          </strong>
+                          </div>                               
+                          <div class="col-4">           
+                            <label  class="form-label"><strong><span style="color: black;">WHATSAPP</span></strong></label> 
+                            <strong style="color: blue;">                          
+                              <h3>
+                                {{fornecedorInformacoes.whatsapp}}
+                              </h3>
+                              </strong>                              
+                            </div>
+            
+                      <div class="col-3">
+                        <label class="form-label"><strong><span style="color: black;">CEP</span></strong></label> 
+                        <strong style="color: blue;">                          
+                          <h3>
+                            {{fornecedorInformacoes.cep}}
+                          </h3>
+                          </strong>
+                     
+                      </div>
+                      <div class="col-md-3">
+                        <label class="form-label"><strong><span style="color: black;">CIDADE</span></strong></label>   
+                           <strong style="color: blue;">                          
+                          <h3>
+                            {{fornecedorInformacoes.cidade}}
+                          </h3>
+                          </strong> 
+                        
+                      </div>
+            
+            
+                      <div class="col-md-3">
+                        <label class="form-label"><strong><span style="color: black;">ESTADO</span></strong></label>
+                        <strong style="color: blue;">                          
+                          <h3>
+                            {{fornecedorInformacoes.estado}}
+                          </h3>
+                          </strong>
+                      </div>
+            
+            
+                      <div class="col-3">
+                        <label class="form-label"><strong><span style="color: black;">BAIRRO</span></strong></label>
+                        <strong style="color: blue;">                          
+                          <h3>
+                            {{fornecedorInformacoes.bairro}}
+                          </h3>
+                          </strong>
+                      </div>
+            
+            
+            
+                      <div class="col-4">
+                        <label class="form-label"><strong><span style="color: black;">ENDEREÇO</span></strong></label>
+                        <strong style="color: blue;">                          
+                          <h3>
+                            {{fornecedorInformacoes.endereco}}
+                          </h3>
+                          </strong>
+                      </div>
+                      <div class="col-4">
+                        <label class="form-label"><strong><span style="color: black;">NUMERO</span></strong></label>
+                        <strong style="color: blue;">                          
+                          <h3>
+                            {{fornecedorInformacoes.numero}}
+                          </h3>
+                          </strong>
+                      </div>
+                      
+            
+                      <div class="col-4">
+                        <label class="form-label"><strong><span style="color: black;">COMPLEMENTO</span></strong></label>
+                        <strong style="color: blue;">                          
+                        <h3>
+                          {{fornecedorInformacoes.complemento}}
+                        </h3>
+                        </strong>
+
+                      </div>
+                  
+                    </div>
+          </div>
+         
+    
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">VOLTAR</button>
+        <button type="submit" class="btn btn-primary" (click)="cadastrarFornecedor(fornecedorInformacoes)">CONFIRMAR CADASTRO</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <body class="text-center-home">
+  <!-- Button trigger modal
+<button type="button" class="btn btn-primary" data-bs-toggle="modal1" data-bs-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" style="margin-top: 4%;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cadastrar Cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input class="form-control" >
+        <input class="form-control" >
+        <input class="form-control" >
+        <input class="form-control" >
+        <input class="form-control" >
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
     <nav class="navbar navbar-expand navbar-dark" style="background: black">
       <div class="container-fluid">
         <div class="logo">
@@ -31,7 +213,7 @@
         <label for="chec" ><mat-icon (click)="toggle()" style="font-size: 50px;">menu</mat-icon></label>
         <nav class="menu-lateral">
           <ul class="list-unstyled">
-            <li><a routerLink="/admin">DASHBOARD</a></li>
+            <li><a  routerLink="/admin">DASHBOARD</a></li>
             <li>
             
             <!--------------
@@ -42,7 +224,7 @@
                 CLIENTES
               </a>                 
                                  
-                <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                <ul class="menu-cliente dropdown-menu" aria-labelledby="navbarDropdownCliente">
                   <li><a class="dropdown-item" routerLink="/dashboard">AREA DO CLIENTE</a></li>
 
                  <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
@@ -51,7 +233,7 @@
                 </ul>
               </li>     
             <li class="cliente-nav dropdown">
-              <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background: red;" >
+              <a class="dropdown-toggle" id="navbarDropdownCliente"  style="background: red;" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
                 FORNECEDORES</a>           
                               
               <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
@@ -59,7 +241,7 @@
                
 
                <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
-                <li><a routerLink="/fornecedorlista">FORNECEDORES CADASTRADOS</a></li>                                                             
+                <li><a class="dropdown-item" routerLink="/fornecedorlista">FORNECEDORES CADASTRADOS</a></li>                                                             
               </ul>            
             </li>
             <li class="cliente-nav dropdown"> 
@@ -68,12 +250,12 @@
               </a>                 
                                  
                 <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
-                  <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA ENTRADA</a></li>
+                  <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA</a></li>
                  
 
                  <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
-                  <li><a routerLink="/cadastrarContaSaida">CADASTRAR CONTA SAIDA</a></li>  
-                  <li><a class="dropdown-item" routerLink="/listarContasEntrada">CONTAS ENTRADAS CADASTRADAS</a></li>                                            
+                  <!------- <li><a routerLink="/cadastrarContaSaida">CADASTRAR CONTA SAIDA</a></li> ----> 
+                  <li><a class="dropdown-item" routerLink="/listarContasEntrada">CONTAS CADASTRADAS</a></li>                                            
                 </ul>
               </li> 
             <li><a >CONSULTAR</a></li>
@@ -90,7 +272,138 @@
                           <hr />  
                           <div class="container">
 
-                            <form [formGroup]="formCadastrarFornecedor" (ngSubmit)="cadastrarFornecedor()">
+
+                            <form class="row g-3">
+
+                              <div class="col-md-6">            
+                    
+                                <label for="nomeFornecedor" class="form-label">NOME FONECEDOR <strong><span style="color: red;">*</span></strong></label>
+                                <input autocomplete="off" name="nomeFornecedor" type="text" class="form-control"  id="nomeFornecedor"
+                                [(ngModel)]="forncedorModel.nomeFornecedor"                  
+                                >
+                                <div class="col-md-6" *ngIf="verificamsgErrornomeFornecedor == true">
+                                   <strong><span style="color: red;">{{msgErrornomeFornecedor}}</span></strong>
+                                </div>
+
+                              </div>
+                           <!-------   <div class="col-md-6">
+                                <label for="razaosocial" class="form-label">RAZÃO SOCIAL </label>
+                                <input type="text" name="razaosocial"  class="form-control" id="razaosocial"
+                                [(ngModel)]="forncedorModel.razaosocial"  />
+                              </div>
+                    ------->
+                              
+                    
+                              <div class="col-6">
+                                <label for="cnpj" class="form-label">CNPJ <strong><span style="color: red;">*</span></strong></label>
+                                <input type="text" class="form-control" name="cnpj"  id="cnpj" placeholder="Caso seja pessoa fisíca use o CPF" mask="CPF_CNPJ"
+                                [(ngModel)]="forncedorModel.cnpj"  >
+                                <div class="col-md-6" *ngIf="verificamsgErrorcnpj === true">
+                                  <strong><span style="color: red;">{{msgErrorcnpj}}</span></strong>
+                               </div>
+
+                              </div>
+                    
+                              <div class="col-12">
+                                <label for="email" class="form-label">E-MAIL</label>
+                                <input type="email" name="email" class="form-control"  id="codigoCaixa" 
+                                [(ngModel)]="forncedorModel.email">
+                              </div>
+                    
+                              <div class="col-4">
+                                <label for="telefone" class="form-label">TELEFONE</label>
+                                <input type="text" name="telefone" class="form-control" id="telefone"
+                                [(ngModel)]="forncedorModel.telefone"
+                                prefix="55+" mask="(00) 0000 0000">
+                              </div>
+                    
+                              <div class="col-4">           
+                                <label for="celular" class="form-label">CELULAR <strong><span style="color: red;">*</span></strong></label>
+                                  <input type="text" name="celular" class="form-control" id="celular"
+                                  [(ngModel)]="forncedorModel.celular"
+                                  prefix="55+" mask="(00) 0 0000 0000">
+                                  <div class="col-md-6" *ngIf="verificamsgErrorcelular === true">
+                                    <strong><span style="color: red;">{{msgErrorcelular}}</span></strong>
+                                 </div>
+                                  </div>                               
+                                  <div class="col-4">           
+                                    <label for="whatsapp" class="form-label">WHATSAPP <strong><span style="color: red;">*</span></strong><input class="form-check-input" type="checkbox" style="margin-left: 2px; margin-right: 2px;"id="whatsapp" (click)="numeroWhatsapp()">(MESMO QUE O CELULAR)</label>
+                                      <input type="text" [disabled]="verificaCelularWhats === true" name="whatsapp" 
+                                      class="form-control" id="whatsapp" [(ngModel)]="forncedorModel.whatsapp"
+                                      prefix="55+" mask="(00) 0 0000 0000">
+                                      </div>
+                    
+                              <div class="col-3">
+                                <label for="cep" class="form-label">CEP <strong><span style="color: red;">*</span></strong></label>
+                                <input type="text" name="cep" class="form-control" id="cep"
+                                [(ngModel)]="forncedorModel.cep" 
+                                (blur)="consultarCEP($event)"/>
+                                <!----------
+                                [(ngModel)]="empresaCadastrarCompleto.cep"            
+                                (blur)="consultarCEP($event)"
+                                <div *ngIf="verificaCEPDigitado == true" class="col-md-6" style="background: rosybrown;">              
+                                  <strong><span style="color: red;"><h5>{{msgErrorCEP}}</h5></span></strong>              
+                                </div>            
+                              </div>-------->
+                              <div class="col-md-6" *ngIf="verificamsgErrorCEP === true">
+                                <strong><span style="color: red;">{{msgErrorCEP}}</span></strong>
+                             </div>
+                              </div>
+                              <div class="col-md-3">
+                                <label for="cidade" class="form-label">CIDADE</label>
+                                <input type="text" name="cidade" class="form-control" id="cidade"
+                                [(ngModel)]="forncedorModel.cidade" > 
+                               
+                              </div>
+                    
+                    
+                              <div class="col-md-3">
+                                <label for="estado" class="form-label">ESTADO</label>
+                                <input type="text" name="estado" class="form-control" id="estado"
+                                [(ngModel)]="forncedorModel.estado">
+                              </div>
+                    
+                    
+                              <div class="col-3">
+                                <label for="bairro" class="form-label">BAIRRO</label>
+                                <input type="text" name="bairro" class="form-control" id="bairro"
+                                [(ngModel)]="forncedorModel.bairro">
+                              </div>
+                    
+                    
+                    
+                              <div class="col-4">
+                                <label for="endereco" class="form-label">ENDEREÇO</label>
+                                <input type="text" name="endereco" class="form-control" id="endereco"
+                                [(ngModel)]="forncedorModel.endereco"> 
+                              </div>
+                              <div class="col-4">
+                                <label for="numero" class="form-label">NUMERO</label>
+                                <input type="text" name="numero" class="form-control" id="numero"
+                                [(ngModel)]="forncedorModel.numero">
+                              </div>
+                             
+                    
+                              <div class="col-4">
+                                <label for="complemento" class="form-label">COMPLEMENTO</label>
+                                <input type="text" name="complemento" class="form-control" id="complemento"
+                                [(ngModel)]="forncedorModel.complemento">
+                              </div>
+                           
+
+                             
+
+                              <div class="col-12" style="margin-left: 40%;">
+                                <button type="submit" class="btn btn-primary" (click)="cadastarFornecedor(forncedorModel)" >CADASTRAR FORNECEDOR</button>
+                              </div>
+                            </form>
+
+
+
+
+
+
+                    <!-----------------       <form [formGroup]="formCadastrarFornecedor" (ngSubmit)="cadastrarFornecedor()">
                               <div class="container" style="margin-left: 16%;">
                                   <div class="row">
                                       <div class="col-md-2">
@@ -184,7 +497,7 @@
                                          <button type="submit"  class="btn btn-primary" style="margin-left: 20%; width: 100%;">CADASTRAR FORNECEDOR</button>
                                       </div>
                               </div>   
-                        </form>                                                  
+                        </form>           ----------->                                        
                           </div>
 
   

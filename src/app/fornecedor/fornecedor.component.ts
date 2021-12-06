@@ -1,5 +1,6 @@
+import { ContaSaida } from './../model/conta-saida';
 import { FornecedorService } from './../service/fornecedor.service';
-import { FornecedorModel } from './../model/fornecedor-model';
+import { Fornecedor } from './../model/fornecedor';
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from './../models/UserModel';
 import { Router } from '@angular/router';
@@ -11,6 +12,9 @@ import { Observable, Subscription } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { UserModelService } from '../services/user-model.service'
 import Swal from 'sweetalert2';
+import { HttpClient } from '@angular/common/http';
+import { NgbModal  } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-fornecedor',
@@ -60,14 +64,80 @@ export class FornecedorComponent implements OnInit {
   userModel: UserModel = new UserModel;
   userModelRecuperado: UserModel;
   formCadastrarFornecedor: FormGroup;
-  forncedorModel: FornecedorModel;
+
+
+
+  //---------------MENSAGENS DE ERROS---------------------//
+  msgErrorCEP: string = "";
+  msgErrornomeFornecedor: string = "";
+  msgErrorcnpj: string  = "";
+	msgErrorendereco :string  = "";
+	msgErroremail :string  = "";
+	msgErrorcep : string  = "";
+	msgErrornumero :string  = "";
+	msgErrorcidade: string = "";
+	msgErrorbairro: string = "";
+	msgErrorestado: string = "";
+	msgErrorcomplemento :string = "";
+	msgErrortelefone: string = "";
+	msgErrorcelular: string = "";
+  msgErrorwhatsapp: string = "";
+
+
+
+
+
+  //-------------VARIAVEIS DE DECISÃO---------------//
+
+  verificaCelularWhats: boolean = false;
+ 
+  verificamsgErrorCEP: boolean = false;
+  verificamsgErrornomeFornecedor: boolean = false;
+  verificamsgErrorcnpj: boolean = false;
+	verificamsgErrorendereco : boolean = false;
+	verificamsgErroremail : boolean = false;
+	verificamsgErrorcep : boolean = false;
+	veriricamsgErrornumero : boolean = false;
+	verificamsgErrorcidade: boolean = false;
+	verificamsgErrorbairro: boolean = false;
+	verificamsgErrorestado: boolean = false;
+	verificamsgErrorcomplemento : boolean = false;
+	verificamsgErrortelefone: boolean = false;
+	verificamsgErrorcelular: boolean = false;
+  verificamsgErrorwhatsapp: boolean = false;
+
+  verificaModal: boolean = false;
+
+  
   validadorMsgUsuario: boolean;
+ //-------------------CADASTRO FORNECEDOR-----------------------//
+ forncedorModel: Fornecedor;
+ fornecedorInformacoes: Fornecedor; 
+
+
+
+//-------------------CONTA SAIDA CADASTRO FORNECEDOR-----------------------//
+  contaSaidaCadastradaFornecedor: ContaSaida [];
+  listaContasAdicionadas: ContaSaida [] = [];
+  contaSaidaCadastradaFornecedorCompleta: ContaSaida;
+  historicoCompleto: string;
+  descricao: string;
+  codigoContaFornecedor: string;
+  nomeFornecedorHistorico: string;
+
+
+  //------------------COMPONENTES DE TELA----------------------//
+
+  trocaBotao: boolean = false; 
+
 
 
   constructor(private cf: ChangeDetectorRef, public userModelService: UserModelService,  
     public afAuth: AngularFireAuth, 
     private firestore: AngularFirestore, 
-    private router : Router, 
+    private router : Router,
+    private _httpClient: HttpClient, 
+    private modal: NgbModal,
     private fornecedorService: FornecedorService ) {
 
     this.formCadastrarFornecedor = new FormGroup({
@@ -80,15 +150,17 @@ export class FornecedorComponent implements OnInit {
       contatoTelefonico: new FormControl('', Validators.required),
       tipoServico: new FormControl('', Validators.required),
     })
-    this.forncedorModel= new FornecedorModel();
+    this.forncedorModel= new Fornecedor();
+    this.forncedorModel.nomeFornecedor = '';
    }
 
   ngOnInit(): void {
 
     this.afAuth.authState.subscribe(user => {
       console.log('Dashboard: user', user);
-     
-     
+     this.contaSaidaCadastradaFornecedor = [];
+     this.fornecedorInformacoes = new Fornecedor ();
+     this.contaSaidaCadastradaFornecedorCompleta = new ContaSaida();
       if (user) {
         this.userModelRecuperado = new UserModel();
         
@@ -105,6 +177,8 @@ export class FornecedorComponent implements OnInit {
     }
 });
     
+
+
   }
   toggle(){
     this.isOpen = !this.isOpen;
@@ -113,7 +187,117 @@ export class FornecedorComponent implements OnInit {
       this.afAuth.signOut();
   }
 
+  editarLinhaContaCadastradaFornecedor(indice: number, contaRecebida: ContaSaida ){
+    this.trocaBotao = true;
+  }
+
+  salvarAlteracoesFeitasContaCadastradaFornecedor(){
+    this.trocaBotao = false;
+  }
+
+
+  adicionarLinhaCadastrarContaFornecedor(nomeFornecedor: string){ 
+ 
+
+    const contaCadastrada = new ContaSaida();
+   
+    contaCadastrada.identificadorFornecedor = this.forncedorModel.cnpj;
+    contaCadastrada.codigoConta = this.codigoContaFornecedor;    
+    contaCadastrada.historico = nomeFornecedor  + " : " + this.descricao;  
+    
+    
+    this.contaSaidaCadastradaFornecedor.push(contaCadastrada)
+    console.log("Entrou no adicionar linha dados recuperados: " , this.contaSaidaCadastradaFornecedorCompleta)
+    this.contaSaidaCadastradaFornecedorCompleta = new ContaSaida();
+    this.codigoContaFornecedor = "";
+    this.descricao = "";    
+    this.contaSaidaCadastradaFornecedor.splice;
+  }
+
+  cadastarFornecedor(forncedorModelRecebido: Fornecedor){
+
+    if(forncedorModelRecebido.nomeFornecedor !== '' && forncedorModelRecebido.cnpj !== '' &&
+     forncedorModelRecebido.celular !== '' && forncedorModelRecebido.whatsapp !== '' &&
+     forncedorModelRecebido.cep){
+      this.fornecedorInformacoes = forncedorModelRecebido;
+      this.verificaModal = !this.verificaModal;
+
+      this.fornecedorService.cadastrar({...this.forncedorModel});
+
+      Swal.fire({
+        icon: 'success',
+        title: 'CADASTRO EFETUADO',
+        text: 'Cadastro efetuado com sucesso!',
+        showConfirmButton: false,
+        timer: 1000
+      })
+      this.forncedorModel = new Fornecedor();
+    }else{
+      Swal.fire({
+        icon: 'info',
+        title: 'Faltando informação',
+        text: 'Favor verifique as informações inseridas e se o problema persistir contate o administrador'       
+      })
+
+    }
+  }
+
+
+  consultarCEP($event: any){
+    
+    this.forncedorModel.cep = this.forncedorModel.cep.replace(/\D/g, '');
+
+    if (this.forncedorModel.cep != "") {
+      var validacep = /^[0-9]{8}$/;
+
+       //Valida o formato do CEP.
+       if(validacep.test(this.forncedorModel.cep)) {
+        this._httpClient.get(`https://viacep.com.br/ws/${this.forncedorModel.cep}/json/`).subscribe(resultadoCep=>{
+          let fornecedor : any = new Fornecedor()
+          fornecedor = resultadoCep;
+        this.popularDadosEndereco(fornecedor)
+        this.msgErrorCEP = "";
+        })
+       }else{       
+         console.log("CEP invalido")
+
+       }
+
+    }else{
+
+      if(this.forncedorModel.cep = ""){
+        this.msgErrorCEP = "Esse campo é obrigatório no cadastro de empresa"        
+      }
+      console.log("Cep vazio")
+    }
+
+
+   
+    
+  
+ 
+ 
+  }
+
+  popularDadosEndereco(empresa: any){
+    
+    this.forncedorModel.endereco = empresa.logradouro;
+    this.forncedorModel.bairro = empresa.bairro;
+    this.forncedorModel.complemento = empresa.complemento;
+    this.forncedorModel.estado = empresa.uf;
+    this.forncedorModel.cidade = empresa.localidade;
+    
+    console.log("Resultado: ", empresa)
+
+  }
+
+
+  /**
+   * 
+  
   cadastrarFornecedor(){
+
+
 
     console.log("Clicado Cadastrar fornecedor");
     console.log("informações formControl: ", this.formCadastrarFornecedor.value);
@@ -121,7 +305,7 @@ export class FornecedorComponent implements OnInit {
    
 
     if(this.formCadastrarFornecedor.invalid){
-      this.fornecedorService.cadastrar({...this.forncedorModel})
+    //  this.fornecedorService.cadastrar({...this.forncedorModel})
       console.log("Dentro else", this.formCadastrarFornecedor.value)
       Swal.fire({
         position: 'top-end',
@@ -145,5 +329,22 @@ export class FornecedorComponent implements OnInit {
     }
 
   }
+   * 
+   */
+cadastrarFornecedor(fornecedorConfirmado: Fornecedor){
 
 }
+  numeroWhatsapp(){
+    this.verificaCelularWhats = !this.verificaCelularWhats;
+    if(this.verificaCelularWhats == true){
+    this.forncedorModel.whatsapp = this.forncedorModel.celular;
+    console.log("Valor do whats é: ", this.forncedorModel.whatsapp);
+    }
+    
+    }
+
+}
+function index(index: any, arg1: number) {
+  throw new Error('Function not implemented.');
+}
+

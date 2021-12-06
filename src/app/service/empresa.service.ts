@@ -1,3 +1,5 @@
+import { ContaEntradaCaixa } from './../model/conta-entrada-caixa';
+import { ContaEntradaBanco } from './../model/conta-entrada-banco';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FornecedorModel } from './../model/fornecedor-model';
 import { EmpresaModel } from './../models/empresaModel';
@@ -21,7 +23,29 @@ export class EmpresaService {
     .then((resultado: any) =>{
         console.log(resultado.key);
     })
+  }
 
+
+  cadastrarContaCaixa(contaCaixa: ContaEntradaCaixa, identificadorEmpresa: string, identificadorCliente: string){
+
+    this.db.collection("CLIENTES-CADASTRADOS").doc(identificadorCliente)
+    .collection("EMPRESAS-CLIENTE").doc(identificadorEmpresa)
+    .collection("CONTA-CAIXA")  
+    .add(contaCaixa)   
+    .then((resultado: any) =>{
+        console.log(resultado.key);
+    })
+  }
+
+  cadastrarContaBanco(contaBanco: ContaEntradaBanco, identificadorEmpresa: string, identificadorCliente: string){
+
+    this.db.collection("CLIENTES-CADASTRADOS").doc(identificadorCliente)
+    .collection("EMPRESAS-CLIENTE").doc(identificadorEmpresa)
+    .collection("CONTA-BANCO")
+    .add(contaBanco)   
+    .then((resultado: any) =>{
+        console.log(resultado.key);
+    })
   }
 
 

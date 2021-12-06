@@ -10,5 +10,6 @@ export class Cliente{
     modified: string;
     obs: string;
     status: string;
-    quantidadeEmpresaCadastradas: number;    
+    quantidadeEmpresaCadastradas: number; 
+    codigoConta: string;   
 }

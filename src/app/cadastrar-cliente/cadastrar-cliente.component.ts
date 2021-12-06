@@ -45,6 +45,10 @@ export class CadastrarClienteComponent implements OnInit {
   isDisabled = false;
   clickCliente = false;
   formCadastrarCliente: FormGroup;  
+
+
+  codigoConta: string;
+
               // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
 
   constructor(private clienteservice: ClienteService, private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
@@ -57,6 +61,7 @@ export class CadastrarClienteComponent implements OnInit {
       emailCliente: new FormControl('', Validators.required),
       telefone: new FormControl('', Validators.required),
       celular: new FormControl('', Validators.required),
+      codigoConta: new FormControl('', Validators.required),
     })
 
   }

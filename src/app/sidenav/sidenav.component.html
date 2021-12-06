@@ -1,40 +1,20 @@
+<div class="logo py-4" *ngIf="verificaUserLogado == false">
+  <img src="../../assets/imagens/65ab872f-fa8e-4b2b-bdd4-376c93f02752_uploads_destacklogo.png" alt="Company Logo" width="200" />
 
+<h2 matSubheader class="mt-2">APPLICATIONS</h2>
+<mat-nav-list *ngIf="verificaUserLogado == false">
 
-<body class="text-center-home">
-
-<div class="d-flex">
-    <div class="check-menu">
-      <input type="checkbox" id="chec"  class="checkmenu">        
-        <label for="chec"><mat-icon (click)="toggle()">menu</mat-icon></label>
-        <nav class="menu-lateral">
-        <ul class="list-unstyled">
-         <!-------------- <li><a class="pagina-selecionada" >DASHBOARD</a></li>----------->
-          <li><a class="dropdown-item" (click)="acessarInicio()">
-            INICIO
-            </a></li>
-          
-          <!--------------
-          <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
+  <a mat-list-item routerLinkActive="list-item-active" style="text-align: start;" routerLink="/home" value="Home">
+    INICIO<mat-icon >home</mat-icon>
+    
+    </a>
   
-          <li class="cliente-nav dropdown"> 
-              
-                <a class="dropdown-toggle" href="#" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                LANÇAMENTOS
-                </a>     
-              <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
-                <!-----------<li><a class="dropdown-item" href="#">AREA DO CLIENTE</a></li>------->
-                <li><a class="dropdown-item" (click)="efetuarLancamentoEntrada()">LANÇAR ENTRADA</a></li>
-                <li><a class="dropdown-item"(click)="efetuarLancamentoSaida()">LANÇAR SAÍDA</a>                                
-                </li>
-                <!----------- <li><a class="dropdown-item" href="#">EDITAR</a></li>  ------>             
-              </ul>
-            </li>
-      
-          <li><a ></a></li>
-          <li><a >CONTAS</a></li>
-          <li><a >CONSULTAR</a></li>
-        </ul>
-      </nav>
-    </div>
-  <!------------ *ngIf="clickEfetuarLancamento == true" -->
-  
+
+<a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard">
+  DASHBOARD<mat-icon>dashboard</mat-icon> 
+</a>
+<a mat-list-item routerLink="/lancar-entrada"routerLinkActive="list-item-active" >ENTRADA <mat-icon>trending_up</mat-icon>  </a>
+<a mat-list-item routerLink="/lancar-saida" routerLinkActive="list-item-active">SAIDA <mat-icon>trending_down</mat-icon>  </a>
+<a mat-list-item routerLinkActive="list-item-active">HISTÓRICO <mat-icon>source</mat-icon> </a>
+</mat-nav-list>
+</div>

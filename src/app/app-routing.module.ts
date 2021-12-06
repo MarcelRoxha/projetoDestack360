@@ -1,3 +1,4 @@
+import { FormularioCadastroClienteComponent } from './formularios/formulario-cadastro-cliente/formulario-cadastro-cliente.component';
 import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.component';
 import { FornecedorComponent } from './fornecedor/fornecedor.component';
 import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas-entrada.component';
@@ -7,7 +8,7 @@ import { CadastrarClienteComponent } from './cadastrar-cliente/cadastrar-cliente
 import { ConsultaClienteComponent } from './consulta-cliente/consulta-cliente.component';
 import { LancarSaidaComponent } from './lancar-saida/lancar-saida.component';
 import { LancarEntradaComponent } from './lancar-entrada/lancar-entrada.component';
-import { EftLanceComponent } from './eft-lance/eft-lance.component';
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -39,7 +40,8 @@ const routes: Routes = [
     { path: 'cadastrarContaEntrada', component: CadastrarContaEntradaComponent, canActivate: [AuthGuard]},
     { path: 'listarContasEntrada', component: ListaContasEntradaComponent, canActivate: [AuthGuard]},
     { path: 'fornecedor', component: FornecedorComponent, canActivate: [AuthGuard]},
-    { path: 'fornecedorlista', component: FornecedorListaComponent}
+    { path: 'fornecedorlista', component: FornecedorListaComponent},
+    { path: 'formulario', component: FormularioCadastroClienteComponent}
 ];
 
 @NgModule({

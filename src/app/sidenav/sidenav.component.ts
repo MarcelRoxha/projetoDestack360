@@ -35,7 +35,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class SidenavComponent implements OnInit {
-
+  
+  verificaUserLogado = false;     
   user: Observable<any>;  
   loginForm: FormGroup; 
   isProgressVisible: boolean;

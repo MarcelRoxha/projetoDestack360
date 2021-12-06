@@ -1,0 +1,113 @@
+label{
+    opacity: 100%;
+}
+
+/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+   background: linear-gradient(90deg,  #323232, #01637f, #666666);  
+  }
+
+
+  
+
+  :host {
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+    }
+  
+  mat-drawer {
+    width: 260px;
+  }
+  mat-drawer-container {
+    height: 100%;
+  }
+  
+  mat-drawer {
+    background: #0f172a;
+  }
+  .form-control{
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto; 
+}
+.form-signin {
+
+    background: white;
+    
+    padding: 5px;
+    border-radius: 50px;
+    width: 500px;    
+    display: block;
+    margin: 0 auto;
+    margin-top: 2%;
+    margin-bottom: 1%;    
+  }
+
+  mat-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  ul li{
+    
+      list-style: none;
+   
+  }
+  button {
+    outline: none;
+    border: 0;
+    background: transparent;
+  }
+  .user {
+    font-size: 14px;
+  }
+  mat-toolbar {
+    background: #f7f7f7;
+  }
+  .user-image-icon {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;     
+    height: 18px;
+    font-size: 16px;
+   
+  }
+  
+  .user-image-icon ::ng-deep {
+   
+      width: 160px;
+
+  }
+
+  .page {
+    color: white;
+    padding: 0 1rem;
+    background: #f1f5f9;    
+  }
+
+  .page__box{
+    min-height: 120px;
+    background: #1e293b;
+    margin: 0 -1rem;
+    font-size: 36px;
+  } 
+
+  .page__content{
+    min-height: calc(100vh - 178px);
+    border-radius: 10px;
+    margin-top: -2rem;
+    background: white;
+    color: black;
+    font-size: 2rem;
+  }
+  .page__content-data{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

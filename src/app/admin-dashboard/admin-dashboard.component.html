@@ -141,12 +141,12 @@
               </a>                 
                                  
                 <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
-                  <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA ENTRADA</a></li>
+                  <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA</a></li>
                  
 
                  <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
-                  <li><a routerLink="/cadastrarContaSaida">CADASTRAR CONTA SAIDA</a></li>  
-                  <li><a class="dropdown-item" routerLink="/listarContasEntrada">CONTAS ENTRADAS CADASTRADAS</a></li>                                            
+                  <!------- <li><a routerLink="/cadastrarContaSaida">CADASTRAR CONTA SAIDA</a></li> ----> 
+                  <li><a class="dropdown-item" routerLink="/listarContasEntrada">CONTAS CADASTRADAS</a></li>                                            
                 </ul>
               </li> 
             <li><a >CONSULTAR</a></li>
@@ -159,12 +159,7 @@
             class="open-close-container">
 
             <div class="row">
-              <div class="col-md-2">
-                <h3>Clientes1</h3>
-              </div>
-              <div class="col-md-2">
-                <h3>Clientes1</h3>
-              </div>
+              <app-formulario-cadastro-empresa></app-formulario-cadastro-empresa>
             </div>
            
                 

@@ -82,6 +82,10 @@ import { ListaContasEntradaComponent } from './lista-contas-entrada/lista-contas
 import { NgxMaskModule } from 'ngx-mask';
 import { FornecedorComponent } from './fornecedor/fornecedor.component';
 import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.component';
+import { FormularioCadastroClienteComponent } from './formularios/formulario-cadastro-cliente/formulario-cadastro-cliente.component';
+import { FormularioCadastroEmpresaComponent } from './formularios/formulario-cadastro-empresa/formulario-cadastro-empresa.component';
+import { CampoControlErroComponent } from './campo-control-erro/campo-control-erro.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -106,7 +110,10 @@ import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.co
     CadastrarContaEntradaComponent,
     ListaContasEntradaComponent,
     FornecedorComponent,
-    FornecedorListaComponent
+    FornecedorListaComponent,
+    FormularioCadastroClienteComponent,
+    FormularioCadastroEmpresaComponent,
+    CampoControlErroComponent
   ],
   imports: [
     BrowserModule,
@@ -155,7 +162,8 @@ import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.co
     HttpClientModule,
     NgxMaskModule.forRoot({
       dropSpecialCharacters: true
-       })
+       }),
+    NgbModule
 
     
 

@@ -38,12 +38,12 @@ export class ContaEntradaService {
   }
 
   listaFornecedoresCadastrados() : Observable<FornecedorModel[]>{
-    return this.http.get<FornecedorModel[]>('http://localhost:8080/api/recuperar-fornecedores-cadastrados');
+    return this.http.get<FornecedorModel[]>('https://destack360.herokuapp.com/api/recuperar-fornecedores-cadastrados');
 
   }
 
   recuperarServicosFornecedor(identificadorContaEntrada : string) : Observable<ServicoFornecedorModel[]>{
-    return this.http.post<ServicoFornecedorModel[]>('http://localhost:8080/api/recuperar-servicos-fornecedor-selecionado', identificadorContaEntrada);
+    return this.http.post<ServicoFornecedorModel[]>('https://destack360.herokuapp.com/api/recuperar-servicos-fornecedor-selecionado', identificadorContaEntrada);
     
   }
 

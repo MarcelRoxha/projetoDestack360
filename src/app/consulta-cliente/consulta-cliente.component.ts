@@ -1,10 +1,12 @@
+
+
 import { FornecedorModel } from './../model/fornecedor-model';
 import { ContaCaixa } from './../models/contaCaixaModel';
 import { ContaSaidaSalvaFutura } from './../models/ContaSaidaSalvaFutura';
 import { ContaSaidaService } from './../services/conta-saida.service';
 import { UserModelService } from './../services/user-model.service';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
@@ -24,6 +26,8 @@ import { ContaBancoModel } from '../models/contaBancoModel';
 import { EmpresaModel } from '../models/empresaModel';
 import { EmpresaService } from '../service/empresa.service';
 import { ServicoFornecedorModel } from '../models/servicoFornecedorModel';
+import { ContaEntradaCaixa } from '../model/conta-entrada-caixa';
+import { ContaEntradaBanco } from '../model/conta-entrada-banco';
 
 
 
@@ -58,6 +62,7 @@ import { ServicoFornecedorModel } from '../models/servicoFornecedorModel';
 export class ConsultaClienteComponent implements OnInit {
 
   clientes : Cliente[] = [];
+  empresasRecuperadas: EmpresaModel[] = [];
   user: Observable<any>; 
   isOpen = false; 
   isDisabled = false;
@@ -71,6 +76,7 @@ export class ConsultaClienteComponent implements OnInit {
 
   identificador: string;
   nome: string;
+  nomeMaiusculo: string;
   cpf: string;
   usuariocliente: string;
   email: string;
@@ -97,8 +103,7 @@ export class ConsultaClienteComponent implements OnInit {
   lancerFormCreditoCaixa: FormGroup;
   lancerFormCreditoBanco: FormGroup;
   lancerFormDebitoCaixa : FormGroup;
-  lancerFormDebitoBanco : FormGroup;
-
+  lancerFormDebitoBanco : FormGroup;  
 
   lancerForm: FormGroup;
  
@@ -147,6 +152,10 @@ export class ConsultaClienteComponent implements OnInit {
 
   verificaClientesCadastrados: boolean = false ;
   selecionadoServicoEFornecedor: boolean = false;
+  verificaCelularWhats: boolean = false;
+  verificaMostaEmpresas: boolean = false;
+
+  msgEWhats: string = "SIM"
 
   //-------CONTA CAIXA-------//
 
@@ -167,6 +176,18 @@ export class ConsultaClienteComponent implements OnInit {
   destalhesLancamentoContaBanco: string;
 
 
+  //--------------VALIDACAO CAMPOS OBRIGATORIOS-----------------//
+  verificaRazaoSocial: boolean = false;
+  msgErrorCNPJ: string ;
+  msgErrorRazaoSocial: string ;
+  msgErrorCEP: string ;
+  verificaCNPJDigitado: boolean = false;
+  verificaRazaoSocialDigitado: boolean = false;
+  verificaCEPDigitado: boolean = false;
+  verificaEnderecoDigitado: boolean = false;
+  verificaCadastroEmpresaCompleto: boolean = false;
+
+
 
   //---------------FORNECEDOR--------------------//
 
@@ -174,16 +195,36 @@ export class ConsultaClienteComponent implements OnInit {
 
   //----------CADASTRAR EMPRESA--------//
 
+  empresaCadastrarCompleto: EmpresaModel;
   empresaCadastrar: any ;
   identificadorCliente: String ;
 	cnpj: string ;
 	endereco :string ;
+  bairro: string;
+  estado: string;
+  complemento: string;
+  cidade: string;
 	emailEmpresa :string ;
-	cep : string ;
+	cep : any ;
 	numero :string ;
-	complemento :string ;
 	razaoSocial :string ;
 	nomeEmpresa :string ;
+  saldoCaixaCadastrar: string;
+  saldoBancoCadastrar: string;
+  codigoBanco: string;
+  agencia: string;
+  nconta: string;
+  codigoCaixa: string = "5";
+  verificaCadastroContaBanco: boolean = false;
+
+
+  //--------------CADASTRAR CONTA CAIXA DE ACORDO COM A EMPRESA----------------//
+
+  contaEntradaCaixaCadastro: ContaEntradaCaixa;
+  contaEntradaBancoCadastro: ContaEntradaBanco;
+
+
+
 
   //----------EMPRESAS CADASTRADAS--------//
   empresas: EmpresaModel [] = [];
@@ -197,11 +238,16 @@ export class ConsultaClienteComponent implements OnInit {
 	razaoSocialEmpresa :string ;
 	nomeEmpresaEmpresa :string ;
   saldoBanco: string;
-  saldoCaixa: string; 
+  saldoCaixa: string;
+
+  codigoContaCaixa: number = 5;
+  codigoContaBanco: number = 0;
+  agenciaBanco: string = "01...";
+  numeroContaBanco: string = "01..-01";
 
   //----------RECUPERAR INFORMAÇÕES EMPRESA CLIENTE--------//
   clienteRecuperaEmpresa : any = new Cliente();
- 
+  empresasCliente: any = new EmpresaModel();
 
   //------------PREPARER DADOS CLIENTE EMPRESA PARA EFETUAR LANCAMENTO DE ENTRADA----------//
 
@@ -230,12 +276,14 @@ export class ConsultaClienteComponent implements OnInit {
 
 
 
+
   //-----------INFORMAÇÕES RECUPERADA PARA EFETUAR LANCAMENTO PARA O DEVIDO CLIENTE---------------///
   identificadorClienteLancaCredito: string;
   identificadorEmpresaLancaCredito: string;
 
   identificadorClienteLancaDebito: string;
   identificadorEmpresaLancaDebito: string;
+  
 
 
 // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
@@ -248,10 +296,16 @@ export class ConsultaClienteComponent implements OnInit {
     private afAuth: AngularFireAuth, 
     private firestore: AngularFirestore, 
     private router : Router,
+ 
     private serviceEmpresa: EmpresaService) {
     this.router.navigate(['/consultarClientes']);
     this.fornecedoresModel = [];
     this.contaEntradaInicial = new ContaEntrada();
+
+
+
+    this.empresaCadastrarCompleto = new EmpresaModel();
+    this.contaEntradaBancoCadastro = new ContaEntradaBanco();
 
     this.lancerForm = new FormGroup({
       'dataLancamentoEntrada': new FormControl(''),
@@ -260,6 +314,9 @@ export class ConsultaClienteComponent implements OnInit {
       'descricaoLancamento' : new FormControl(''),
   
   });
+
+  
+
 
   this.lancerFormSaida = new FormGroup({
     'datalancamentoSaida': new FormControl('', Validators.required),
@@ -270,14 +327,18 @@ export class ConsultaClienteComponent implements OnInit {
 });
 
 this.cadastrarFormEmpresa = new FormGroup({
-  'nomeEmpresa': new FormControl('', Validators.required),
+  'nomeEmpresa': new FormControl(''),
   'razaoSocial': new FormControl('', [Validators.required]),
   'cnpj' : new FormControl('', Validators.required),
+  'telefone': new FormControl('', Validators.required),
+	'celular': new FormControl('', Validators.required), 
   'endereco' : new FormControl('', Validators.required),
   'numero' : new FormControl('', Validators.required),
   'cep' : new FormControl('', Validators.required),
   'complemento' : new FormControl('', Validators.required),
-  'email' : new FormControl('', Validators.required)
+  'email' : new FormControl('', Validators.required),
+  'saldoCaixa' : new FormControl('', Validators.required),
+  'saldoBanco' : new FormControl('', Validators.required),
 });
 
 
@@ -335,9 +396,17 @@ this.lancerFormCreditoBanco = new FormGroup({
 });
 
 
+this.contaEntradaCaixaCadastro = new ContaEntradaCaixa ();
+  this.contaEntradaCaixaCadastro.codigoContaCaixa = 5;
+  this.contaEntradaCaixaCadastro.historico = "CONTA CAIXA";
+  this.contaEntradaCaixaCadastro.saldoCaixa = "";
+
+
   }
 
   ngOnInit(): void {
+
+   
 
     this.empresaCadastrar = new EmpresaModel();
       this.afAuth.authState.subscribe(user => {                                                   // grab the user object from Firebase Authorization
@@ -352,13 +421,25 @@ this.lancerFormCreditoBanco = new FormGroup({
           }
       });
 
+      this.empresaCadastrarCompleto.nomeEmpresa = "";
+      this.empresaCadastrarCompleto.cnpj = "";
+
      
 
       this.clienteservice.listarClientes().subscribe(clientesCadastradosBanco =>{
         this.clientes = clientesCadastradosBanco;
         this.clienteRecuperaEmpresa = this.clientes;
-      
-     
+        console.log("CPF recuperado: ", clientesCadastradosBanco[0].nome)
+        for (var i = 0; i < clientesCadastradosBanco.length ; i++) {
+          this.recuperarInformacoesEmpresaCliente(clientesCadastradosBanco[i].cpf)
+         console.log("Recuperado dentro do for: ",  clientesCadastradosBanco[i].cpf)
+       }      
+
+      this.recuperarInformacoesEmpresaCliente(this.clienteRecuperaEmpresa.cpf);
+        this.contaEntradaService.listaFornecedoresCadastrados().subscribe(resultadoFornecedores=>{
+          this.fornecedoresModel = resultadoFornecedores;
+          console.log("Forncedores recuperados: ",this.fornecedoresModel)
+        })
        
        // console.log("Empresas Recuperadas: ",  this.clientes["cpf"])
         console.log("Clientes Recuperados: ", this.clientes)
@@ -391,10 +472,7 @@ this.contaEntradaService.listaContasEntradaSalvas().subscribe(constaEntradaSalva
   this.listaEntradasCadastradas = constaEntradaSalva;
 })
 
-this.contaEntradaService.listaFornecedoresCadastrados().subscribe(resultadoFornecedores=>{
-  this.fornecedoresModel = resultadoFornecedores;
-  console.log("Forncedores recuperados: ",this.fornecedoresModel)
-})
+
 
 console.log("Resulrado valor: ", this.lancerFormCreditoCaixa.value('valorlancamentoSainda') )
 
@@ -423,15 +501,47 @@ this.isOpen = !this.isOpen;
 }
 
 
-recuperarinformacoesEmpresa(identificadorCliente : string){
+//-------------------------------------------------------EMPRESAS CLIENTES------------------------------------------------------//
 
+
+
+recuperarInformacoesEmpresaCliente(identificadorCliente: string){
+
+  if(identificadorCliente !== ''){
+    console.log("Entrou no if cpf recuperado: ", identificadorCliente);
+    this.clienteservice.recuperarEmpresasCliente(identificadorCliente).subscribe(resultadoApi=>{
+      this.empresasRecuperadas = resultadoApi;
+    })
+  }
+
+
+}
+
+
+cliqueinoCheck(){
+  this.verificaCadastroContaBanco = !this.verificaCadastroContaBanco;
+  console.log(this.verificaCadastroContaBanco);
+  console.log("Cliquei no chec banco")
+}
+
+
+recuperarinformacoesEmpresa(identificadorCliente : string){
+  
   this.identificadorClientePreparer = identificadorCliente;
+
+  this.verificaMostaEmpresas = true;
+  this.clienteservice.recuperarEmpresasCliente(identificadorCliente).subscribe(ResultadoAPI=>{
+    this.verificaMostaEmpresas = true;
+    console.log("Recuperar empresas API: ", ResultadoAPI)
+  })
+
   this.clienteservice.recuperarEmpresaCadastradasCliente(identificadorCliente).subscribe(empresasRecuperadas =>{
     this.empresas = empresasRecuperadas;
   })
 
 console.log("Identificador recuperado: ", identificadorCliente);
 console.log("Empresaas recuperadas: ", this.empresas);
+this.verificaMostaEmpresas = false;
 }
 
 clickcliente(){
@@ -440,7 +550,198 @@ return this.clickCliente = !this.clickCliente;
 
 recuperarInformacoesEmpresaClienteLancaDebitoCaixa(identificadorCliente: string, identificaorEmpresa: string){
 
+
 }
+
+numeroWhatsapp(){
+this.verificaCelularWhats = !this.verificaCelularWhats;
+if(this.verificaCelularWhats == true){
+this.empresaCadastrarCompleto.whatsapp = this.empresaCadastrarCompleto.celular;
+console.log("Valor do whats é: ", this.empresaCadastrarCompleto.whatsapp);
+}
+
+}
+
+
+verificaRaZaoSocialDigitado($event: any){
+
+
+  this.empresaCadastrarCompleto.razaoSocial =  this.empresaCadastrarCompleto.razaoSocial;
+   
+  if(this.empresaCadastrarCompleto.razaoSocial == ""){
+    this.msgErrorRazaoSocial = "Esse campo é obrigatório no cadastro de empresa"
+    this.verificaRazaoSocialDigitado = true;
+    
+  } 
+  this.verificaRazaoSocialDigitado = !this.verificaRazaoSocialDigitado;
+  
+}
+
+
+cadastrarEmpresa(empresaRecebendo: EmpresaModel){
+  this.validarCampoRazaoSocial;
+  this.validacaoCNPJ();
+  this.validarCampoCEP();
+  let identificadorEmpresa = '';
+  let identificadorCliente = '';
+
+
+  if(this.validarCampoRazaoSocial()){
+    Swal.fire({
+      position: 'top',
+      icon: 'error',
+      title: 'Ops! Não foi possível concluir o cadastro, favor verifique as informações e se o problema persistir contate o administrador',
+      showConfirmButton: true,
+      
+    })
+    return 
+  }
+
+    if(this.validacaoCNPJ()){
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Ops! Não foi possível concluir o cadastro, favor verifique as informações e se o problema persistir contate o administrador',
+        showConfirmButton: true,
+        
+      })
+      return 
+    }
+
+    if(this.validarCampoCEP()){
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Ops! Não foi possível concluir o cadastro, favor verifique as informações e se o problema persistir contate o administrador',
+        showConfirmButton: true,
+        
+      })
+      return 
+  
+  
+  }else{
+    
+    
+    if(this.verificaCadastroContaBanco){
+      console.log("Você cadastrou conta de banco: ")
+      this.contaEntradaBancoCadastro.identificadorEmpresa = empresaRecebendo.cnpj;
+      this.contaEntradaCaixaCadastro.identificadorEmpresa = empresaRecebendo.cnpj;
+      empresaRecebendo.identificadorCliente = this.cpf
+      identificadorEmpresa = empresaRecebendo.cnpj
+      identificadorCliente =  empresaRecebendo.identificadorCliente ;
+
+
+      this.serviceEmpresa.cadastrarEmpresa({...this.empresaCadastrarCompleto},  empresaRecebendo.identificadorCliente)
+      this.serviceEmpresa.cadastrarContaCaixa({...this.contaEntradaCaixaCadastro},  identificadorEmpresa, identificadorCliente )
+      this.serviceEmpresa.cadastrarContaBanco({...this.contaEntradaBancoCadastro},  identificadorEmpresa, identificadorCliente)
+     
+
+      console.log("Resultado conta banco: ",this.contaEntradaBancoCadastro);
+      console.log("Resultado conta caixa: ",this.contaEntradaCaixaCadastro);
+      console.log("Resultado empresa: ",empresaRecebendo);
+      this.verificaCadastroEmpresaCompleto = true;
+
+      this.contaEntradaCaixaCadastro = new ContaEntradaCaixa ();
+      this.contaEntradaCaixaCadastro.codigoContaCaixa = 5;
+      this.contaEntradaCaixaCadastro.historico = "CONTA CAIXA";
+      this.contaEntradaCaixaCadastro.saldoCaixa = ""
+      this.contaEntradaBancoCadastro = new ContaEntradaBanco ();
+      this.empresaCadastrarCompleto = new EmpresaModel();    
+      this.verificaCadastroEmpresaCompleto = !this.verificaCadastroEmpresaCompleto;
+
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'O CADASTRO EFETUADO ESTÁ COMPLETO',
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+    }else{
+      
+      console.log("Você não cadastrou conta Banco:");
+  
+      if(this.contaEntradaCaixaCadastro.saldoCaixa == ""){
+        console.log("Não foi digitado um valor de saldo, por padrão será 0")
+        this.contaEntradaCaixaCadastro.saldoCaixa = "0"
+        this.contaEntradaCaixaCadastro.identificadorEmpresa = empresaRecebendo.cnpj;
+        empresaRecebendo.identificadorCliente = this.cpf
+
+
+      console.log("Resultado empresa: ",{...this.contaEntradaCaixaCadastro});
+      console.log("Resultado Empresa recebida: ", empresaRecebendo);
+      this.verificaCadastroEmpresaCompleto = true;
+      this.contaEntradaCaixaCadastro = new ContaEntradaCaixa ();
+      this.contaEntradaCaixaCadastro.codigoContaCaixa = 5;
+      this.contaEntradaCaixaCadastro.historico = "CONTA CAIXA";
+      this.contaEntradaCaixaCadastro.saldoCaixa = ""
+      this.contaEntradaBancoCadastro = new ContaEntradaBanco ();
+      this.empresaCadastrarCompleto = new EmpresaModel();    
+      this.verificaCadastroEmpresaCompleto = !this.verificaCadastroEmpresaCompleto;
+      Swal.fire({
+        position: 'top',
+        icon: 'info',
+        title: 'Atenção, você cadastrou a empresa, porém, não cadastrou o banco, você pode fazer isso a qualquer momento no painel de controle',
+        showConfirmButton: true,
+        
+      })
+
+
+
+      }else{
+        console.log("Você digitou um saldo")
+        this.contaEntradaCaixaCadastro.identificadorEmpresa = empresaRecebendo.cnpj;
+        empresaRecebendo.identificadorCliente = this.cpf
+        console.log("Resultado empresa: ",this.contaEntradaCaixaCadastro);
+        console.log("Resultado Empresa recebida: ", empresaRecebendo);
+        this.verificaCadastroEmpresaCompleto = true;
+        this.contaEntradaCaixaCadastro = new ContaEntradaCaixa ();
+        this.contaEntradaCaixaCadastro.codigoContaCaixa = 5;
+        this.contaEntradaCaixaCadastro.historico = "CONTA CAIXA";
+        this.contaEntradaCaixaCadastro.saldoCaixa = ""
+        this.contaEntradaBancoCadastro = new ContaEntradaBanco ();
+        this.empresaCadastrarCompleto = new EmpresaModel();    
+        this.verificaCadastroEmpresaCompleto = !this.verificaCadastroEmpresaCompleto;
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          title: 'CADASTRO PARCIAL COMPLETO',
+          showConfirmButton: false,
+          timer: 1500
+        })
+
+        Swal.fire({
+          position: 'top',
+          icon: 'info',
+          title: 'Atenção, você cadastrou a empresa, porém, não cadastrou o banco, você pode fazer isso a qualquer momento no painel de controle',
+          showConfirmButton: true,
+          
+        })
+       
+       
+      }
+    
+    }
+
+  
+    
+  
+    // console.log("Resultado Empresa recebida: ", empresaRecebendo);
+    //  console.log("Resultado Conta Caixa: " , this.contaEntradaCaixaCadastro);
+  
+    
+  
+  
+ // console.log(empresaRecebendo);
+  return true;
+  }
+
+
+
+  
+}
+
+@ViewChild('exampleModalLancars') exampleModalLancars: any;
 
 lancarEntradaContaBanco(){
   this.contaBanco = new ContaBancoModel();
@@ -497,7 +798,7 @@ recuperarInformarcoesClientesSelecionado(idClienteSelecionado: string){
     this.nome = resultadoInfoCliente.nome;
     this.telefone = resultadoInfoCliente.telefone;
     this.usuariocliente = resultadoInfoCliente.usuariocliente;
-  
+    this.nomeMaiusculo = this.nome.toUpperCase();
   })
 
 
@@ -806,11 +1107,13 @@ declaroAnonimo(){
     this.empresaCadastrar.created = this.data.toTimeString();
     this.empresaCadastrar.modified = "Cliente Sem modificações"
     this.empresaCadastrar.nomeEmpresa =this.nomeEmpresa;
+    this.empresaCadastrar.saldoCaixa =this.saldoCaixa;
+    this.empresaCadastrar.saldoBanco =this.saldoBanco;
 
     if(this.empresaCadastrar){
       
-
-      this.serviceEmpresa.cadastrarEmpresaClienteAPI(this.empresaCadastrar).subscribe(Resultado=>{
+      console.log("empresaCadastrar: ", this.empresaCadastrar)
+      this.serviceEmpresa.cadastrarEmpresaClienteAPI({...this.empresaCadastrar}).subscribe(Resultado=>{
         console.log("resultado do cadastrar API: ",Resultado)
       });
       Swal.fire({
@@ -841,6 +1144,171 @@ declaroAnonimo(){
 
     
   
+  }
+
+  consultarCEP($event: any){
+    
+    this.empresaCadastrarCompleto.cep = this.empresaCadastrarCompleto.cep.replace(/\D/g, '');
+
+    if (this.empresaCadastrarCompleto.cep != "") {
+      var validacep = /^[0-9]{8}$/;
+
+       //Valida o formato do CEP.
+       if(validacep.test(this.empresaCadastrarCompleto.cep)) {
+        this._httpClient.get(`https://viacep.com.br/ws/${this.empresaCadastrarCompleto.cep}/json/`).subscribe(resultadoCep=>{
+          let empresa : any = new EmpresaModel()
+          empresa = resultadoCep;
+        this.popularDadosEndereco(empresa)
+        })
+       }else{
+        if(this.empresaCadastrarCompleto.razaoSocial.length < 2){
+          this.msgErrorCEP = "Digite um CEP válido"
+          this.verificaCEPDigitado = true;
+         }
+         console.log("CEP invalido")
+
+       }
+
+    }else{
+
+      if(this.empresaCadastrarCompleto.cep = ""){
+        this.msgErrorCEP = "Esse campo é obrigatório no cadastro de empresa"
+        this.verificaCEPDigitado = true;
+      }
+      console.log("Cep vazio")
+    }
+
+
+   
+    
+  
+ 
+ 
+  }
+
+  popularDadosEndereco(empresa: any){
+    
+    this.empresaCadastrarCompleto.endereco = empresa.logradouro;
+    this.empresaCadastrarCompleto.bairro = empresa.bairro;
+    this.empresaCadastrarCompleto.complemento = empresa.complemento;
+    this.empresaCadastrarCompleto.estado = empresa.uf;
+    this.empresaCadastrarCompleto.cidade = empresa.localidade;
+    
+    console.log("Resultado: ", empresa)
+
+  }
+
+  consultarCNPJ($event: any){
+
+    this.empresaCadastrarCompleto.cnpj = this.empresaCadastrarCompleto.cnpj.replace(/\D/g, '');
+
+    if(this.empresaCadastrarCompleto.cnpj === ''){
+      return false;
+    }
+    
+    if(this.empresaCadastrarCompleto.cnpj.length !== 14){
+      return false;
+    }
+
+    if (this.empresaCadastrarCompleto.cnpj == "00000000000000" || 
+    this.empresaCadastrarCompleto.cnpj == "11111111111111" || 
+    this.empresaCadastrarCompleto.cnpj == "22222222222222" || 
+    this.empresaCadastrarCompleto.cnpj == "33333333333333" || 
+    this.empresaCadastrarCompleto.cnpj == "44444444444444" || 
+    this.empresaCadastrarCompleto.cnpj == "55555555555555" || 
+    this.empresaCadastrarCompleto.cnpj == "66666666666666" || 
+    this.empresaCadastrarCompleto.cnpj == "77777777777777" || 
+    this.empresaCadastrarCompleto.cnpj == "88888888888888" || 
+    this.empresaCadastrarCompleto.cnpj == "99999999999999"){
+    return false;
+        }
+
+        this._httpClient.get("https://www.receitaws.com.br/v1/cnpj/" + 61695227000193 + "").subscribe(resultadoConsultaCNPJ =>{
+          console.log("Resultado receita federal ", resultadoConsultaCNPJ)
+        
+        let empresaRecuperadaReceita : any = new EmpresaModel();
+          empresaRecuperadaReceita = resultadoConsultaCNPJ;
+
+          this.popularDadosEmpresaComCNPJ(empresaRecuperadaReceita)
+
+        })
+        
+        
+        
+     
+    return true;
+
+  }
+
+  validacaoCNPJ(){
+
+  if(this.empresaCadastrarCompleto.cnpj == ''){
+      this.msgErrorCNPJ = "Esse campo é obrigatório"
+      this.verificaCNPJDigitado = true;
+      return true;
+      
+    }
+    
+    if(this.empresaCadastrarCompleto.cnpj.length == 14 || this.empresaCadastrarCompleto.cnpj.length == 12  ){
+      this.verificaCNPJDigitado = false;
+      return false;
+  
+    }
+
+
+    this.verificaCNPJDigitado = !this.verificaCNPJDigitado;
+
+    if (this.empresaCadastrarCompleto.cnpj == "00000000000000" || 
+    this.empresaCadastrarCompleto.cnpj == "11111111111111" || 
+    this.empresaCadastrarCompleto.cnpj == "22222222222222" || 
+    this.empresaCadastrarCompleto.cnpj == "33333333333333" || 
+    this.empresaCadastrarCompleto.cnpj == "44444444444444" || 
+    this.empresaCadastrarCompleto.cnpj == "55555555555555" || 
+    this.empresaCadastrarCompleto.cnpj == "66666666666666" || 
+    this.empresaCadastrarCompleto.cnpj == "77777777777777" || 
+    this.empresaCadastrarCompleto.cnpj == "88888888888888" || 
+    this.empresaCadastrarCompleto.cnpj == "99999999999999"){
+      this.msgErrorCNPJ = "Dado cadastral invalido"
+      this.verificaCNPJDigitado = true;
+       return true;
+        }
+
+   //     this._httpClient.get("https://www.receitaws.com.br/v1/cnpj/" + 61695227000193 + "").subscribe(resultadoConsultaCNPJ =>{
+        //  console.log("Resultado receita federal ", resultadoConsultaCNPJ)
+        
+        //let empresaRecuperadaReceita : any = new EmpresaModel();
+        //  empresaRecuperadaReceita = resultadoConsultaCNPJ;
+
+        //  this.popularDadosEmpresaComCNPJ(empresaRecuperadaReceita)
+
+      //  })
+      this.verificaCNPJDigitado = false;
+    return false;
+  }
+
+  validarCampoRazaoSocial(){
+    
+   if(this.empresaCadastrarCompleto.razaoSocial == ''){
+     this.msgErrorRazaoSocial = "Esse campo é obrigatório no cadastro de empresa"
+     this.verificaRazaoSocialDigitado = true;
+     return true;
+   }    
+    return false;
+  }
+
+  validarCampoCEP(){
+    
+    if(this.empresaCadastrarCompleto.cep == ''){
+      this.msgErrorCEP = "Esse campo é obrigatório no cadastro de empresa"
+      this.verificaCEPDigitado = true;
+      return true;
+    } 
+     return false;
+   }
+
+  popularDadosEmpresaComCNPJ(empresa: any){
+    console.log("Resultado CNPJ: ", empresa)
+
   }
 
   salvarLancamentoSaida(identificador: string){
@@ -904,6 +1372,14 @@ declaroAnonimo(){
 
 
     console.log("cnpj recuperado: ", identificadorFornecedor)
+  }
+
+  validacaoDosCamposObrigatorios(){
+
+  }
+
+  verificaWhatsCelular(){
+    this.verificaCelularWhats = this.verificaCelularWhats;
   }
 
 }

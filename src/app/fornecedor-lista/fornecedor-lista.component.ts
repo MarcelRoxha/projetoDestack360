@@ -12,7 +12,7 @@ import { UserModelService } from '../services/user-model.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FirestoreModule } from '@angular/fire/firestore';
 import Swal from 'sweetalert2';
-import { ContaSaida } from '../models/contaSaidaModel';
+import { ContaSaida } from '../model/conta-saida';
 import { ContaSaidaService } from '../services/conta-saida.service';
 
 @Component({
@@ -66,12 +66,21 @@ export class FornecedorListaComponent implements OnInit {
   fornecedorInformacoes: any = new FornecedorModel();
   formAtualizarFornecedor: FormGroup;
 
+  //------------CADASTRAR CONTA FORNECEDOR--------------------//
+  contaSaidaCadastradaFornecedor: ContaSaida ;
+  nomeFornecedorSelecionado: string;
+  descricaoConta: string;
+  codigoConta: string;
+  historicoCompleto: string; 
+
+
+
+
 
   //-------------CADASTRO DE SERVIÇO FORNECEDOR--------------//
   identificadorFornecedor: string;
   descricaoServico: string;
-  codigoContaDebito: string;
-  codigoContaCredito: string;
+  codigoContaDigitado: string;
   nomeFornecedorCadastroServico: string;
 
 
@@ -137,13 +146,13 @@ export class FornecedorListaComponent implements OnInit {
    
     this.fornecedores = this.fornecedorService.recuperarFornecedoresCadastrados();
 
-    if(this.fornecedores._isScalar !== false ){
+/**    if(this.fornecedores._isScalar !== false ){
       console.log("Tem Fornecedor")
     }else{
       this.verificaFornecedores = true;
       console.log("Não tem fornecedor")
     }
-    console.log("O que está me retornando?: ", this.fornecedores)
+    console.log("O que está me retornando?: ", this.fornecedores)*/
     this.afAuth.authState.subscribe(user => {
       console.log('Dashboard: user', user);
      console.log("Fornecedores:",  this.fornecedores)
@@ -173,73 +182,13 @@ export class FornecedorListaComponent implements OnInit {
       this.afAuth.signOut();
   }
 
-  cadastrarContaSaida(identificadorSaida: string){
-    console.log(this.formCadastrarContaSaida.value);
-   
-  
-  if(this.formCadastrarContaSaida.invalid){
-    Swal.fire('Só é possível salvar conta de saída, se todas as informações estiverem preenchidas, verifique as informações e tente novamente')
-    console.log("Invalido")
-  }else{
-    const contaSaida : ContaSaida = {...this.formCadastrarContaSaida.value}
-    
-  
-    if(contaSaida.codigoC !== "" || contaSaida.codigoD !== "" 
-    || contaSaida.descricaoServico !== ""){
+  cadastrarContaSaida(contaFornecedorRecebida: ContaSaida){   
 
-      contaSaida.fornecedor = this.nomeFornecedorCadastroServico;
-      contaSaida.identificador = this.identificadorFornecedor;
-      console.log("conta depois de receber identificador e fornecedor: ", contaSaida);
-      this.firebase.collection('FORNECEDORES').doc(this.identificadorFornecedor).collection("SERVIÇOS").doc(identificadorSaida).set({...this.formCadastrarContaSaida.value})
-      console.log("Imprimindo formulario completo fornecedor servico: ", this.formCadastrarContaSaida.value)
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Conta de Saída salva com sucesso',
-        showConfirmButton: false,
-        timer: 1000
-      })
-      console.log("Entrou no cadastrarServico Fornecedor cadastrar conta Saida: ", contaSaida)
-      this.firebase.collection("CONTAS_SAIDA")
-      .doc(identificadorSaida)
-      .set(contaSaida)
-
-      this.formCadastrarContaSaida.reset();
-    }else{
       
-      Swal.fire('Erro desconhecido, favor contate o administrador')
-      
-    }
-  
-  
-    
-  }
-  
   }
 
 
-  cadastrarServicoFornecedor(){
-    this.contaSaida = new ContaSaida();
-    this.contaSaida.fornecedor = this.nomeFornecedorCadastroServico;
-    this.contaSaida.descricaoServico = this.descricaoServico;
-    this.contaSaida.codigoC = this.codigoContaCredito;
-    this.contaSaida.codigoD = this.codigoContaDebito;
-    this.contaSaida.identificador = this.identificadorFornecedor;
-
-      console.log("Entrou no cadastrarServico Fornecedor: ", {...this.contaSaida})
-      this.firebase.collection("FORNECEDORES")
-      .doc(this.identificadorFornecedor)
-      .collection(this.nomeFornecedorCadastroServico)
-      .add({...this.contaSaida})
-    
-      console.log("Entrou no cadastrarServico Fornecedor cadastrar conta Saida: ", {...this.contaSaida})
-      this.firebase.collection("CONTAS_SAIDA")
-      .doc(this.contaSaida.codigoC)
-      .set({...this.contaSaida})
-    
-
-  }
-
+ 
   editar(fornecedor: FornecedorModel){
     console.log("Cliquei no editar Fornecedor: ", fornecedor )
 
@@ -318,6 +267,9 @@ export class FornecedorListaComponent implements OnInit {
     
     this.identificadorFornecedor = idFornecedor;
     this.nomeFornecedorCadastroServico = nomeEmpresa
+
+    console.log("idendificador recuperada: ",  this.identificadorFornecedor)
+    console.log("nome recuperada: ",  this.nomeFornecedorCadastroServico)
 
   }
 

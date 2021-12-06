@@ -36,4 +36,8 @@ export class ClienteService {
 
   }
 
+  recuperarEmpresasCliente(identificardo: string): Observable<EmpresaModel[]>{
+    return this.http.post<EmpresaModel[]>('http://localhost:8080/api/recuperar-empresas-cliente', identificardo)
+  }
+
 }

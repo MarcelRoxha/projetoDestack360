@@ -18,6 +18,9 @@ input[type="checkbox"]:checked ~ .open-close-container{
   max-width: 100%;
   overflow: auto;
 }
+.form-label{
+  opacity: 100%;
+}
 
 .example-container {
     height: 400px;

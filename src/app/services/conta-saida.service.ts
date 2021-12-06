@@ -29,7 +29,7 @@ export class ContaSaidaService {
   }
 
   listaContasSaidaSalvas():Observable<ContaSaida[]>{
-    return this.http.get<ContaSaida[]>('http://localhost:8080/recuperarContasSaida');
+    return this.http.get<ContaSaida[]>('https://destack360.herokuapp.com/api/recuperarContasSaida');
 
   }
 

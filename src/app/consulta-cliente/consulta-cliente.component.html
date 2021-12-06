@@ -145,136 +145,170 @@
 </div>
 
 <!-- Modal Cadastrar empresa cliente -->
-<div class="modal fade" style="margin: 1%;" id="exampleModalLancars" tabindex="-1" aria-labelledby="exampleModalLabelLancarEntrada" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title " id="exampleModalLabelLancarEntrada"><strong> CADASTRAR EMPRESA DO CLIENTE {{nome}} </strong></h3>
+<div class="modal fade" style="background: black !important;" id="exampleModalLancars" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content" style="background:#c6c2c4 !important;">
+      <div class="modal-header" >
+        <h3 class="modal-title " id="exampleModalLabelLancarEntrada"><strong> CADASTRAR EMPRESA DO CLIENTE <span style="color: red;">{{nomeMaiusculo}}</span>  </strong></h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
       </div>
-      <div class="modal-body">
+      <div class="modal-body">      
+       
+         
+          <form class="row g-3">
 
-        <form [formGroup]="cadastrarFormEmpresa" (ngSubmit)="cadastrarEmpresaCliente(cpf)">
-          <div class="container">
-              
-              <div class="row">
-                  <div class="col-md-4">
-                      <label class="form-label" style="opacity: 100%;">                        
-                          NOME EMPRESA:                                      
-                      </label>
-                      </div>
-                      <div class="col-md-6">
-                        <input class="form-control" type="text" formControlName="nomeEmpresa" [(ngModel)]="nomeEmpresa" required/>                                  
-                  </div>
-                  </div>
-                  <br>
-                  <div class="row">
-                    <div class="col-md-4">
-                        <label class="form-label" style="opacity: 100%;">                        
-                            RAZÃO SOCIAL:                                      
-                        </label>
-                        </div>
-                        <div class="col-md-6">
-                          <input class="form-control" type="text" formControlName="razaoSocial" [(ngModel)]="razaoSocial" required/>                                  
-                    </div>
-                    </div>
-                    <br>
-                  <div class="row">
-                    <div class="col-md-4">
-                        <label class="form-label" style="opacity: 100%;">
-                           CNPJ:                                      
-                        </label>
-                        </div>
-                        <div class="col-md-6">
-                        <input class="form-control" type="text" formControlName="cnpj" [(ngModel)]="cnpj" mask="CPF_CNPJ" required/>                                  
-                    </div>
-                    
-                  </div>
-                  <br>
-                  <div class="row">
-                    <div class="col-md-4">  
-                      <label class="form-label" style="opacity: 100%;">                        
-                        ENDEREÇO:                                      
-                    </label>                      
-                        </div>
-                        <div class="col-md-6">
-                          <input class="form-control" type="text" formControlName="endereco" [(ngModel)]="endereco" required/>                                  
+          <div class="col-md-6">            
 
-                       </div>
-                       </div> 
-                       <br>
-                       <div class="row">
-                        <div class="col-md-4">
-                            <label class="form-label" style="opacity: 100%;">
-                               Nº:                                      
-                            </label>
-                            </div>
-                            <div class="col-md-6">
-                            <input class="form-control" type="text" formControlName="numero" [(ngModel)]="numero"/>                                  
-                        </div>                        
-                      </div> 
-                      <br>
-                      <div class="row">
-                        <div class="col-md-4">
-                            <label class="form-label" style="opacity: 100%;">
-                               CEP:                                      
-                            </label>
-                            </div>
-                            <div class="col-md-6">
-                            <input class="form-control" type="text" formControlName="cep" [(ngModel)]="cep" placeholder="*Opcional"/>                                  
-                        </div>                        
-                      </div> 
-                      <br>
-                         <div class="row">
-                        <div class="col-md-4">
-                            <label class="form-label" style="opacity: 100%;">
-                               COMPLEMENTO:                                      
-                            </label>
-                            </div>
-                            <div class="col-md-6">
-                            <input class="form-control" type="text" formControlName="complemento" [(ngModel)]="complemento" placeholder="Ex..Casa 1, Bloco A,"/>                                  
-                        </div>                        
-                      </div>  
-                      <br>    
-                      <div class="row">
-                        <div class="col-md-4">
-                            <label class="form-label" style="opacity: 100%;">
-                               E-MAIL:                                      
-                            </label>
-                            </div>
-                            <div class="col-md-6">
-                            <input class="form-control" type="text" formControlName="email" [(ngModel)]="email" placeholder="*Opcional"/>                                  
-                        </div>                        
-                      </div>  
+            <label for="inputEmail4" class="form-label">NOME EMPRESA</label>
+            <input autocomplete="off" name="nomeEmpresa" type="text" class="form-control"  id="inputEmail4"
+            [(ngModel)]="empresaCadastrarCompleto.nomeEmpresa"
 
-                      <div class="row">
-                        <div class="col-md-4">
-                            <label class="form-label" style="opacity: 100%;">
-                               SALDO CAIXA:                                      
-                            </label>
-                            </div>
-                            <div class="col-md-6">
-                            <input class="form-control" type="text" formControlName="saldoCaixa" [(ngModel)]="saldoCaixa" placeholder="Ex..Casa 1, Bloco A,"/>                                  
-                        </div>                        
-                      </div>  
-                      <br>    
-                      <div class="row">
-                        <div class="col-md-4">
-                            <label class="form-label" style="opacity: 100%;">
-                               SALDO BANCO:                                      
-                            </label>
-                            </div>
-                            <div class="col-md-6">
-                            <input class="form-control" type="text" formControlName="saldoBanco" [(ngModel)]="saldoBanco" placeholder="*Opcional"/>                                  
-                        </div>                        
-                      </div>
-                  <div class="col-md-6">
-                    <br> 
-                     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" style="margin-left: 50%; width: 100%;">CADASTRAR EMPRESA</button>
+            >
+          </div>
+          <div class="col-md-6">
+            <label for="razaosocial" class="form-label">RAZÃO SOCIAL <strong><span style="color: red;">*</span></strong></label>
+            <input type="text" name="razaosocial"  class="form-control" id="razaosocial"
+            [(ngModel)]="empresaCadastrarCompleto.razaoSocial"
+            (blur)="verificaRaZaoSocialDigitado($event)"/>
+            <div *ngIf="verificaRazaoSocialDigitado == true" class="col-md-6" style="background: rosybrown;">              
+              <strong><span style="color: red;"><h5>{{msgErrorRazaoSocial}}</h5></span></strong>              
+            </div>
+          </div>
+
+          
+
+          <div class="col-6">
+            <label for="cnpj" class="form-label">CNPJ <strong><span style="color: red;">*</span></strong></label>
+            <input type="text" class="form-control" name="cnpj"  id="cnpj" placeholder="Caso seja pessoa fisíca use o CPF" mask="CPF_CNPJ"
+            [(ngModel)]="empresaCadastrarCompleto.cnpj">
+            <div *ngIf="verificaCNPJDigitado == true" class="col-md-6" style="background: rosybrown;">              
+              <strong><span style="color: red;"><h5>{{msgErrorCNPJ}}</h5></span></strong>              
+            </div>
+          </div>
+
+          <div class="col-6">
+            <label for="email" class="form-label">E-MAIL</label>
+            <input type="email" name="email" class="form-control"  id="codigoCaixa" [(ngModel)]="empresaCadastrarCompleto.email">
+          </div>
+
+          <div class="col-4">
+            <label for="telefone" class="form-label">TELEFONE</label>
+            <input type="text" name="telefone" class="form-control" id="telefone" [(ngModel)]="empresaCadastrarCompleto.telefone">
+          </div>
+
+          <div class="col-4">           
+            <label for="telefone" class="form-label">CELULAR <strong><span style="color: red;">*</span></strong></label>
+              <input type="text" name="celular" class="form-control" id="celular" [(ngModel)]="empresaCadastrarCompleto.celular">
+              </div>
+              <div class="col-4">           
+                <input class="form-check-input" type="checkbox" style="margin-right: 2px;"id="whatsapp" (click)="numeroWhatsapp()"> 
+                <h4 for="whatsapp" class="form-label">WHATSAPP <strong><span style="color: red;">*</span></strong>( MESMO QUE O CELULAR)</h4>
+                  <input type="text" [disabled]="verificaCelularWhats === true" name="whatsapp" class="form-control" id="whatsapp" [(ngModel)]="empresaCadastrarCompleto.whatsapp">
                   </div>
-                  </div>
-                
-                </form>
+
+          <div class="col-4">
+            <label for="codigoCaixa" class="form-label">CODIGO CONTA CAIXA (Por padrão o código é 5)</label>
+            <input type="text" name="codigoCaixa" class="form-control"  id="codigoCaixa" [(ngModel)]="contaEntradaCaixaCadastro.codigoContaCaixa">
+          </div>
+
+          <div class="col-4">
+            <label for="historico" class="form-label">HISTORICO</label>
+            <input type="text" name="historico" class="form-control" id="historico" [(ngModel)]="contaEntradaCaixaCadastro.historico">
+          </div>
+
+          <div class="col-4">
+            <label for="saldoCaixa" class="form-label">SALDO CAIXA</label>
+            <input type="text" name="saldoCaixa" autocomplete="off" class="form-control" id="saldoCaixa"  placeholder="0,00" [(ngModel)]="contaEntradaCaixaCadastro.saldoCaixa">
+          </div>
+         <div class="col-12">            
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" style="margin-left: 0.5px ; margin-right: 2px;" role="switch" id="flexSwitchCheckDefault" [(ngModel)]="verificaCadastroContaBanco">
+            
+          </div>          
+          <p class="form-check-label" for="flexSwitchCheckDefault"style="margin-left: 2px;" >CADASTRAR CONTA BANCO</p>
+        </div>
+                   
+          <div class="col-4">
+            <label for="codigoBanco" class="form-label">CODIGO BANCO</label>
+            <input type="text" name="codigoBanco" class="form-control" id="codigoBanco"  [disabled]="verificaCadastroContaBanco === false" [(ngModel)]="contaEntradaBancoCadastro.codigoContaBanco">
+          </div>
+          <div class="col-8">
+            <label for="historicoBanco" class="form-label">HISTÓRICO BANCO</label>
+            <input type="text" name="historicoBanco" class="form-control" id="historicoBanco" [disabled]="verificaCadastroContaBanco === false" [(ngModel)]="contaEntradaBancoCadastro.historico">
+          </div>
+
+
+          <div class="col-4">
+            <label for="agencia" class="form-label">AGÊNCIA</label>
+            <input type="text" name="agencia" class="form-control" id="agencia"  [disabled]="verificaCadastroContaBanco === false" [(ngModel)]="contaEntradaBancoCadastro.agencia">
+          </div>
+
+          <div class="col-4">
+            <label for="nconta" class="form-label">Nº CONTA</label>
+            <input type="text" name="nconta" class="form-control" id="nconta" [disabled]="verificaCadastroContaBanco === false"[(ngModel)]="contaEntradaBancoCadastro.conta">
+          </div>
+
+        
+
+          <div class="col-4">
+            <label for="saldoBancoCadastrar" class="form-label">SALDO BANCO</label>
+            <input type="text" name="saldoBancoCadastrar" class="form-control" id="saldoBancoCadastrar" [disabled]="verificaCadastroContaBanco === false" [(ngModel)]="contaEntradaBancoCadastro.saldoBanco">
+          </div>
+          <div class="col-3">
+            <label for="inputCep" class="form-label">CEP <strong><span style="color: red;">*</span></strong></label>
+            <input type="text" class="form-control" id="inputCep"
+            [ngModel] 
+            name="cep"
+            [(ngModel)]="empresaCadastrarCompleto.cep"            
+            (blur)="consultarCEP($event)"/>
+            <div *ngIf="verificaCEPDigitado == true" class="col-md-6" style="background: rosybrown;">              
+              <strong><span style="color: red;"><h5>{{msgErrorCEP}}</h5></span></strong>              
+            </div>            
+          </div>
+          
+          <div class="col-md-3">
+            <label for="cidade" class="form-label">CIDADE</label>
+            <input type="text" name="cidade" class="form-control" id="cidade" 
+            [(ngModel)]="empresaCadastrarCompleto.cidade">
+          </div>
+
+
+          <div class="col-md-3">
+            <label for="estado" class="form-label">ESTADO</label>
+            <input type="text" name="estado" class="form-control" id="estado"
+            [(ngModel)]="empresaCadastrarCompleto.estado">
+          </div>
+
+
+          <div class="col-3">
+            <label for="bairro" class="form-label">BAIRRO</label>
+            <input type="text" name="bairro" class="form-control" id="bairro" 
+            [(ngModel)]="empresaCadastrarCompleto.bairro">
+          </div>
+
+
+
+          <div class="col-4">
+            <label for="bairro" class="form-label">ENDEREÇO</label>
+            <input type="text" name="endereco" class="form-control" id="endereco" 
+            [(ngModel)]="empresaCadastrarCompleto.endereco">
+          </div>
+          <div class="col-4">
+            <label for="numero" class="form-label">NUMERO</label>
+            <input type="text" name="numero" class="form-control" id="numero" 
+            [(ngModel)]="empresaCadastrarCompleto.numero">            
+          </div>
+
+          <div class="col-4">
+            <label for="complemento" class="form-label">COMPLEMENTO</label>
+            <input type="text" name="complemento" class="form-control" id="complemento"
+            [(ngModel)]="empresaCadastrarCompleto.complemento">
+          </div>
+       
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary" (click)="cadastrarEmpresa(empresaCadastrarCompleto)">Cadastrar</button>
+          </div>        
+        </form>
               
                         </div>
                       </div>
@@ -1456,14 +1490,14 @@
         <label for="chec" ><mat-icon (click)="toggle()" style="font-size: 50px;">menu</mat-icon></label>
         <nav class="menu-lateral">
           <ul class="list-unstyled">
-            <li><a routerLink="/admin">DASHBOARD</a></li>
+            <li><a  routerLink="/admin">DASHBOARD</a></li>
             <li>
             
             <!--------------
             <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
     
             <li class="cliente-nav dropdown"> 
-              <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="background: red;">
+              <a class="dropdown-toggle" id="navbarDropdownCliente" style="background: red;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 CLIENTES
               </a>                 
                                  
@@ -1493,12 +1527,12 @@
               </a>                 
                                  
                 <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
-                  <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA ENTRADA</a></li>
+                  <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA</a></li>
                  
 
                  <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
-                  <li><a routerLink="/cadastrarContaSaida">CADASTRAR CONTA SAIDA</a></li>  
-                  <li><a class="dropdown-item" routerLink="/listarContasEntrada">CONTAS ENTRADAS CADASTRADAS</a></li>                                            
+                  <!------- <li><a routerLink="/cadastrarContaSaida">CADASTRAR CONTA SAIDA</a></li> ----> 
+                  <li><a class="dropdown-item" routerLink="/listarContasEntrada">CONTAS CADASTRADAS</a></li>                                            
                 </ul>
               </li> 
             <li><a >CONSULTAR</a></li>
@@ -1538,12 +1572,45 @@
                                   <p>{{Cliente.quantidadeEmpresaCadastradas}}</p> 
                                 </div>
                                 <div class="col-md-4" *ngIf="Cliente.quantidadeEmpresaCadastradas > 1">
-                                  <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInfoEmpresasCliente" (click)="recuperarinformacoesEmpresa(Cliente.cpf)">VER EMPRESAS</button>                               
+                                  <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInfoEmpresasssssssCliente" (click)="recuperarinformacoesEmpresa(Cliente.cpf)">VER EMPRESAS</button>                               
                                 </div>
                                 <div class="col-md-4"*ngIf="Cliente.quantidadeEmpresaCadastradas == 1">
-                                  <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInfoEmpresasCliente" (click)="recuperarinformacoesEmpresa(Cliente.cpf)" >VER EMPRESA</button>                               
+                                  <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInfoEmssssssspresasCliente" (click)="recuperarinformacoesEmpresa(Cliente.cpf)" >VER EMPRESA</button>                               
                                 </div>                               
-                              </div>                                                                
+                              </div>
+                              
+                              <table class="table" *ngFor="let EmpresaModel of empresasRecuperadas">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">NOME EMPRESA</th>
+                                    <th scope="col">CNPJ</th>
+                                    <th scope="col">SALDO CAIXA</th>
+                                    <th scope="col">SALDO BANCO</th>
+                                    <th scope="col">LANÇAR ENTRADA</th>
+                                    <th scope="col">LANÇAR SAIDA</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">{{EmpresaModel.nomeEmpresa}}</th>
+                                    <td>{{EmpresaModel.cnpj}}</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                    <td>
+                                      <button class="btn btn-primary">
+                                          LANÇAR ENTRADA
+                                      </button>
+
+                                    </td>
+                                    <td><button class="btn btn-secondary">
+                                      LANÇAR SAIDA
+                                  </button></td>
+                                  </tr>                                
+                                </tbody>
+                              </table>
+                              
+
+
                               <hr />
                               <div class="row">
                                 <div class="col-md-12">                          

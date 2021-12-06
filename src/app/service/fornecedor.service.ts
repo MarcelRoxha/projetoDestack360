@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
+import { Fornecedor } from '../model/fornecedor';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +16,7 @@ export class FornecedorService {
   constructor(private db: AngularFirestore,  private http : HttpClient) { }
 
 
-  cadastrar(fornecedor: FornecedorModel){
+  cadastrar(fornecedor: Fornecedor){
 
     this.db.collection("FORNECEDORES").doc(fornecedor.cnpj).set(fornecedor)  
     .then((resultado: any) =>{
@@ -50,8 +51,8 @@ return this.verificaIf;
     this.db.collection("FORNECEDORES").doc(key).delete();
   }
 
-  recuperarFornecedoresCadastrados() :Observable<FornecedorModel[]>{
-    return this.http.get<FornecedorModel[]>('https://destack360.herokuapp.com/api/listafornecedores');
+  recuperarFornecedoresCadastrados() :Observable<Fornecedor[]>{
+    return this.http.get<Fornecedor[]>('http://localhost:8080/api/recuperar-fornecedores-cadastrados');
 
   }
   informacoesFornecedor(id: string){
