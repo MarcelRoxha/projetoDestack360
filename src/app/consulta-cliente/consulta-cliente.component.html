@@ -592,112 +592,53 @@
               
          
 <!-- Modal recuperar empresas cliente -->
-<div class="modal fade" style="margin: 1%;" id="exampleModalInfoEmpresasCliente" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="exampleModalInfoEmpresasCliente" style="background: black;" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title " id="exampleModalLabelLancarSaida"><strong> EMPRESAS CADASTRADAS NO NOME DE: </strong></h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
-       <div class="row">
-         <div class="col-md-12">
-           <ul class="list-group">
-             <li *ngFor="let EmpresaModel of empresas" class="list-group-item d-flex justify-content-between align-items-start" style="margin-bottom: 10px; background: yellow;">
-              <div class="container mt-2 mb-2">
-                <div class="row">
-                  <div class="col-md-5">
-                  <strong><p>NOME EMPRESA:</p></strong>                                                           
-                  </div>
-                  <div class="col-md-4 ">
-                    <strong><p style="color: blue;">{{EmpresaModel.nomeEmpresa}}</p></strong>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-5">
-                    <strong> <p>RAZÃO SOCIAL: </p>  </strong>                                                           
-                  </div>
-                  <div class="col-md-4 ">
-                    <strong> <p style="color: blue;">{{EmpresaModel.razaoSocial}}</p> </strong>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-5">
-                    <strong> <p>CNPJ: </p></strong>                                                         
-                  </div>
-                  <div class="col-md-4 ">
-                    <strong><p style="color: blue;">{{EmpresaModel.cnpj}}</p></strong>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-5">
-                   <strong> <p>ENDERECO: </p> </strong>                                                      
-                  </div>
-                  <div class="col-md-7">
-                    <strong><p style="color: blue;">{{EmpresaModel.endereco}}</p> </strong>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-5">
-                    <strong><p>CEP: </p></strong>                                                     
-                  </div>
-                  <div class="col-md-3">
-                    <strong><p style="color: blue;">{{EmpresaModel.cep}}</p> </strong>
-                  </div>
-                  </div>
-                  <div class="row">
-                  <div class="col-md-5">
-                    <strong> <p>Nº: </p>   </strong>                                                          
-                  </div>
-                  <div class="col-md-3">
-                    <strong><p style="color: blue;">{{EmpresaModel.numero}}</p> </strong>
-                  </div>
-                  </div>
-
-                  <div class="row">
-                  <div class="col-md-5">
-                    <strong> <p>COMPLEMENTO: </p>  </strong>                                                            
-                  </div>
-                  <div class="col-md-4">
-                    <strong><p style="color: blue;">{{EmpresaModel.complemento}}</p> </strong>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <div class="col-md-4">
-                    <strong>  <p>E-MAIL: </p>  </strong>                                                           
-                  </div>
-                  <div class="col-md-4">
-                    <strong><p style="color: blue;">{{EmpresaModel.email}}</p></strong>
-                  </div>
-                </div>              
-                <div class="row">
-                  <div class="col-md-2">
-                    <strong><p>CADASTRADO EM:</p>    </strong>                                                         
-                  </div>
-                  <div class="col-md-4 ">
-                    <strong><p style="color: blue;">{{EmpresaModel.created}}</p></strong> 
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <strong><p>ULTIMA MODIFICAÇÃO: </p></strong>                                                             
-                  </div>
-                  <div class="col-md-4">
-                    <strong><p style="color: blue;">{{EmpresaModel.modified}}</p></strong> 
-                  </div>
-                </div>
+  
+        <table class="table" >
+          <thead>
+            <tr>
+              <th scope="col">NOME EMPRESA</th>
+              <th scope="col">CNPJ</th>
+              <th scope="col">SALDO CAIXA</th>
+              <th scope="col">SALDO BANCO</th>
+              <th scope="col">LANÇAR ENTRADA</th>
+              <th scope="col">LANÇAR SAIDA</th>
+            </tr>
+          </thead>
+          <tr *ngIf="verificaMostaEmpresas == true">
+            <div class="form-control">
+              <h3>CLIENTE NÃO POSSUI EMPRESA(AS) CADASTRADA(AS)</h3>
               </div>
-             </li>
-             <br>
-           </ul>
-         </div>
-       </div>
-                
+
+             </tr>
+
+          <tbody *ngFor="let EmpresaModel of empresasRecuperadas">
+            <tr>
+              <th scope="row">{{EmpresaModel.nomeEmpresa}}</th>
+              <td>{{EmpresaModel.cnpj}}</td>
+              <td>{{EmpresaModel.saldoCaixa}}</td>
+              <td>{{EmpresaModel.saldoBanco}}</td>
+              <td>
+                <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#modalLancarEntradaEmpresaSelecionada" (click)="lancarEntradaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">LANÇAR ENTRADA</button>
+
+              </td>
+              <td><button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalQualEmpresaLancaCredito" (click)="lancarSaidaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">LANÇAR SAIDA</button></td>
+            </tr>
+            
+          </tbody>
+        </table>                        
 
                         </div>
                       </div>
+
+        
                     </div>
 </div>
 
@@ -1427,6 +1368,191 @@
                     </div>
 </div>
 
+<!-- MODAL LANÇAR ENTRADA EMPRESA SELECIONADA  -->
+<div class="modal fade" style="margin: 1%;" id="modalLancarEntradaEmpresaSelecionada" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>LANÇAR ENTRADA</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row" style="margin: 0 auto;">
+          <div class="col-md-6" style="justify-items: center;">
+            <button class="btn btn-primary" (click)="lancarEntradaCaixa()" *ngIf="verificLancarEntradaCaixa == true">
+              NO CAIXA
+            </button>
+          </div>
+          <div class="col-md-6" style="justify-items: center;" *ngIf="verificLancarEntradaBanco == true">
+            <button class="btn btn-secondary" (click)="lancarEntradaBanco()">
+              NO BANCO
+            </button>
+          </div> 
+          
+          <div *ngIf="verificLancarEntradaCaixa == true && verificLancarEntradaBanco == false">
+            <div class="container mt-2"> 
+              <h3 class="text-center"> EFETUAR LANÇAMENTO DE ENTRADA NO <strong style="color: red;"> CAIXA </strong></h3>
+                  <hr />        
+                  <form [formGroup]="lancerFormDebitoCaixa" (ngSubmit)="efetuarCreditoCaixa()">
+                        <div class="container">
+                          
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label" style="opacity: 100%;">
+                                        Informe a data:                                      
+                                    </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                    <input class="form-control" type="date" formControlName="dataLancamentoEntrada" [(ngModel)]="dataLancamento">                                  
+                                </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                  <div class="col-md-4">
+                                      <label class="form-label" style="opacity: 100%;">
+                                         Valor do lançamento:                                      
+                                      </label>
+                                      </div>
+                                      <div class="col-md-6">
+                                      <input class="form-control" type="text" formControlName="valorlancamentoentrada" [(ngModel)]="valorLancamento" mask="separator.2" thousandSeparator="." required/>                                  
+                                  </div>
+                                  
+                                </div>
+                                <br>
+                                <div class="row">
+                                  <div class="col-md-4">                                
+                                    <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoEntrada()"/>Desejo Digitar
+                                      </div>
+                                      <div class="col-md-4" *ngIf="checkDigitarLancamento == true">
+                                        <input type="text"  class="form-control"  [(ngModel)]="descricaoLancamento" formControlName="contaEntrdaSelecionada"/>
+                                        <input type="checkbox" (change)="salvarLancaMentoEntradaDigitada()"/>Salvar para lancamentos futuros
+                                     </div> 
+                                     <br>
+                                      <div class="col-md-6" *ngIf="checkDigitarLancamento == false">
+                                        <select class="form-control" type="text" formControlName="contaEntrdaSelecionada" [(ngModel)]="descricaoLancamento">
+                                          <option>Escolha a Entrada</option>
+                                          <option *ngFor="let ContaEntrada of listaEntradasCadastradas">
+                                           {{ContaEntrada.descricao}}
+                                          </option>    
+                                        </select>                                    
+                                          <div>    
+                                      </div>
+                                  <br>                         
+                                </div>     
+                                <div class="row">
+                                  <div class="col-md-4">
+                                      <label class="form-label" style="opacity: 100%;">
+                                         Descrição:                                      
+                                      </label>
+                                      </div>
+                                      <div class="col-md-6">
+                                      <input class="form-control" type="text" formControlName="descricaoLancamento" [(ngModel)]="destalhesLancamentoEntrada" placeholder="*Opcional"/>                                  
+                                  </div>
+                                  
+                                </div>                                                
+    
+                                <div class="col-md-6">
+                                  <br> 
+                                   <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;"   data-bs-toggle="modal" data-bs-target="#exampleModalRecarregarPagina" data-bs-dismiss="modal">LANÇAR INFORMAÇÕES DE ENTRADA</button>
+                                </div>
+                                </div>
+                              </div>
+    
+    
+    
+                              </form>
+                    </div>
+
+            
+
+          </div>
+
+          <div *ngIf="verificLancarEntradaCaixa == false && verificLancarEntradaBanco == true">
+            <h3>Selecionado entrada banco</h3>
+
+          </div>
+        </div>       
+
+<!--------
+
+        <div class="container mt-2"> 
+          <h3 class="text-center"> EFETUAR LANÇAMENTO DE CRÉDITO NO <strong style="color: red;"> CAIXA </strong></h3>
+              <hr />        
+              <form [formGroup]="lancerFormCreditoCaixa" (ngSubmit)="efetuarCreditoCaixa()">
+                    <div class="container">
+                      
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label" style="opacity: 100%;">
+                                    Informe a data:                                      
+                                </label>
+                                </div>
+                                <div class="col-md-6">
+                                <input class="form-control" type="date" name="dataLancamentoSaida" formControlName="dataLancamentoSaida" [(ngModel)]="datalancamentoSaida">                                  
+                            </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-4">
+                                  <label class="form-label" style="opacity: 100%;">
+                                     Valor do lançamento:                                      
+                                  </label>
+                                  </div>
+                                  <div class="col-md-6">
+                                  <input class="form-control" type="text" name="valorlancamentoSainda" formControlName="valorlancamentoSainda" [(ngModel)]="valorlancamentoSaida" mask="separator.2" thousandSeparator="." required/>                                  
+                              </div>
+                              
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-4">                                
+                                <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoEntrada()"/>Desejo Digitar
+                                  </div>
+
+                                  <div class="col-md-4" *ngIf="checkDigitarLancamento == true && selecionadoServicoEFornecedor == false">
+                                    <input type="text"  class="form-control"  [(ngModel)]="fornecedor" formControlName="fornecedorSelecionado"/>
+                                    <input type="checkbox" (change)="salvarLancaMentoEntradaDigitada()"/>Salvar para lancamentos futuros
+                                 </div> 
+                                 <br>
+                                  <div class="col-md-7" *ngIf="checkDigitarLancamento == false && selecionadoServicoEFornecedor == false">
+                                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalSelecioneFornecedor">ESCOLHA FORNECEDOR</button>
+                              <br>                         
+                            </div> 
+                            <br>    
+                            <div class="row" *ngIf="checkDigitarLancamento == false && selecionadoServicoEFornecedor == true">
+                              <div class="col-md-4">
+                                  <label class="form-label" style="opacity: 100%;">
+                                    <p style="color: blue;"> Fornecedor: </p>{{lancamentoSaidaCompleto.fornecedor}}                                       
+                                  </label>
+                                  <label class="form-label" style="opacity: 100%;">
+                                    <p style="color: blue;"> Serviço: </p>    {{lancamentoSaidaCompleto.servico}}                                   
+                                 </label>
+                                  </div>
+                                  <button class="btn btn-secondary" (click)="selecionarFornecedorEServicoNovamente()">Selecionar novamente</button>
+                            </div>                                                
+
+                            <div class="col-md-6">
+                              <br> 
+                               <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;"   data-bs-toggle="modal" data-bs-target="#exampleModalRecarregarPagina" data-bs-dismiss="modal" (click)="lancarSaidaCompleta()">LANÇAR INFORMAÇÕES DE SAIDA</button>
+                            </div>
+                            </div>
+                          </div>
+
+
+
+                          </form>
+                </div>---------->
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+
+
+
+
+
       
 
 <body class="text-center-home">
@@ -1535,7 +1661,7 @@
                   <li><a class="dropdown-item" routerLink="/listarContasEntrada">CONTAS CADASTRADAS</a></li>                                            
                 </ul>
               </li> 
-            <li><a >CONSULTAR</a></li>
+              <li><a routerLink="/movimentacao">MOVIMENTAÇÃO</a></li>
           </ul>
         </nav>
       </div>
@@ -1546,10 +1672,179 @@
               <div class="container mt-2"> 
                 <h3 class="text-center"> CONSULTAR CLIENTES<h3>
                   <hr /> 
-                  <div class="col-md-12 text-center" *ngIf="verificaClientesCadastrados == true">
-                    <h4>Você ainda não tem Clientes cadastrados</h4>
-                  </div>
+                  <div class="progressIndicator" [style.display]="isProgressVisibleCarregarLis ? 'inline' : 'none' ">
+                    <mat-progress-spinner class=" example-margin" color="primary" mode="indeterminate"></mat-progress-spinner>
+                </div>
+                  <div class="col-md-12 text-center" >
+                   <form *ngIf="isProgressVisibleCarregarLis == false">
+                    
+                    <select class="col-md-12" [(ngModel)]="clienteSelecionadoInformacoes" (ngModelChange)="clienteSelecionado($event)">
+                      <option [value]="1">
+                        Escolha o cliente
+                      </option> 
+                      <option *ngFor="let Cliente of clientes" [value]="Cliente.cpf">
+                        {{Cliente.nome}}
+                      </option> 
+                    </select>
+                   </form>
+                 <div class="progressIndicator" [style.display]="isProgressVisible ? 'inline' : 'none' ">
+                    <mat-progress-spinner class=" example-margin" color="primary" mode="indeterminate"></mat-progress-spinner>
+                </div>
+                   <fieldset style="background: brown;">
+                    <div class="container mt-2" *ngIf="clienteFoiSelecionado == true && isProgressVisible == false">
+                     
+                      <div class="container">
+                        <form class="row g-3">
 
+                          <div class="col-md-6">            
+                
+                            <label for="inputEmail4" class="form-label">NOME CLIENTE</label>
+                            <input autocomplete="off" name="nomeEmpresa" [disabled]="editarClienteSelecionado == false" type="text" class="form-control"  id="inputEmail4"
+                            [(ngModel)]="clienteSelecionadoRecuperarInformacoes.nome"                
+                            >
+                          </div>
+                         
+                
+                
+                          <div class="col-6">
+                            <label for="cnpj" class="form-label">CPF</label>
+                            <input type="text" class="form-control" [disabled]="true" name="cnpj"  id="cnpj" mask="CPF_CNPJ"
+                            [(ngModel)]="clienteSelecionadoRecuperarInformacoes.cpf">                         
+                          </div>
+                
+                          <div class="col-12">
+                            <label for="email" class="form-label">E-MAIL</label>
+                            <input type="email" name="email"[disabled]="editarClienteSelecionado == false" class="form-control"  id="codigoCaixa" [(ngModel)]="clienteSelecionadoRecuperarInformacoes.emailCliente">
+                          </div>
+              
+                          <div class="col-4">
+                            <label for="telefone" class="form-label">TELEFONE</label>
+                            <input type="text" name="telefone" class="form-control" id="telefone" [disabled]="editarClienteSelecionado == false"
+                            [(ngModel)]="clienteSelecionadoRecuperarInformacoes.telefone"
+                            prefix="55+" mask="(00) 0000 0000">
+                          </div>
+                            <div class="col-4">           
+                              <label for="celular" class="form-label">CELULAR</label>
+                                <input type="text" name="celular" class="form-control" id="celular"[disabled]="editarClienteSelecionado == false"
+                                [(ngModel)]="clienteSelecionadoRecuperarInformacoes.celular"
+                                prefix="55+" mask="(00) 0 0000 0000">
+                               
+                                </div>                               
+                                <div class="col-4">           
+                                  <label for="whatsapp" class="form-label">WHATSAPP</label>
+                                    <input type="text" [disabled]="verificaCelularWhats === true" name="whatsapp" [disabled]="editarClienteSelecionado == false"
+                                    class="form-control" id="whatsapp" [(ngModel)]="clienteSelecionadoRecuperarInformacoes.whatsapp"
+                                    prefix="55+" mask="(00) 0 0000 0000">
+                                    </div>
+                
+                        
+                
+                          <div class="col-3">
+                            <label for="inputCep" class="form-label">CEP <strong><span style="color: red;">*</span></strong></label>
+                            <input type="text" class="form-control" id="inputCep"[disabled]="editarClienteSelecionado == false"
+                            [(ngModel)]="clienteSelecionadoRecuperarInformacoes.cep"/> 
+                           <!--- [(ngModel)]="clienteSelecionadoRecuperarInformacoes.cep"            
+                            //(blur)="consultarCEP($event)"      -->                           
+                          </div>
+                          
+                          <div class="col-md-3">
+                            <label for="cidade" class="form-label">CIDADE</label>
+                            <input type="text" name="cidade" class="form-control" id="cidade" 
+                            [(ngModel)]="clienteSelecionadoRecuperarInformacoes.cidade" [disabled]="editarClienteSelecionado == false">
+                          </div>
+                
+                
+                          <div class="col-md-3">
+                            <label for="estado" class="form-label">ESTADO</label>
+                            <input type="text" name="estado" class="form-control" id="estado"
+                            [(ngModel)]="clienteSelecionadoRecuperarInformacoes.estado" [disabled]="editarClienteSelecionado == false">
+                          </div>
+                
+                
+                          <div class="col-3">
+                            <label for="bairro" class="form-label">BAIRRO</label>
+                            <input type="text" name="bairro" class="form-control" id="bairro" 
+                            [(ngModel)]="clienteSelecionadoRecuperarInformacoes.bairro" [disabled]="editarClienteSelecionado == false">
+                          </div>
+                
+                
+                
+                          <div class="col-4">
+                            <label for="bairro" class="form-label">ENDEREÇO</label>
+                            <input type="text" name="endereco" class="form-control" id="endereco" 
+                            [(ngModel)]="clienteSelecionadoRecuperarInformacoes.endereco" [disabled]="editarClienteSelecionado == false">
+                          </div>
+                          <div class="col-4">
+                            <label for="numero" class="form-label">NUMERO</label>
+                            <input type="text" name="numero" class="form-control" id="numero" 
+                            [(ngModel)]="clienteSelecionadoRecuperarInformacoes.numero" [disabled]="editarClienteSelecionado == false">            
+                          </div>
+                
+                          <div class="col-4">
+                            <label for="complemento" class="form-label">COMPLEMENTO</label>
+                            <input type="text" name="complemento" class="form-control" id="complemento"
+                            [(ngModel)]="clienteSelecionadoRecuperarInformacoes.complemento" [disabled]="editarClienteSelecionado == false">
+                          </div>
+                       
+                          <div class="col-12">
+                           
+                          </div>    
+                          <div class="row">
+                            <div class="col-md-12">                          
+                              <div class="btn-group"  role="group" aria-label="Basic mixed styles example">
+                                <button type="button" class="btn btn-success" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalLancars" (click)="recuperarInformarcoesClientesSelecionado(clienteSelecionadoRecuperarInformacoes.cpf)" >CADASTRAR EMPRESA</button>                                  
+                                <button type="button" class="btn btn-secondary" style="margin: 10px;" *ngIf="editarClienteSelecionado == true" (click)="voltarEditarClienteSelecionado()">VOLTAR</button>
+                                <button type="button" class="btn btn-primary" style="margin: 10px;" *ngIf="editarClienteSelecionado == true">SALVAR</button>
+                                <button type="button" class="btn btn-warning" style="margin: 10px;" *ngIf="editarClienteSelecionado == false" (click)="editarClienteSelecionadoed()">EDITAR</button>  
+                                <button type="button" class="btn btn-danger" style="margin: 10px;" >EXCLUIR</button>  
+                              </div>
+                            </div>                      
+                          </div>
+
+
+                        </form>
+                      
+  
+                        <table class="table" >
+                          <thead>
+                            <tr>
+                              <th scope="col">NOME EMPRESA</th>
+                              <th scope="col">CNPJ</th>
+                              <th scope="col">SALDO CAIXA</th>
+                              <th scope="col">SALDO BANCO</th>
+                              <th scope="col">LANÇAR ENTRADA</th>
+                              <th scope="col">LANÇAR SAIDA</th>
+                            </tr>
+                          </thead>
+                          <tr *ngIf="verificaMostaEmpresas == true">
+                            <div class="form-control">
+                              <h3>CLIENTE NÃO POSSUI EMPRESA(AS) CADASTRADA(AS)</h3>
+                              </div>
+                
+                             </tr>
+                
+                          <tbody *ngFor="let EmpresaModel of empresasRecuperadas">
+                            <tr>
+                              <th scope="row">{{EmpresaModel.nomeEmpresa}}</th>
+                              <td>{{EmpresaModel.cnpj}}</td>
+                              <td>{{EmpresaModel.saldoCaixa}}</td>
+                              <td>{{EmpresaModel.saldoBanco}}</td>
+                              <td>
+                                <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#modalLancarEntradaEmpresaSelecionada" (click)="lancarEntradaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">LANÇAR ENTRADA</button>
+                
+                              </td>
+                              <td><button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalQualEmpresaLancaCredito" (click)="lancarSaidaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">LANÇAR SAIDA</button></td>
+                            </tr>
+                            
+                          </tbody>
+                        </table>                        
+                
+                                        </div>
+
+                                        
+                  </div>
+               
+<!-------------
                   <div class="row" *ngIf="verificaClientesCadastrados == false">
                     <div class="col-md-12">
                         <ul class="list-group">
@@ -1564,50 +1859,12 @@
                                   <p>{{Cliente.nome}}</p> 
                                 </div>
                               </div>
-                              <div class="row">
-                                <div class="col-md-2">
-                                  <p>EMPRESAS CADASTRADAS: </p>                                                             
-                                </div>
+                              <div class="row">                               
                                 <div class="col-md-4">
-                                  <p>{{Cliente.quantidadeEmpresaCadastradas}}</p> 
-                                </div>
-                                <div class="col-md-4" *ngIf="Cliente.quantidadeEmpresaCadastradas > 1">
-                                  <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInfoEmpresasssssssCliente" (click)="recuperarinformacoesEmpresa(Cliente.cpf)">VER EMPRESAS</button>                               
-                                </div>
-                                <div class="col-md-4"*ngIf="Cliente.quantidadeEmpresaCadastradas == 1">
-                                  <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInfoEmssssssspresasCliente" (click)="recuperarinformacoesEmpresa(Cliente.cpf)" >VER EMPRESA</button>                               
+                                                                
                                 </div>                               
                               </div>
-                              
-                              <table class="table" *ngFor="let EmpresaModel of empresasRecuperadas">
-                                <thead>
-                                  <tr>
-                                    <th scope="col">NOME EMPRESA</th>
-                                    <th scope="col">CNPJ</th>
-                                    <th scope="col">SALDO CAIXA</th>
-                                    <th scope="col">SALDO BANCO</th>
-                                    <th scope="col">LANÇAR ENTRADA</th>
-                                    <th scope="col">LANÇAR SAIDA</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <th scope="row">{{EmpresaModel.nomeEmpresa}}</th>
-                                    <td>{{EmpresaModel.cnpj}}</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td>
-                                      <button class="btn btn-primary">
-                                          LANÇAR ENTRADA
-                                      </button>
-
-                                    </td>
-                                    <td><button class="btn btn-secondary">
-                                      LANÇAR SAIDA
-                                  </button></td>
-                                  </tr>                                
-                                </tbody>
-                              </table>
+                            
                               
 
 
@@ -1616,8 +1873,7 @@
                                 <div class="col-md-12">                          
                                   <div class="btn-group"  role="group" aria-label="Basic mixed styles example">
                                     <button type="button" class="btn btn-success" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalLancars" (click)="recuperarInformarcoesClientesSelecionado(Cliente.cpf)" >CADASTRAR EMPRESA</button>                                    
-                                    <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalQualEmpresaLancaCredito" (click)="recuperarinformacoesEmpresa(Cliente.cpf)">LANÇAR CRÉDITO</button>
-                                    <button type="button" class="btn btn-secondary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalQualEmpresaLancaDebito" (click)="recuperarinformacoesEmpresa(Cliente.cpf)">LANÇAR DÉBITO</button>                                     
+                                    <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalInfoEmpresasCliente" (click)="recuperarinformacoesEmpresa(Cliente.cpf)">ADMINISTRAR EMPRESA</button>
                                     <button type="button" class="btn btn-info"style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="recuperarInformarcoesClientesSelecionado(Cliente.cpf)">INFO</button>
                                     <button type="button" class="btn btn-warning" style="margin: 10px;" >EDITAR</button>  
                                     <button type="button" class="btn btn-danger" style="margin: 10px;" >EXCLUIR</button>  
@@ -1629,7 +1885,7 @@
                             </li>                           
                         </ul>
       
-                      
+                      ----->
                     
                 
                    

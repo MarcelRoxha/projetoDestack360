@@ -1,5 +1,6 @@
 export class EmpresaModel{
     identificadorCliente: string;
+	nomeCliente: string;
 	cnpj: string ;
 	endereco :string ;
 	email :string ;

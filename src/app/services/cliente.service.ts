@@ -1,10 +1,13 @@
+import { Cliente } from './../models/clienteModel';
+import { ContaEntrada } from './../models/contaEntradaModel';
 import { EmpresaModel } from './../models/empresaModel';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
-import { Cliente } from '../models/clienteModel';
 import { Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserModel } from '../models/UserModel';
+import { ContaEntradaCaixa } from '../model/conta-entrada-caixa';
+import { RecuperarInformacoesCixaEmpresaCliente } from '../model/recuperarInformacoesCaixaEmpresaCliente';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +27,7 @@ export class ClienteService {
   }
 
   recuperarInformacoesCliente(identificardo: string) : Observable<Cliente>{
-    return this.http.post<Cliente>('https://destack360.herokuapp.com/api/recuperarInformacoesCliente', identificardo)
+    return this.http.post<Cliente>('http://localhost:8080/api/recuperarInformacoesCliente', identificardo)
   }
 
   recuperarEmpresaCadastradasCliente(identificardo: string) : Observable<EmpresaModel[]>{
@@ -39,5 +42,16 @@ export class ClienteService {
   recuperarEmpresasCliente(identificardo: string): Observable<EmpresaModel[]>{
     return this.http.post<EmpresaModel[]>('http://localhost:8080/api/recuperar-empresas-cliente', identificardo)
   }
+
+  listaEmpresasCliente() : Observable<EmpresaModel[]>{
+    return this.http.get<EmpresaModel[]>('http://localhost:8080/api/recuperar-empresas-clientes-admin');
+
+  }
+
+  recuperarContaCaixaEmpresaCliente(informacoesClienteEmpresa: RecuperarInformacoesCixaEmpresaCliente) : Observable<ContaEntradaCaixa>{
+    return this.http.post<ContaEntradaCaixa>('http://localhost:8080/api/recuperar-conta-caixa-empresa', informacoesClienteEmpresa);
+
+  }
+
 
 }

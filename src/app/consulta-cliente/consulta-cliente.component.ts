@@ -1,3 +1,4 @@
+import { RecuperarInformacoesCixaEmpresaCliente } from './../model/recuperarInformacoesCaixaEmpresaCliente';
 
 
 import { FornecedorModel } from './../model/fornecedor-model';
@@ -86,13 +87,18 @@ export class ConsultaClienteComponent implements OnInit {
   modified: string;
   obs: string;
   status: string;  
+  limparDadosLista: boolean = false;
+  identificadorClienteSelecionado: string = '';
 
+  clienteSelecionadoRecuperarInformacoes: Cliente = new Cliente()
+  clienteSelecionadoInformacoes: any;
 
   data: Date = new Date();
 
-  //
-
-  isProgressVisible: boolean;
+  //--------LOADING-------------//
+  firebaseErrorMessage: string;
+  isProgressVisible: boolean ;
+  isProgressVisibleCarregarLis: boolean = true;
 
 
   //-------FORMGROUP------------//
@@ -107,7 +113,6 @@ export class ConsultaClienteComponent implements OnInit {
 
   lancerForm: FormGroup;
  
-  firebaseErrorMessage: string;
   clickDashBoard = false;    
   dataRecuperada : string;
   emailUser: string;
@@ -154,11 +159,18 @@ export class ConsultaClienteComponent implements OnInit {
   selecionadoServicoEFornecedor: boolean = false;
   verificaCelularWhats: boolean = false;
   verificaMostaEmpresas: boolean = false;
+  verificLancarEntradaCaixa: boolean = true;
+  verificLancarEntradaBanco: boolean = true;
+
+
+  editarClienteSelecionado: boolean = false;
 
   msgEWhats: string = "SIM"
 
   //-------CONTA CAIXA-------//
 
+
+  referenciaFirebase : RecuperarInformacoesCixaEmpresaCliente = new RecuperarInformacoesCixaEmpresaCliente();
   contaCaixa: ContaCaixa = new ContaCaixa()
   identificadorLancamentoEntradaContaCaixa:string;
   dataLancamentoContaCaixa:string;
@@ -186,6 +198,8 @@ export class ConsultaClienteComponent implements OnInit {
   verificaCEPDigitado: boolean = false;
   verificaEnderecoDigitado: boolean = false;
   verificaCadastroEmpresaCompleto: boolean = false;
+
+  clienteFoiSelecionado = false;
 
 
 
@@ -246,8 +260,13 @@ export class ConsultaClienteComponent implements OnInit {
   numeroContaBanco: string = "01..-01";
 
   //----------RECUPERAR INFORMAÇÕES EMPRESA CLIENTE--------//
+
   clienteRecuperaEmpresa : any = new Cliente();
   empresasCliente: any = new EmpresaModel();
+  recuperarInformacoesEmpresaSelecionada : any = new RecuperarInformacoesCixaEmpresaCliente();
+
+
+
 
   //------------PREPARER DADOS CLIENTE EMPRESA PARA EFETUAR LANCAMENTO DE ENTRADA----------//
 
@@ -404,9 +423,7 @@ this.contaEntradaCaixaCadastro = new ContaEntradaCaixa ();
 
   }
 
-  ngOnInit(): void {
-
-   
+  ngOnInit(): void {   
 
     this.empresaCadastrar = new EmpresaModel();
       this.afAuth.authState.subscribe(user => {                                                   // grab the user object from Firebase Authorization
@@ -429,13 +446,9 @@ this.contaEntradaCaixaCadastro = new ContaEntradaCaixa ();
       this.clienteservice.listarClientes().subscribe(clientesCadastradosBanco =>{
         this.clientes = clientesCadastradosBanco;
         this.clienteRecuperaEmpresa = this.clientes;
-        console.log("CPF recuperado: ", clientesCadastradosBanco[0].nome)
-        for (var i = 0; i < clientesCadastradosBanco.length ; i++) {
-          this.recuperarInformacoesEmpresaCliente(clientesCadastradosBanco[i].cpf)
-         console.log("Recuperado dentro do for: ",  clientesCadastradosBanco[i].cpf)
-       }      
-
-      this.recuperarInformacoesEmpresaCliente(this.clienteRecuperaEmpresa.cpf);
+        this.isProgressVisibleCarregarLis = false;
+          
+      
         this.contaEntradaService.listaFornecedoresCadastrados().subscribe(resultadoFornecedores=>{
           this.fornecedoresModel = resultadoFornecedores;
           console.log("Forncedores recuperados: ",this.fornecedoresModel)
@@ -443,6 +456,15 @@ this.contaEntradaCaixaCadastro = new ContaEntradaCaixa ();
        
        // console.log("Empresas Recuperadas: ",  this.clientes["cpf"])
         console.log("Clientes Recuperados: ", this.clientes)
+        for(let i = 0; i < this.clientes.length ; i ++){
+          
+
+          console.log("Resultado cliente cpf: ", this.clientes[i].cpf)
+          this.clienteservice.recuperarEmpresasCliente(this.clientes[i].cpf).subscribe(recuperadoEmpresas=>{
+            console.log("Empresas Cliente recuperado: ", recuperadoEmpresas)
+          })
+        // this.recuperarinformacoesEmpresa(this.clienteRecuperaEmpresa[i].cpf);
+        }
         if(clientesCadastradosBanco === null){
          let cliente : Cliente = new Cliente();
          
@@ -492,6 +514,9 @@ let cliente : Cliente = new Cliente();
 
          this.clientes.push(cliente);
 
+        
+       
+
   }
   logout(): void {
     this.afAuth.signOut();
@@ -526,12 +551,18 @@ cliqueinoCheck(){
 
 
 recuperarinformacoesEmpresa(identificadorCliente : string){
-  
+  this.referenciaFirebase = new RecuperarInformacoesCixaEmpresaCliente();
   this.identificadorClientePreparer = identificadorCliente;
+  this.referenciaFirebase.identificadorCliente = identificadorCliente;
 
-  this.verificaMostaEmpresas = true;
+
+  
   this.clienteservice.recuperarEmpresasCliente(identificadorCliente).subscribe(ResultadoAPI=>{
-    this.verificaMostaEmpresas = true;
+    this.empresasRecuperadas = ResultadoAPI;
+    if(this.empresasRecuperadas.length == 0){
+      this.verificaMostaEmpresas = true;
+    }
+    
     console.log("Recuperar empresas API: ", ResultadoAPI)
   })
 
@@ -542,6 +573,35 @@ recuperarinformacoesEmpresa(identificadorCliente : string){
 console.log("Identificador recuperado: ", identificadorCliente);
 console.log("Empresaas recuperadas: ", this.empresas);
 this.verificaMostaEmpresas = false;
+}
+
+
+lancarEntradaEmpresaCliente(identificadorEmpresa: string, identificadorCliente: string){
+  
+this.referenciaFirebase.identificadorEmpresa = identificadorEmpresa;  
+
+  console.log("Entrou no entrada empresa")
+  console.log("identificador empresa recuperado: ", identificadorEmpresa)
+  console.log("identificador cliente recuperado: ", identificadorCliente)
+
+  this.referenciaFirebase.identificadorCliente = identificadorCliente;
+  this.referenciaFirebase.identificadorEmpresa = identificadorEmpresa;
+
+  console.log("Recuperado Referencia: ", {...this.referenciaFirebase})
+
+  this.clienteservice.recuperarContaCaixaEmpresaCliente({...this.referenciaFirebase}).subscribe(resultadoAPI=>{
+    console.log("Informações da conta de caixa recuperado: ", resultadoAPI)
+  })
+
+
+}
+
+lancarSaidaEmpresaCliente(identificadorEmpresa: string, identificadorCliente: string){
+  this.referenciaFirebase.identificadorCliente = identificadorCliente;
+this.referenciaFirebase.identificadorEmpresa = identificadorEmpresa;
+  console.log("Entrou no saida empresa")
+  console.log("identificador empresa recuperado: ", identificadorEmpresa)
+  console.log("identificador cliente recuperado: ", identificadorCliente)
 }
 
 clickcliente(){
@@ -628,10 +688,15 @@ cadastrarEmpresa(empresaRecebendo: EmpresaModel){
       this.contaEntradaCaixaCadastro.identificadorEmpresa = empresaRecebendo.cnpj;
       empresaRecebendo.identificadorCliente = this.cpf
       identificadorEmpresa = empresaRecebendo.cnpj
-      identificadorCliente =  empresaRecebendo.identificadorCliente ;
+      identificadorCliente =  empresaRecebendo.identificadorCliente;
+      this.empresaCadastrarCompleto.identificadorCliente = this.cpf;
+      this.empresaCadastrarCompleto.saldoCaixa = this.contaEntradaCaixaCadastro.saldoCaixa;
+      this.empresaCadastrarCompleto.saldoBanco = this.contaEntradaBancoCadastro.saldoBanco;
 
 
-      this.serviceEmpresa.cadastrarEmpresa({...this.empresaCadastrarCompleto},  empresaRecebendo.identificadorCliente)
+      this.serviceEmpresa.cadastrarEmpresa({...this.empresaCadastrarCompleto}).subscribe(resultadoAPI=>{
+        console.log("Recuperado da API cadastrar empresa: ",resultadoAPI )
+      })
       this.serviceEmpresa.cadastrarContaCaixa({...this.contaEntradaCaixaCadastro},  identificadorEmpresa, identificadorCliente )
       this.serviceEmpresa.cadastrarContaBanco({...this.contaEntradaBancoCadastro},  identificadorEmpresa, identificadorCliente)
      
@@ -666,8 +731,13 @@ cadastrarEmpresa(empresaRecebendo: EmpresaModel){
         this.contaEntradaCaixaCadastro.saldoCaixa = "0"
         this.contaEntradaCaixaCadastro.identificadorEmpresa = empresaRecebendo.cnpj;
         empresaRecebendo.identificadorCliente = this.cpf
-
-
+        this.empresaCadastrarCompleto.identificadorCliente = this.cpf;
+        this.empresaCadastrarCompleto.saldoCaixa = this.contaEntradaCaixaCadastro.saldoCaixa;
+        this.empresaCadastrarCompleto.saldoBanco = this.contaEntradaBancoCadastro.saldoBanco;
+        this.serviceEmpresa.cadastrarEmpresa({...this.empresaCadastrarCompleto}).subscribe(resultadoAPI=>{
+          console.log("Recuperado da API cadastrar empresa: ",resultadoAPI )
+        })
+        this.serviceEmpresa.cadastrarContaCaixa({...this.contaEntradaCaixaCadastro},  identificadorEmpresa, identificadorCliente )
       console.log("Resultado empresa: ",{...this.contaEntradaCaixaCadastro});
       console.log("Resultado Empresa recebida: ", empresaRecebendo);
       this.verificaCadastroEmpresaCompleto = true;
@@ -692,7 +762,18 @@ cadastrarEmpresa(empresaRecebendo: EmpresaModel){
         console.log("Você digitou um saldo")
         this.contaEntradaCaixaCadastro.identificadorEmpresa = empresaRecebendo.cnpj;
         empresaRecebendo.identificadorCliente = this.cpf
-        console.log("Resultado empresa: ",this.contaEntradaCaixaCadastro);
+        identificadorEmpresa = empresaRecebendo.cnpj
+        identificadorCliente =  empresaRecebendo.identificadorCliente;
+        this.empresaCadastrarCompleto.identificadorCliente = this.cpf;
+        this.empresaCadastrarCompleto.saldoCaixa = this.contaEntradaCaixaCadastro.saldoCaixa;
+        this.empresaCadastrarCompleto.saldoBanco = this.contaEntradaBancoCadastro.saldoBanco;
+        console.log("Resultado empresa: ",this.empresaCadastrarCompleto);
+        this.serviceEmpresa.cadastrarEmpresa({...this.empresaCadastrarCompleto}).subscribe(resultadoAPI=>{
+          console.log("Recuperado da API cadastrar empresa: ",resultadoAPI )
+        })
+        this.serviceEmpresa.cadastrarContaCaixa({...this.contaEntradaCaixaCadastro},  identificadorEmpresa, identificadorCliente )
+
+        
         console.log("Resultado Empresa recebida: ", empresaRecebendo);
         this.verificaCadastroEmpresaCompleto = true;
         this.contaEntradaCaixaCadastro = new ContaEntradaCaixa ();
@@ -751,6 +832,10 @@ lancarEntradaContaBanco(){
   this.contaBanco.descricaoLancamentoContaBanco = this.descricaoLancamentoContaBanco;
 console.log("Lançar conta Banco: ", this.contaBanco);
 
+}
+
+recuperarInformacoesCliente(clienteSelecionado: Cliente){
+console.log("Selecionado o cliente: ", clienteSelecionado)
 }
 
 selecionarFornecedor(identificadorFornecedor: string){
@@ -1382,4 +1467,77 @@ declaroAnonimo(){
     this.verificaCelularWhats = this.verificaCelularWhats;
   }
 
+  
+  lancarEntradaCaixa(){
+    this.referenciaFirebase = new RecuperarInformacoesCixaEmpresaCliente();
+
+    this.referenciaFirebase.identificadorCliente = this.identificadorClientePreparer;
+    this.referenciaFirebase.identificadorEmpresa = this.identificadorEmpresaPreparer;
+  
+    console.log("Recuperado Referencia: ", {...this.referenciaFirebase})
+
+    this.clienteservice.recuperarContaCaixaEmpresaCliente({...this.referenciaFirebase}).subscribe(resultadoAPI=>{
+      console.log("Informações da conta de caixa recuperado: ", resultadoAPI)
+    })
+   
+    this.verificLancarEntradaBanco = !this.verificLancarEntradaBanco;
+
+  }
+  lancarEntradaBanco(){
+
+
+  }
+  voltarBotoes(){
+    this.verificLancarEntradaCaixa = true
+    this.verificLancarEntradaBanco = true;
+  }
+clienteSelecionado(event: any){
+  
+  this.isProgressVisible = true;
+  this.identificadorClienteSelecionado = event
+  if(event == 1){
+    this.isProgressVisible = false; 
+    this.clienteFoiSelecionado = !this.clienteFoiSelecionado;
+    console.log("Entrou no if ", this.clienteFoiSelecionado)
+    this.clienteSelecionadoRecuperarInformacoes = new Cliente
+  }else{
+
+    this.clienteservice.recuperarInformacoesCliente(event).subscribe(informacoesCliete=>{
+
+      if(informacoesCliete){
+        this.clienteSelecionadoRecuperarInformacoes = informacoesCliete
+
+        this.recuperarInformacoesEmpresaCliente(event)
+        console.log("Cliente Recuperado foi: ", informacoesCliete)
+        
+      }
+
+    })
+
+    this.isProgressVisible = false; 
+    console.log("Cliente Recuperado: ", this.identificadorClienteSelecionado)
+    this.clienteFoiSelecionado = true;
+  }
+
+  
+ // if (result == null){                                 // null is success, false means there was an error
+   // this.firebaseErrorMessage = result.message;
+
+   
+    
+   // }else if (result.isValid == false){
+    //  this.firebaseErrorMessage = result.message;
+
+     // this.isProgressVisible = false; 
+   // }else{
+     // this.router.navigate(['/dashboard']);
+   // }
+}
+editarClienteSelecionadoed(){
+  this.editarClienteSelecionado = true;
+}
+voltarEditarClienteSelecionado(){
+  this.editarClienteSelecionado = false;
+
+}
 }

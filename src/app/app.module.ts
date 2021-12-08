@@ -86,6 +86,7 @@ import { FormularioCadastroClienteComponent } from './formularios/formulario-cad
 import { FormularioCadastroEmpresaComponent } from './formularios/formulario-cadastro-empresa/formulario-cadastro-empresa.component';
 import { CampoControlErroComponent } from './campo-control-erro/campo-control-erro.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MovimentacaoComponent } from './movimentacao/movimentacao.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +114,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FornecedorListaComponent,
     FormularioCadastroClienteComponent,
     FormularioCadastroEmpresaComponent,
-    CampoControlErroComponent
+    CampoControlErroComponent,
+    MovimentacaoComponent
   ],
   imports: [
     BrowserModule,

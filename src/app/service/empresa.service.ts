@@ -16,13 +16,17 @@ export class EmpresaService {
 
   constructor(private db: AngularFirestore,  private http : HttpClient) { }
 
-  cadastrarEmpresa(empresa: EmpresaModel, identificadorCliente: string){
+  cadastrarEmpresa(empresa: EmpresaModel) : Observable<EmpresaModel>{
 
-    this.db.collection("CLIENTES-CADASTRADOS").doc(identificadorCliente)
+    return this.http.post<EmpresaModel>('http://localhost:8080/api/cadastrar-empresa-cliente', empresa)
+
+/**
+
+    this.db.collection("CLIENTES-CADASTRADOS").doc(empresa.identificadorCliente)
     .collection("EMPRESAS-CLIENTE").doc(empresa.cnpj).set(empresa) 
     .then((resultado: any) =>{
         console.log(resultado.key);
-    })
+    }) */
   }
 
 

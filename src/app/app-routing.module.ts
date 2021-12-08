@@ -1,3 +1,4 @@
+import { MovimentacaoComponent } from './movimentacao/movimentacao.component';
 import { FormularioCadastroClienteComponent } from './formularios/formulario-cadastro-cliente/formulario-cadastro-cliente.component';
 import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.component';
 import { FornecedorComponent } from './fornecedor/fornecedor.component';
@@ -41,7 +42,8 @@ const routes: Routes = [
     { path: 'listarContasEntrada', component: ListaContasEntradaComponent, canActivate: [AuthGuard]},
     { path: 'fornecedor', component: FornecedorComponent, canActivate: [AuthGuard]},
     { path: 'fornecedorlista', component: FornecedorListaComponent},
-    { path: 'formulario', component: FormularioCadastroClienteComponent}
+    { path: 'formulario', component: FormularioCadastroClienteComponent},
+    { path: 'movimentacao', component: MovimentacaoComponent}
 ];
 
 @NgModule({

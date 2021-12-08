@@ -93,6 +93,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
   input[type="checkbox"].checkmenu{
     display: none;
     position: absolute;
+   
   }
 
   input[type="checkbox"]:checked ~ nav.menu-lateral{
@@ -112,14 +113,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
       
   }
 
-  label{
-    transition: all 1.5s;
-    opacity: 15%;
-  }
-  input[type="checkbox"]:checked ~ label{
-    transform: translateX(-200px);
+ 
+  input[type="checkbox"]:checked ~ label{    
+    transform: translateX(-200px);    
     opacity: 100%;
-     
+    transition: all 1.5s;
   }
 
   .teste{

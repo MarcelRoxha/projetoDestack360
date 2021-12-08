@@ -1,0 +1,110 @@
+<body class="text-center-home">
+    <!-- Button trigger modal
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal1" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" style="margin-top: 4%;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cadastrar Cliente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input class="form-control" >
+          <input class="form-control" >
+          <input class="form-control" >
+          <input class="form-control" >
+          <input class="form-control" >
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+      <nav class="navbar navbar-expand navbar-dark" style="background: black">
+        <div class="container-fluid">
+          <div class="logo">
+              <img src="../../assets/imagens/65ab872f-fa8e-4b2b-bdd4-376c93f02752_uploads_destacklogo.png" width="170px" alt="Destack 360">
+              </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="menu_topo_admin">
+            <ul class="navbar-nav me-auto  mb-2 mb-lg-0">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="../../assets/imagens/icone_pequeno.jpg" width="20" height="20">
+                  {{ (user | async)?.displayName }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Perfil</a></li>
+                  <li><a class="dropdown-item" href="#">Clientes</a></li>
+                  <li><a class="dropdown-item" href="#">Fornecedores</a></li>
+                  <li><a class="dropdown-item" href="#"(click)="logout()">Sair</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="d-flex">
+        <div class="check-menu">
+          <input type="checkbox" id="chec"  class="checkmenu">        
+          <label for="chec" ><mat-icon (click)="toggle()" style="font-size: 50px;">menu</mat-icon></label>
+          <nav class="menu-lateral">
+            <ul class="list-unstyled">
+              <li><a routerLink="/admin">DASHBOARD</a></li>
+              <li>
+              
+              <!--------------
+              <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
+      
+              <li class="cliente-nav dropdown"> 
+                <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  CLIENTES
+                </a>                 
+                                   
+                  <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                    <li><a class="dropdown-item" routerLink="/dashboard">AREA DO CLIENTE</a></li>
+  
+                   <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                    <li><a routerLink="/cadastrarCliente">CADASTRAR</a></li>
+                    <li><a class="dropdown-item" routerLink="/consultarClientes">CONSULTAR</a></li>                               
+                  </ul>
+                </li>     
+              <li class="cliente-nav dropdown">
+                <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                  FORNECEDORES</a>           
+                                
+                <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                  <li><a class="dropdown-item" routerLink="/fornecedor">CADASTRAR FONECEDOR</a></li>
+                 
+  
+                 <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                  <li><a class="dropdown-item" routerLink="/fornecedorlista">FORNECEDORES CADASTRADOS</a></li>                                                             
+                </ul>            
+              </li>
+              <li class="cliente-nav dropdown"> 
+                <a class="dropdown-toggle" id="navbarDropdownCliente"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  CONTAS
+                </a>                 
+                                   
+                  <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                    <li><a class="dropdown-item" routerLink="/cadastrarContaEntrada">CADASTRAR CONTA</a></li>
+                   
+  
+                   <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                    <!------- <li><a routerLink="/cadastrarContaSaida">CADASTRAR CONTA SAIDA</a></li> ----> 
+                    <li><a class="dropdown-item" routerLink="/listarContasEntrada">CONTAS CADASTRADAS</a></li>                                            
+                  </ul>
+                </li> 
+                <li><a routerLink="/movimentacao"style="background: red;">MOVIMENTAÇÃO</a></li>
+            </ul>
+          </nav>
+        </div>
