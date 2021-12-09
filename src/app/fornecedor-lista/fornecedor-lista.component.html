@@ -224,7 +224,7 @@
 
 <!-- Modal cadastrar serviço Fornecedor -->
 <div class="modal fade" style="margin: 1%;" id="exampleModalCadastrarServicoFornecedor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title " id="exampleModalLabel"><strong>Cadastrar seriviço no cliente {{nomeFornecedorCadastroServico}}</strong></h3>
@@ -233,7 +233,7 @@
       <div class="modal-body">
 
         <div class="container col-md-12">
-          <form [formGroup]="formCadastrarContaSaida">
+          <form>
 
             <div class="row">
               <div class="col-md-6">
@@ -244,7 +244,7 @@
               </div>
               <div class="col-md-6">
                
-                <input type="text" formControlName="descricaoServico"[(ngModel)]="descricaoServico" > 
+                <input type="text" name="descricao"[(ngModel)]="contaCadastradaCompletaFornecedor.descricao" > 
               </div>
             
             <div class="row">
@@ -257,7 +257,20 @@
               </div>
               <div class="col-md-6">
                 
-                 <input type="text" formControlName="descricaoServico"[(ngModel)]="codigoContaDigitado" > 
+                 <input type="text" name="codigoConta"[(ngModel)]="contaCadastradaCompletaFornecedor.codigoConta" > 
+              </div>  
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <h4 style="color: black;">
+                  <strong>
+                    HISTORICO: {{contaCadastradaCompletaFornecedor.historico}}
+                  </strong>
+                </h4>
+              </div>
+              <div class="col-md-6">
+                
+                 <input type="text" name="historico"[(ngModel)]="contaCadastradaCompletaFornecedor.historico"> 
               </div>  
             </div>
             </div>   

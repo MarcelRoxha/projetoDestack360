@@ -1,3 +1,4 @@
+import { ContaCadastrada } from './../model/conta-cadastrada';
 import { ContaEntrada } from './../models/contaEntradaModel';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -42,19 +43,21 @@ export class CadastrarContaEntradaComponent implements OnInit {
   user: Observable<any>; 
   isOpen = false; 
   isDisabled = false;
-  clickCliente = false;            // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
+  clickCliente = false;  
+  contaCadastrarCompleta: ContaCadastrada ; 
+
+  // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
 
   constructor(private contaEntradaService: ContaEntradaService, private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
     this.router.navigate(['/cadastrarContaEntrada']);
 
-    this.formCadastrarContaEntrada = new FormGroup({
-      codigoC: new FormControl('', Validators.required),
-      codigoD: new FormControl('', Validators.required),
-      descricao: new FormControl('', Validators.required),     
-    })
+   
   }
 
   ngOnInit(): void {
+
+    this.contaCadastrarCompleta = new ContaCadastrada();
+
       this.afAuth.authState.subscribe(user => {                                                   // grab the user object from Firebase Authorization
           if (user) {
               let emailLower = user.email.toLowerCase();
@@ -93,5 +96,46 @@ cadastrarContaEntrada(){
     console.log(clienteBanco)});
   this.formCadastrarContaEntrada.reset();
     
+}
+cadastrarConta(contaCadastrarCompletaRecebida: ContaCadastrada){
+
+  this.contaEntradaService.cadastrarConta({...this.contaCadastrarCompleta}).subscribe(resultadoAPiContaCadastrada=>{
+    
+    if(resultadoAPiContaCadastrada == 1){
+      Swal.fire({
+        position: 'top',
+        icon: 'info',
+        title: 'DUPLICIDADE',
+        showConfirmButton: true,         
+        text: "Código já foi cadastrado em uma conta",
+        confirmButtonText:'Ok'
+      })
+    }else if (resultadoAPiContaCadastrada == 2){
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'SUCESSO',
+        showConfirmButton: true,        
+        text: "Conta cadastrada com sucesso!",
+        confirmButtonText:'Ok'
+      })
+      this.contaCadastrarCompleta = new ContaCadastrada();
+    }else if (resultadoAPiContaCadastrada == 3){
+      Swal.fire({
+        position: 'top',
+        icon: 'info',
+        title: 'FALTA INFORMAÇÃO',
+        showConfirmButton: true,
+        text: "Para cadastrar uma conta é necessário preencher todas as informações. Tente novamente",
+        confirmButtonText:'Ok'
+      })
+    }
+    
+    console.log("Resultado conta Cadastrada: ",resultadoAPiContaCadastrada)
+  })
+
+
+  
+
 }
 }

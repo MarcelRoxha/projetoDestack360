@@ -1,3 +1,4 @@
+import { ContaCadastrada } from './../model/conta-cadastrada';
 import { LancamentoSaida } from './../models/LancamentoSaidaModel';
 import { ContaEntradaSalvaFutura } from './../models/lancamentoEntradaSalvoFuturo';
 import { LancamentoEntrada } from './../models/lancamentoEntradaModel';
@@ -30,6 +31,11 @@ export class ContaEntradaService {
   cadastrarContaEntrada(contaEntrada : ContaEntrada) : Observable<ContaEntrada>{
     return this.http.post<ContaEntrada>(this.apiURL, contaEntrada);
 
+  }
+
+
+  cadastrarConta(contaCadastradaRecebida: ContaCadastrada) : Observable<any>{
+    return this.http.post<ContaCadastrada>('https://destack360.herokuapp.com/api/cadastrar-conta',contaCadastradaRecebida)
   }
 
   listaContasEntradaSalvas() : Observable<ContaEntrada[]>{
@@ -70,14 +76,14 @@ return this.verificaIf;
   }
 
   lancarEntrada(lancamentoContaEtrada : LancamentoEntrada){
-    return this.http.post<LancamentoEntrada>('http://localhost:8080/api/lancar-entrada-caixa', lancamentoContaEtrada).pipe(tap(()=>{
+    return this.http.post<LancamentoEntrada>('https://destack360.herokuapp.com/api/lancar-entrada-caixa', lancamentoContaEtrada).pipe(tap(()=>{
       this._refreshNeeded$.next() 
       
     }));
   }
 
   lancarEntradaBanco(lancamentoContaEtrada : LancamentoEntrada){
-    return this.http.post<LancamentoEntrada>('http://localhost:8080/api/lancar-entrada-banco', lancamentoContaEtrada).pipe(tap(()=>{
+    return this.http.post<LancamentoEntrada>('https://destack360.herokuapp.com/api/lancar-entrada-banco', lancamentoContaEtrada).pipe(tap(()=>{
       this._refreshNeeded$.next() 
       
     }));
@@ -90,14 +96,14 @@ return this.verificaIf;
 
   
   lancarSaida(lancamentoSaida : LancamentoSaida){
-    return this.http.post<LancamentoSaida>('http://localhost:8080/api/lancar-saida-caixa', lancamentoSaida).pipe(tap(()=>{
+    return this.http.post<LancamentoSaida>('https://destack360.herokuapp.com/api/lancar-saida-caixa', lancamentoSaida).pipe(tap(()=>{
       this._refreshNeeded$.next() 
       
     }));
   }
 
   lancarSaidaBanco(lancamentoSaida : LancamentoSaida){
-    return this.http.post<LancamentoSaida>('http://localhost:8080/api/lancar-saida-banco', lancamentoSaida).pipe(tap(()=>{
+    return this.http.post<LancamentoSaida>('https://destack360.herokuapp.com/api/lancar-saida-banco', lancamentoSaida).pipe(tap(()=>{
       this._refreshNeeded$.next() 
       
     }));

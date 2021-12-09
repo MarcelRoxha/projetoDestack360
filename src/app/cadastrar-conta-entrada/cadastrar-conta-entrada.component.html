@@ -114,27 +114,27 @@
               class="open-close-container">
               <h3 class="text-center"> CADASTRAR CONTA DE ENTRADA<h3>
                 <hr />        
-                <form [formGroup]="formCadastrarContaEntrada" (ngSubmit)="cadastrarContaEntrada()">
+                <form>
                       <div class="container" style="margin-left: 16%;">
                           <div class="row">
                               <div class="col-md-2">
                                   <label class="form-label" style="opacity: 100%;">
-                                      Descrição:                                      
+                                      DESCRIÇÃO:                                      
                                   </label>
                                   </div>
                                   <div class="col-md-6">
-                                  <input class="form-control" type="text" formControlName="descricao" placeholder="Ex: Doação, Entrada Anônima, etc...">                                  
+                                  <input class="form-control" type="text" name="descricao" placeholder="Ex: Doação, Entrada Anônima, etc..." [(ngModel)]="contaCadastrarCompleta.descricao" >                                  
                               </div>
                               </div>
                               
                               <div class="row">
                                 <div class="col-md-2">
                                     <label class="form-label" style="opacity: 100%;">
-                                       Codigo conta Débito:                                      
+                                       CODIGO CONTA:                                      
                                     </label>
                                     </div>
                                     <div class="col-md-6">
-                                    <input class="form-control" type="text" formControlName="codigoC">                                  
+                                    <input class="form-control" type="number" name="codigoConta" [(ngModel)]="contaCadastrarCompleta.codigoConta">                                  
                                 </div>
                                 <br>
                               </div>
@@ -142,17 +142,17 @@
                               <div class="row">
                                 <div class="col-md-2">
                                     <label class="form-label" style="opacity: 100%;">
-                                        Codigo conta Crédito:                                      
+                                        HISTORICO:                                      
                                     </label>
                                     </div>
                                     <div class="col-md-6">
-                                    <input class="form-control" type="text" formControlName="codigoD">                                  
+                                    <input class="form-control" type="text" name="historico" [(ngModel)]="contaCadastrarCompleta.historico">                                  
                                 </div>
                                 <br>
                               </div>
                               <br>
                               <div class="col-md-6">
-                                 <button type="submit" class="btn btn-primary" style="margin-left: 20%; width: 100%;">CADASTRAR CONTA DE ENTRADA</button>
+                                 <button type="submit" class="btn btn-primary" style="margin-left: 20%; width: 100%;" (click)="cadastrarConta(contaCadastrarCompleta)">CADASTRAR CONTA DE ENTRADA</button>
                               </div>
                       </div>   
                 </form> 

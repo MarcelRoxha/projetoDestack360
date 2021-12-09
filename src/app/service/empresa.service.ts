@@ -18,7 +18,7 @@ export class EmpresaService {
 
   cadastrarEmpresa(empresa: EmpresaModel) : Observable<EmpresaModel>{
 
-    return this.http.post<EmpresaModel>('http://localhost:8080/api/cadastrar-empresa-cliente', empresa)
+    return this.http.post<EmpresaModel>('https://destack360.herokuapp.com/api/cadastrar-empresa-cliente', empresa)
 
 /**
 

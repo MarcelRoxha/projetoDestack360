@@ -193,17 +193,23 @@
 
           <div class="col-4">
             <label for="telefone" class="form-label">TELEFONE</label>
-            <input type="text" name="telefone" class="form-control" id="telefone" [(ngModel)]="empresaCadastrarCompleto.telefone">
+            <input type="text" name="telefone" class="form-control" id="telefone" 
+            [(ngModel)]="empresaCadastrarCompleto.telefone"
+            prefix="55+" mask="(00) 0000 0000">
           </div>
 
           <div class="col-4">           
             <label for="telefone" class="form-label">CELULAR <strong><span style="color: red;">*</span></strong></label>
-              <input type="text" name="celular" class="form-control" id="celular" [(ngModel)]="empresaCadastrarCompleto.celular">
+              <input type="text" name="celular" class="form-control" id="celular" 
+              [(ngModel)]="empresaCadastrarCompleto.celular"
+              prefix="55+" mask="(00) 0 0000 0000">
               </div>
               <div class="col-4">           
                 <input class="form-check-input" type="checkbox" style="margin-right: 2px;"id="whatsapp" (click)="numeroWhatsapp()"> 
                 <h4 for="whatsapp" class="form-label">WHATSAPP <strong><span style="color: red;">*</span></strong>( MESMO QUE O CELULAR)</h4>
-                  <input type="text" [disabled]="verificaCelularWhats === true" name="whatsapp" class="form-control" id="whatsapp" [(ngModel)]="empresaCadastrarCompleto.whatsapp">
+                  <input type="text" [disabled]="verificaCelularWhats === true" name="whatsapp" class="form-control" id="whatsapp" 
+                  [(ngModel)]="empresaCadastrarCompleto.whatsapp"
+                  prefix="55+" mask="(00) 0 0000 0000">
                   </div>
 
           <div class="col-4">
@@ -1830,17 +1836,116 @@
                               <td>{{EmpresaModel.saldoCaixa}}</td>
                               <td>{{EmpresaModel.saldoBanco}}</td>
                               <td>
-                                <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#modalLancarEntradaEmpresaSelecionada" (click)="lancarEntradaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">LANÇAR ENTRADA</button>
+                                <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#modalLancarEntradaEmpresaSelecionadas" (click)="lancarEntradaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">LANÇAR ENTRADA</button>
                 
                               </td>
                               <td><button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalQualEmpresaLancaCredito" (click)="lancarSaidaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">LANÇAR SAIDA</button></td>
                             </tr>
                             
                           </tbody>
-                        </table>                        
-                
+                        </table> 
                                         </div>
+                                        <div *ngIf="lancarEntrada == true "  style="background: white; border-radius: 7px;">
+                                          <div>
 
+                                            <div class="form-check form-check-inline" style="border-radius: 12px; width: 400px; background: grey;">
+                                              
+                                              <div class="container" style="margin-top: 5px;">
+                                                <div class="text-center">
+                                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                              <label class="form-check-label" for="inlineRadio1">CONTA CAIXA</label>
+
+                                                  <h2>LANÇAR ENTRADA CAIXA:</h2> 
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-4">
+                                                    <h3>DATA:</h3>
+  
+                                                  </div>
+                                                  <div class="col-8">
+                                                    <input type="date" class="form-control" >
+                                                  </div>
+  
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-4">
+                                                    <h3>VALOR:</h3>
+  
+                                                  </div>
+                                                  <div class="col-8">
+                                                    <input type="number" class="form-control" >
+                                                  </div>
+  
+                                                </div>
+
+                                              </div>
+                                             
+
+                                              
+                                            </div>
+                                            <div class="form-check form-check-inline" style="border-radius: 12px; width: 400px; background: steelblue;">
+                                              <div class="container"  style="margin-top: 5px;">
+                                                <div class="text-center">
+                                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                              <label class="form-check-label" for="inlineRadio1">CONTA BANCO</label>
+
+                                                  <h2>LANÇAR ENTRADA BANCO:</h2> 
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-4">
+                                                    <label>DATA:</label>
+  
+                                                  </div>
+                                                  <div class="col-8">
+                                                    <input type="date" class="form-control" >
+                                                  </div>
+  
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-4">
+                                                    <label>VALOR:</label>
+  
+                                                  </div>
+                                                  <div class="col-8">
+                                                    <input type="number" class="form-control" >
+                                                  </div>
+  
+                                                </div>
+
+                                                <div class="row">
+                                                  <div class="col-10">
+                                                    <label>CONTA ENTRADA:</label>
+  
+                                                  </div>
+                                                  <div class="col-4">
+                                                    <input type="number" class="form-control" >
+                                                  </div>
+                                                  <div class="col-8">
+                                                    <input type="text" class="form-control" >
+                                                  </div>
+  
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-10">
+                                                    <label>CONTA SAIDA:</label>
+  
+                                                  </div>
+                                                  <div class="col-4">
+                                                    <input type="number" class="form-control" >
+                                                  </div>
+                                                  <div class="col-8">
+                                                    <input type="text" class="form-control" >
+                                                  </div>
+  
+                                                </div>
+
+                                              </div>
+                                             
+
+                                            </div>
+                                           
+                                        </div>
+                
                                         
                   </div>
                

@@ -14,6 +14,7 @@ import { FirestoreModule } from '@angular/fire/firestore';
 import Swal from 'sweetalert2';
 import { ContaSaida } from '../model/conta-saida';
 import { ContaSaidaService } from '../services/conta-saida.service';
+import { ContaCadastradaFornecedor } from '../model/conta-cadastrada-fornecedor';
 
 @Component({
   selector: 'app-fornecedor-lista',
@@ -67,6 +68,10 @@ export class FornecedorListaComponent implements OnInit {
   formAtualizarFornecedor: FormGroup;
 
   //------------CADASTRAR CONTA FORNECEDOR--------------------//
+
+  contaCadastradaCompletaFornecedor: ContaCadastradaFornecedor = new ContaCadastradaFornecedor() ;
+
+
   contaSaidaCadastradaFornecedor: ContaSaida ;
   nomeFornecedorSelecionado: string;
   descricaoConta: string;
@@ -267,10 +272,16 @@ export class FornecedorListaComponent implements OnInit {
     
     this.identificadorFornecedor = idFornecedor;
     this.nomeFornecedorCadastroServico = nomeEmpresa
-
+    this.contaCadastradaCompletaFornecedor = new ContaCadastradaFornecedor();
+    this.contaCadastradaCompletaFornecedor.historico = this.nomeFornecedorCadastroServico.toUpperCase().toString();
+    this.contaCadastradaCompletaFornecedor.fornecedor = this.nomeFornecedorCadastroServico.toUpperCase().toString();
     console.log("idendificador recuperada: ",  this.identificadorFornecedor)
     console.log("nome recuperada: ",  this.nomeFornecedorCadastroServico)
 
+  }
+
+  cadastrarContaFornecedor(){
+      console.log("conta Recebida: ", {...this.contaCadastradaCompletaFornecedor})
   }
 
 }

@@ -167,6 +167,8 @@ export class ConsultaClienteComponent implements OnInit {
 
   msgEWhats: string = "SIM"
 
+  lancarEntrada: boolean = false;
+
   //-------CONTA CAIXA-------//
 
 
@@ -577,7 +579,7 @@ this.verificaMostaEmpresas = false;
 
 
 lancarEntradaEmpresaCliente(identificadorEmpresa: string, identificadorCliente: string){
-  
+  this.lancarEntrada = !this.lancarEntrada; 
 this.referenciaFirebase.identificadorEmpresa = identificadorEmpresa;  
 
   console.log("Entrou no entrada empresa")
@@ -589,9 +591,10 @@ this.referenciaFirebase.identificadorEmpresa = identificadorEmpresa;
 
   console.log("Recuperado Referencia: ", {...this.referenciaFirebase})
 
-  this.clienteservice.recuperarContaCaixaEmpresaCliente({...this.referenciaFirebase}).subscribe(resultadoAPI=>{
-    console.log("Informações da conta de caixa recuperado: ", resultadoAPI)
-  })
+ // this.clienteservice.recuperarContaCaixaEmpresaCliente({...this.referenciaFirebase}).subscribe(resultadoAPI=>{
+   // console.log("Informações da conta de caixa recuperado: ", resultadoAPI)
+//  })
+
 
 
 }

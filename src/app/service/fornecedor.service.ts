@@ -52,7 +52,7 @@ return this.verificaIf;
   }
 
   recuperarFornecedoresCadastrados() :Observable<Fornecedor[]>{
-    return this.http.get<Fornecedor[]>('http://localhost:8080/api/recuperar-fornecedores-cadastrados');
+    return this.http.get<Fornecedor[]>('https://destack360.herokuapp.com/api/recuperar-fornecedores-cadastrados');
 
   }
   informacoesFornecedor(id: string){

@@ -27,7 +27,7 @@ export class ClienteService {
   }
 
   recuperarInformacoesCliente(identificardo: string) : Observable<Cliente>{
-    return this.http.post<Cliente>('http://localhost:8080/api/recuperarInformacoesCliente', identificardo)
+    return this.http.post<Cliente>('https://destack360.herokuapp.com/api/recuperarInformacoesCliente', identificardo)
   }
 
   recuperarEmpresaCadastradasCliente(identificardo: string) : Observable<EmpresaModel[]>{
@@ -40,16 +40,16 @@ export class ClienteService {
   }
 
   recuperarEmpresasCliente(identificardo: string): Observable<EmpresaModel[]>{
-    return this.http.post<EmpresaModel[]>('http://localhost:8080/api/recuperar-empresas-cliente', identificardo)
+    return this.http.post<EmpresaModel[]>('https://destack360.herokuapp.com/api/recuperar-empresas-cliente', identificardo)
   }
 
   listaEmpresasCliente() : Observable<EmpresaModel[]>{
-    return this.http.get<EmpresaModel[]>('http://localhost:8080/api/recuperar-empresas-clientes-admin');
+    return this.http.get<EmpresaModel[]>('https://destack360.herokuapp.com/api/recuperar-empresas-clientes-admin');
 
   }
 
   recuperarContaCaixaEmpresaCliente(informacoesClienteEmpresa: RecuperarInformacoesCixaEmpresaCliente) : Observable<ContaEntradaCaixa>{
-    return this.http.post<ContaEntradaCaixa>('http://localhost:8080/api/recuperar-conta-caixa-empresa', informacoesClienteEmpresa);
+    return this.http.post<ContaEntradaCaixa>('https://destack360.herokuapp.com/api/recuperar-conta-caixa-empresa', informacoesClienteEmpresa);
 
   }
 

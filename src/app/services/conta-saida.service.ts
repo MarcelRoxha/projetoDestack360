@@ -34,13 +34,13 @@ export class ContaSaidaService {
   }
 
   lancaSaida(lancarSaida : LancamentoSaida){
-    return this.http.post<LancamentoEntrada>('http://localhost:8080/lancarSaida', lancarSaida).pipe(tap(()=>{
+    return this.http.post<LancamentoEntrada>('https://destack360.herokuapp.com/api/lancarSaida', lancarSaida).pipe(tap(()=>{
       this._refreshNeeded$.next() 
       
     }));
   }
 
   salvarContaParaLancamentosFuturos(contaSalvaParaLancamentosFuturos : ContaSaidaSalvaFutura){
-    return this.http.post<ContaSaidaSalvaFutura>('http://localhost:8080/salvarSugestao', contaSalvaParaLancamentosFuturos);
+    return this.http.post<ContaSaidaSalvaFutura>('https://destack360.herokuapp.com/api/salvarSugestao', contaSalvaParaLancamentosFuturos);
   }
 }
