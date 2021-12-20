@@ -87,6 +87,15 @@ import { FormularioCadastroEmpresaComponent } from './formularios/formulario-cad
 import { CampoControlErroComponent } from './campo-control-erro/campo-control-erro.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MovimentacaoComponent } from './movimentacao/movimentacao.component';
+import { TelaCadastroComponent } from './cadastro/tela-cadastro/tela-cadastro.component';
+import { TelaAcessoComponent } from './telasprincipais/tela-acesso/tela-acesso.component';
+import { TelaEmpresasComponent } from './telasprincipais/tela-empresas/tela-empresas.component';
+import { TelaClientesComponent } from './telasprincipais/tela-clientes/tela-clientes.component';
+import { TelaFornecedoresComponent } from './telasprincipais/tela-fornecedores/tela-fornecedores.component';
+import { TelaBancosComponent } from './telasprincipais/tela-bancos/tela-bancos.component';
+import { TelaEntradasComponent } from './telasprincipais/tela-entradas/tela-entradas.component';
+import { TelaSaidasComponent } from './telasprincipais/tela-saidas/tela-saidas.component';
+import { TelaTransferenciasComponent } from './telasprincipais/tela-transferencias/tela-transferencias.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +124,16 @@ import { MovimentacaoComponent } from './movimentacao/movimentacao.component';
     FormularioCadastroClienteComponent,
     FormularioCadastroEmpresaComponent,
     CampoControlErroComponent,
-    MovimentacaoComponent
+    MovimentacaoComponent,
+    TelaCadastroComponent,
+    TelaAcessoComponent,
+    TelaEmpresasComponent,
+    TelaClientesComponent,
+    TelaFornecedoresComponent,
+    TelaBancosComponent,
+    TelaEntradasComponent,
+    TelaSaidasComponent,
+    TelaTransferenciasComponent
   ],
   imports: [
     BrowserModule,

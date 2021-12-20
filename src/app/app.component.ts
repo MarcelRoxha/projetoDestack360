@@ -19,15 +19,19 @@ export class AppComponent {
   isProgressVisible: boolean;
   firebaseErrorMessage: string;
   loginForm: FormGroup;
+  sideBarOpen = true;
+  mostrarMenu: boolean = false;
+  
   constructor(private authService: AuthService, private router: Router, public afAuth: AngularFireAuth, private firestore: AngularFirestore) {
-    this.isProgressVisible = false;
    
-         this.loginForm = new FormGroup({
-             'email': new FormControl('', [Validators.required, Validators.email]),
-             'password': new FormControl('', Validators.required)
-         });
-   
-         this.firebaseErrorMessage = '';
+     }
+
+     ngOnInit(){
+
+        this.authService.mostrarMenuCima.subscribe(verificaUsuarioLogado=>{
+            this.mostrarMenu = verificaUsuarioLogado;
+        })
+
      }
 
      loginUser() {
@@ -48,5 +52,8 @@ export class AppComponent {
               this.verificaUserLogado = false; 
           }
       });
+  }
+  sideBarToggler() {
+    this.sideBarOpen = !this.sideBarOpen;
   }
 }

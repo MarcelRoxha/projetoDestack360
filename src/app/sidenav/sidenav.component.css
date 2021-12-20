@@ -3,13 +3,17 @@
     padding: 2.6rem 1rem;
 }
 .logo img{
-   width: 270px;
+   width: 200px;
+   margin: 5px;
   
+}
+body{
+   background: black;
 }
 
 mat-nav-list{
    background-color: black;
-   height: 800px;
+   height: 100%;
   
 }
 
@@ -25,4 +29,54 @@ input[type="checkbox"]:checked ~ .open-close-container{
  }  
  .col-md-2{
      padding: 10px;
+ }
+
+ .mat-list-item {
+   color: black!important;
+   font-size: 0.8rem;
+   height: 44px !important;
+   margin-bottom: 4px;
+   
+  
+ }
+
+ .mat-list-item-content ::ng-deep   {
+   border-radius: 5px;
+   margin: 0 8px;
+ }
+ .mat-list-item :hover {
+   color: #f2f5f7 !important;
+ }
+
+ .mat-list-item :hover {
+   background: black !important;
+ }
+
+ .list-item-active {
+    background: blue !important;
+    border-radius: 0 2rem 2rem 0; 
+ 
+   color: #f2f5f7 !important;
+     
+   
+ }
+
+ .list-item-active :hover {
+      background: red;
+    }
+    .mat-list-item-content  ::ng-deep {
+       background: #2c3344 !important;
+    
+    }
+    .list-item-active ::ng-deep{
+      background: blueviolet;
+      color: yellow;
+    }
+
+
+ .mat-subheader {
+   color: black;
+   font-size: 1.2rem;
+   font-weight: 100;
+   letter-spacing: 1px;
  }

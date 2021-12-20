@@ -1,0 +1,46 @@
+<body>
+
+        <div class="container-fluid page">
+            <div class="d-flex page__box p-3">
+                
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio1">ACESSO</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" (click)="acessarTelaFormularioTela()" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio2">EMPREAS</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio3">CLIENTES</label>
+            
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio4">FORNECEDORES</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio5">BANCOS</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio6">ENTRADAS</label>
+            
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio7" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio7">SAÍDAS</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio8" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="btnradio8">TRANSFERÊNCIAS</label>
+                  
+                  </div>
+</div>
+            <div >
+              <div>
+
+                <app-formulario-cadastro-cliente *ngIf="acessarTelaFormulario == true" ></app-formulario-cadastro-cliente>
+
+         
+
+              </div></div></div>
+
+    
+
+  
+   
+</body>

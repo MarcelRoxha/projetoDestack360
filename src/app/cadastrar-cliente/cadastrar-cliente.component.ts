@@ -160,16 +160,20 @@ cadastrarCliente(clienteRecebido: Cliente){
 
   this.clienteservice.cadastrarCliente({...this.clienteCadastroCompleto}).then(()=>{
     Swal.fire({
-      position: 'top-end',
+      position: 'top',
       icon: 'success',
-      title: 'Conta de Saída salva com sucesso',
+      title: 'Cliente cadastrado com sucesso!',
       showConfirmButton: false,
       timer: 1000, 
       confirmButtonText:'Ok'
     })
     this.formCadastrarCliente.reset();
     this.clienteCadastroCompleto = new Cliente();
+   this.recarregarPagina()
   })
+
+
+ 
 
 
   console.log("Cliente Cadastrado: ", clienteRecebido)
@@ -189,5 +193,13 @@ numeroWhatsapp(){
   console.log("Valor do whats é: ", this.clienteCadastroCompleto.whatsapp);
   }
   
+  }
+  recarregarPagina(){
+   let recarregarpagina: 
+   CadastrarClienteComponent = new CadastrarClienteComponent( this.clienteservice, 
+      this.afAuth , 
+      this.firestore , 
+      this.router ,
+      this._httpClient)
   }
 }

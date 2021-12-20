@@ -1,3 +1,7 @@
+import { LancamentoSaidaCaixa } from './../model/lancamento-saida-caixa';
+import { LancamentoSaidaBanco } from './../model/lancamento-saida-banco';
+import { LancamentoEntradaBanco } from './../model/lancamento-entrada-banco';
+import { ContasCadastradas } from './../model/contas-cadastradas';
 import { RecuperarInformacoesCixaEmpresaCliente } from './../model/recuperarInformacoesCaixaEmpresaCliente';
 
 
@@ -29,6 +33,8 @@ import { EmpresaService } from '../service/empresa.service';
 import { ServicoFornecedorModel } from '../models/servicoFornecedorModel';
 import { ContaEntradaCaixa } from '../model/conta-entrada-caixa';
 import { ContaEntradaBanco } from '../model/conta-entrada-banco';
+import { LancamentoEntradaCaixa } from '../model/lancamento-entrada-caixa';
+import { LancamentoPadrao } from '../model/lancamento-padrao';
 
 
 
@@ -161,13 +167,16 @@ export class ConsultaClienteComponent implements OnInit {
   verificaMostaEmpresas: boolean = false;
   verificLancarEntradaCaixa: boolean = true;
   verificLancarEntradaBanco: boolean = true;
-
+  mostradadosBancoSelecionado: boolean = false;
+  mostradadosBancoSelecionadoSaida: boolean = false;
+ 
 
   editarClienteSelecionado: boolean = false;
 
   msgEWhats: string = "SIM"
 
   lancarEntrada: boolean = false;
+  lancarSaida: boolean = false;
 
   //-------CONTA CAIXA-------//
 
@@ -188,6 +197,9 @@ export class ConsultaClienteComponent implements OnInit {
   valorLancamentoContaBanco: string;
   descricaoLancamentoContaBanco: string
   destalhesLancamentoContaBanco: string;
+
+  contaBancoSelecionadaEmpresaCliente: ContaEntradaBanco = new ContaEntradaBanco();
+  contaBancoSelecionadaEmpresaClienteSaida: ContaEntradaBanco = new ContaEntradaBanco();
 
 
   //--------------VALIDACAO CAMPOS OBRIGATORIOS-----------------//
@@ -238,6 +250,25 @@ export class ConsultaClienteComponent implements OnInit {
 
   contaEntradaCaixaCadastro: ContaEntradaCaixa;
   contaEntradaBancoCadastro: ContaEntradaBanco;
+
+ //--------------CONTA BANCO RECUPERADA DE ACORDO COM A EMPRESA DO CLIENTE----------------//
+
+ contabancoRecuperada: any[] = [];
+ contaBancoRecuperadaSelecionada: string;
+ contaBancoSelecionadaBancoDados: ContaEntradaBanco = new ContaEntradaBanco();
+
+
+ //-----------------CONTAS CADASTRADAS RECUPEARADAS---------//
+ contasCadastradasRecuperadas: any = new ContasCadastradas();
+ contasBancoCadastradaCliente: any = new ContaEntradaBanco();
+
+ contasBancoCadastradaClienteSaida: any = new ContaEntradaBanco();
+ //--------DESABILITAR CONTA CAIXA SE BANCO FOR ESCOLHIDO E VICE VERSA-----------------//
+
+ desabilitarLadoContaCaixa: boolean = false;
+ desabilitarLadoContaBanco: boolean = false; 
+ desabilitarLadoContaCaixaSaida: boolean = false;
+ desabilitarLadoContaBancoSaida: boolean = false;
 
 
 
@@ -293,10 +324,36 @@ export class ConsultaClienteComponent implements OnInit {
   valorSaidaDigitado:string;
   contaSaidaDigitada: string;
   dataSelecionada: string;
+
+  lancamentoSaidaBanco: LancamentoSaidaBanco = new LancamentoSaidaBanco();
   
 
+//---------------------LANÇAR ENTRADA CAIXA----------------------------------//
+
+lancamentoEntradaCaixa: LancamentoEntradaCaixa = new LancamentoEntradaCaixa();
+
+//---------------------LANÇAR ENTRADA BANCO----------------------------------//
+
+lancamentoEntradaBanco: LancamentoEntradaBanco = new LancamentoEntradaBanco();
 
 
+
+//--------------------LANÇAR SAIDA CAIXA----------------------------------//
+lancamentoSaidaCaixaCompleto: LancamentoSaidaCaixa = new LancamentoSaidaCaixa;
+
+
+
+
+
+//------------------------LANCAMENTO PADRÃO--------------------------------//
+
+lancamentoEntradaPadraoCompleto: LancamentoPadrao = new LancamentoPadrao();
+
+
+
+//------------------------LANÇAR SAIDA BANCO---------------------------//
+
+lancamentoSaidaBancoCompleto: LancamentoSaidaBanco = new LancamentoSaidaBanco;
 
   //-----------INFORMAÇÕES RECUPERADA PARA EFETUAR LANCAMENTO PARA O DEVIDO CLIENTE---------------///
   identificadorClienteLancaCredito: string;
@@ -578,8 +635,13 @@ this.verificaMostaEmpresas = false;
 }
 
 
+//-----------METODOS LANCAR ENTRADA CAIXA E BANCO--------------------//
+
+
 lancarEntradaEmpresaCliente(identificadorEmpresa: string, identificadorCliente: string){
   this.lancarEntrada = !this.lancarEntrada; 
+  this.lancarSaida = false;
+  
 this.referenciaFirebase.identificadorEmpresa = identificadorEmpresa;  
 
   console.log("Entrou no entrada empresa")
@@ -591,15 +653,175 @@ this.referenciaFirebase.identificadorEmpresa = identificadorEmpresa;
 
   console.log("Recuperado Referencia: ", {...this.referenciaFirebase})
 
- // this.clienteservice.recuperarContaCaixaEmpresaCliente({...this.referenciaFirebase}).subscribe(resultadoAPI=>{
-   // console.log("Informações da conta de caixa recuperado: ", resultadoAPI)
-//  })
+
+}
+lancarEntradaContaCaixaCompleta(){
+
+  this.lancamentoEntradaCaixa.identificadorCliente = this.referenciaFirebase.identificadorCliente;
+  this.lancamentoEntradaCaixa.identificadorEmpresa = this.referenciaFirebase.identificadorEmpresa;
+  
+  this.lancamentoEntradaPadraoCompleto.identificadorCliente = this.lancamentoEntradaCaixa.identificadorCliente;
+  this.lancamentoEntradaPadraoCompleto.identificadorEmpresa = this.lancamentoEntradaCaixa.identificadorEmpresa;
+  this.lancamentoEntradaPadraoCompleto.codigoCredito = "5"  
+  this.lancamentoEntradaPadraoCompleto.codigoDebito = this.lancamentoEntradaCaixa.codigoSaida;
+  this.lancamentoEntradaPadraoCompleto.valor = this.lancamentoEntradaCaixa.valor;
+  this.lancamentoEntradaPadraoCompleto.data = this.lancamentoEntradaCaixa.data;
+  this.lancamentoEntradaPadraoCompleto.historico = this.lancamentoEntradaCaixa.historico;
 
 
+
+  console.log("Clicado no lancar entrada completa caixa")
+  console.log("Valores recuperados lancamento SAIDA CAIXA: ", this.lancamentoEntradaCaixa)
+  console.log("Lançamento padrão: ", this.lancamentoEntradaPadraoCompleto)
+}
+
+
+
+//-----------METODOS LANCAR SAIDA CAIXA E BANCO--------------------//
+
+
+lancarSaidaContaBancoCompleta(){
+  this.lancamentoEntradaBanco.identificadorCliente = this.referenciaFirebase.identificadorCliente;
+  this.lancamentoEntradaBanco.identificadorEmpresa = this.referenciaFirebase.identificadorEmpresa;
+
+
+  this.lancamentoEntradaPadraoCompleto.identificadorCliente = this.lancamentoEntradaBanco.identificadorCliente;
+  this.lancamentoEntradaPadraoCompleto.identificadorEmpresa = this.lancamentoEntradaBanco.identificadorEmpresa;
+  this.lancamentoEntradaPadraoCompleto.codigoCredito =  this.lancamentoEntradaBanco.codigoSaida;
+  this.lancamentoEntradaPadraoCompleto.codigoDebito = this.contaBancoSelecionadaEmpresaCliente.codigoContaBanco; 
+  this.lancamentoEntradaPadraoCompleto.valor = this.lancamentoEntradaBanco.valor;
+  this.lancamentoEntradaPadraoCompleto.data = this.lancamentoEntradaBanco.data;
+  this.lancamentoEntradaPadraoCompleto.historico = this.lancamentoEntradaBanco.historico
+ 
+  console.log("Clicado no lancar entrada completa banco")
+  console.log("Valores recuperados lancamento saica Caixa: ", this.lancamentoEntradaBanco)
+  console.log("Lancamneto padrao banco: ", this.lancamentoEntradaPadraoCompleto)
+
+  console.log("Clicado no lancar saida completa banco")
+  console.log("Valores recuperados lancamento Entrada Banco: ", this.lancamentoEntradaBanco)
+}
+
+lancarSaidaContaCaixaCompleta(){ 
+
+   
+  this.lancamentoEntradaPadraoCompleto.identificadorCliente = this.referenciaFirebase.identificadorCliente;
+  this.lancamentoEntradaPadraoCompleto.identificadorEmpresa =  this.referenciaFirebase.identificadorEmpresa;
+  this.lancamentoEntradaPadraoCompleto.codigoCredito = this.lancamentoSaidaCaixaCompleto.codigoSaida;
+  this.lancamentoEntradaPadraoCompleto.codigoDebito = "5";
+  this.lancamentoEntradaPadraoCompleto.valor = this.lancamentoSaidaCaixaCompleto.valor;
+  this.lancamentoEntradaPadraoCompleto.data = this.lancamentoSaidaCaixaCompleto.data;
+  this.lancamentoEntradaPadraoCompleto.historico = this.lancamentoSaidaCaixaCompleto.historico;
+
+  console.log("Clicado no lancar saida completa caixa")
+  console.log("Valores recuperados lancamento saica Caixa: ", this.lancamentoSaidaCaixaCompleto)
+  console.log("Valores lancamento padrao: ", this.lancamentoEntradaPadraoCompleto)
+}
+
+
+
+
+
+lancarEntradaContaBancoCompleta(){
+  this.lancamentoEntradaBanco.identificadorCliente = this.referenciaFirebase.identificadorCliente;
+  this.lancamentoEntradaBanco.identificadorEmpresa = this.referenciaFirebase.identificadorEmpresa;
+
+  this.lancamentoEntradaPadraoCompleto.identificadorCliente = this.lancamentoEntradaBanco.identificadorCliente;
+  this.lancamentoEntradaPadraoCompleto.identificadorEmpresa = this.lancamentoEntradaBanco.identificadorEmpresa;
+  this.lancamentoEntradaPadraoCompleto.codigoCredito = this.contaBancoSelecionadaEmpresaCliente.codigoContaBanco; 
+  this.lancamentoEntradaPadraoCompleto.codigoDebito = this.lancamentoEntradaBanco.codigoSaida;
+  this.lancamentoEntradaPadraoCompleto.valor = this.lancamentoEntradaBanco.valor;
+  this.lancamentoEntradaPadraoCompleto.data = this.lancamentoEntradaBanco.data;
+  this.lancamentoEntradaPadraoCompleto.historico = this.lancamentoEntradaBanco.historico
+ 
+  console.log("Clicado no lancar entrada completa banco")
+  console.log("Valores recuperados lancamento saica Caixa: ", this.lancamentoEntradaBanco)
+  console.log("Lancamneto padrao banco: ", this.lancamentoEntradaPadraoCompleto)
+
+}
+
+contaBancoSelecionada($event: any){
+  console.log("Recuperado event: ", $event);
+
+ console.log("ContaBanco Recuperada agencia: ", this.contaBancoSelecionadaBancoDados.agencia);
+
+}
+contaBancoSelecionadoLancamento($event: any){
+  this.desabilitarLadoContaBanco = true;
+  this.desabilitarLadoContaCaixa = false;
+  console.log("Conta Banco Lanmento Selecionado")
+}
+
+contaBancoSelecionadoLancamentoCaixaSaida($event: any){
+  this.desabilitarLadoContaCaixaSaida = true;
+  this.desabilitarLadoContaBancoSaida = false;
+  console.log("Conta Banco Lanmento Selecionado")
+}
+
+contaBancoSelecionadoLancamentoBancoSaida($event: any){
+  this.desabilitarLadoContaCaixaSaida = false;
+  this.desabilitarLadoContaBancoSaida = true;
+  console.log("Conta Banco Lanmento Selecionado")
+}
+
+contaCaixaSelecionadoLancamento($event: any){
+  this.desabilitarLadoContaBanco = false;
+  this.desabilitarLadoContaCaixa = true;
+  this.lancamentoEntradaBanco = new LancamentoEntradaBanco();
+  this.contasBancoCadastradaCliente = [];
+  this.mostradadosBancoSelecionado = false;
+
+  console.log("Conta Caixa Lanmento Selecionado")
+}
+
+contaCaixaSelecionadoLancamentoSaida($event: any){
+  this.desabilitarLadoContaBanco = false;
+  this.desabilitarLadoContaCaixa = true;
+  console.log("Conta Caixa Lanmento Selecionado")
+}
+
+contaBancoSelecionadoLancamentoSaida($event: any){
+  this.desabilitarLadoContaBanco = false;
+  this.desabilitarLadoContaCaixa = true;
+  console.log("Conta Caixa Lanmento Selecionado")
+}
+
+consultarContaCodigo($event: any){
+  this.firestore.collection("CONTAS-CADASTRADAS")
+  .doc(this.lancamentoEntradaCaixa.codigoSaida)
+  .valueChanges().subscribe(ResultadConsulta=>{
+    let resultado: any = ResultadConsulta;
+    this.lancamentoEntradaCaixa.historico = resultado.historico
+    console.log("Entrou no contas cadastradas recuperado foi: ", resultado.historico)
+    
+  })
+  this.lancamentoEntradaCaixa.codigoSaida;
+
+}
+pesquisarContasCadastradas(){
+  this.firestore.collection("CONTAS-CADASTRADAS").valueChanges().subscribe(resultado=>{
+
+    this.contasCadastradasRecuperadas = resultado;
+    console.log("Pesquisando contas deu isso: ", resultado)
+  })
+
+}
+
+contaCadastradaSelecionada(codigoConta: string, historico: string){
+
+  this.lancamentoEntradaCaixa.codigoSaida = codigoConta;
+  this.lancamentoEntradaCaixa.historico = historico;
+  console.log("Selecionei uma conta no pesquise: ", codigoConta, historico)
+}
+contaCadastradaSelecionadaParaBanco(codigoConta: string, historico: string){
+  this.lancamentoEntradaBanco.codigoSaida = codigoConta;
+  this.lancamentoEntradaBanco.historico = historico;
 
 }
 
 lancarSaidaEmpresaCliente(identificadorEmpresa: string, identificadorCliente: string){
+
+  this.lancarSaida = !this.lancarSaida;
+  this.lancarEntrada = false;
   this.referenciaFirebase.identificadorCliente = identificadorCliente;
 this.referenciaFirebase.identificadorEmpresa = identificadorEmpresa;
   console.log("Entrou no saida empresa")
@@ -611,10 +833,7 @@ clickcliente(){
 return this.clickCliente = !this.clickCliente;
 }
 
-recuperarInformacoesEmpresaClienteLancaDebitoCaixa(identificadorCliente: string, identificaorEmpresa: string){
 
-
-}
 
 numeroWhatsapp(){
 this.verificaCelularWhats = !this.verificaCelularWhats;
@@ -644,7 +863,7 @@ verificaRaZaoSocialDigitado($event: any){
 cadastrarEmpresa(empresaRecebendo: EmpresaModel){
   this.validarCampoRazaoSocial;
   this.validacaoCNPJ();
-  this.validarCampoCEP();
+ 
   let identificadorEmpresa = '';
   let identificadorCliente = '';
 
@@ -669,20 +888,7 @@ cadastrarEmpresa(empresaRecebendo: EmpresaModel){
         
       })
       return 
-    }
-
-    if(this.validarCampoCEP()){
-      Swal.fire({
-        position: 'top',
-        icon: 'error',
-        title: 'Ops! Não foi possível concluir o cadastro, favor verifique as informações e se o problema persistir contate o administrador',
-        showConfirmButton: true,
-        
-      })
-      return 
-  
-  
-  }else{
+    }else{
     
     
     if(this.verificaCadastroContaBanco){
@@ -1512,6 +1718,10 @@ clienteSelecionado(event: any){
 
         this.recuperarInformacoesEmpresaCliente(event)
         console.log("Cliente Recuperado foi: ", informacoesCliete)
+        this.lancarEntrada = false;
+        this.lancarSaida = false;
+        this.lancamentoEntradaCaixa = new LancamentoEntradaCaixa();
+        this.lancamentoEntradaBanco = new LancamentoEntradaBanco();
         
       }
 
@@ -1541,6 +1751,50 @@ editarClienteSelecionadoed(){
 }
 voltarEditarClienteSelecionado(){
   this.editarClienteSelecionado = false;
+}
+consultarContaCodigoBanco($event: any){
+  this.firestore.collection("CONTAS-CADASTRADAS")
+  .doc(this.lancamentoEntradaBanco.codigoSaida)
+  .valueChanges().subscribe(ResultadConsulta=>{
+    let resultado: any = ResultadConsulta;
+    this.lancamentoEntradaBanco.historico = resultado.historico
+    console.log("Entrou no contas cadastradas recuperado foi: ", resultado.historico)
+    
+  })
+ 
 
 }
+
+selecionarContaBancoEmpresaCliente(ContaBancoSelecionado: ContaEntradaBanco){
+  
+  this.mostradadosBancoSelecionado = true;
+  this.contaBancoSelecionadaEmpresaCliente = ContaBancoSelecionado;
+  this.lancamentoEntradaBanco.agencia = ContaBancoSelecionado.agencia;
+  this.lancamentoEntradaBanco.conta = ContaBancoSelecionado.conta;
+  
+console.log("Conta Selecionada: ", ContaBancoSelecionado)
+}
+
+selecionarContaBancoEmpresaClienteSaida(ContaEntradaBanco : ContaEntradaBanco){
+this.mostradadosBancoSelecionadoSaida = true;
+this.contaBancoSelecionadaEmpresaClienteSaida = ContaEntradaBanco;
+this.mostradadosBancoSelecionado = false;
+}
+recuperarContasBancoEmpresaCliente(){
+  
+   return this.clienteservice.recuperarListaContasBancoCadastradas(this.referenciaFirebase.identificadorEmpresa, this.referenciaFirebase.identificadorCliente).subscribe(resultado=>{
+      this.contasBancoCadastradaCliente = resultado;
+      
+        console.log("Resultado banco: ", resultado)
+      })
+      
+}
+recuperarContasBancoEmpresaClienteSaida(){
+  return this.clienteservice.recuperarListaContasBancoCadastradas(this.referenciaFirebase.identificadorEmpresa, this.referenciaFirebase.identificadorCliente).subscribe(resultado=>{
+    this.contasBancoCadastradaClienteSaida = resultado;
+    
+      console.log("Resultado banco: ", resultado)
+    })
+}
+
 }

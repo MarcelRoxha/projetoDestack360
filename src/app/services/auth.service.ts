@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Router   } from '@angular/router';
@@ -10,15 +10,19 @@ export class AuthService {
 
   userLoggedIn: boolean;
   entraAnonimo: any;
-  textoEntraAnonimo: string = "Entrada Anonima";
+ 
+  mostrarMenuCima = new EventEmitter<boolean>();
 
   constructor(private router : Router, private afAuth: AngularFireAuth, private afs: AngularFirestore) {
     this.userLoggedIn = false;
     this.afAuth.onAuthStateChanged((user)=>{
       if(user){
         this.userLoggedIn = true;
+        this.mostrarMenuCima.emit(true);
+        
       }else{
         this.userLoggedIn = false;
+        this.mostrarMenuCima.emit(false);
       }
     })
    }
@@ -65,12 +69,12 @@ export class AuthService {
 
     })
 }
-eftLancerAnonimo(lancamento: any, emailUsuario : string, check: boolean): Promise<any> {
+/*eftLancerAnonimo(lancamento: any, emailUsuario : string, check: boolean): Promise<any> {
   
 
-  if(check === true){
-
-    return this.afs.collection('users').doc(emailUsuario).collection('lancamento_entrada').doc().set({
+  //if(check === true){
+//
+   // return this.afs.collection('users').doc(emailUsuario).collection('lancamento_entrada').doc().set({
       data : lancamento.datalancamentoentrada,    
       valor: lancamento.valorlancamentoentrada,
       //codentrada: lancamento.codentrada,
@@ -93,8 +97,9 @@ eftLancerAnonimo(lancamento: any, emailUsuario : string, check: boolean): Promis
     console.log("Resultado: ", resultado);
     console.log(this.textoEntraAnonimo)
   })
-}
+}**/
 
+/*
 eftLancer(lancamento: any, emailUsuario : string, check: boolean): Promise<any> {
 
  
@@ -114,7 +119,7 @@ eftLancer(lancamento: any, emailUsuario : string, check: boolean): Promise<any> 
 
 }
 
-
+*/
 
   resetPassword(email: string, password: string): Promise<any>{
     return this.afAuth.sendPasswordResetEmail(email)

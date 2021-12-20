@@ -261,7 +261,7 @@
             <input type="text" name="saldoBancoCadastrar" class="form-control" id="saldoBancoCadastrar" [disabled]="verificaCadastroContaBanco === false" [(ngModel)]="contaEntradaBancoCadastro.saldoBanco">
           </div>
           <div class="col-3">
-            <label for="inputCep" class="form-label">CEP <strong><span style="color: red;">*</span></strong></label>
+            <label for="inputCep" class="form-label">CEP </label>
             <input type="text" class="form-control" id="inputCep"
             [ngModel] 
             name="cep"
@@ -648,13 +648,6 @@
                     </div>
 </div>
 
-
-
-
-
-
-
-  
 
 <!-- Modal Verifica qual empresa vai ser lançado o débito -->
 <div class="modal fade" style="margin: 1%;" id="exampleModalQualEmpresaLancaDebito" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
@@ -1480,82 +1473,216 @@
           </div>
         </div>       
 
-<!--------
-
-        <div class="container mt-2"> 
-          <h3 class="text-center"> EFETUAR LANÇAMENTO DE CRÉDITO NO <strong style="color: red;"> CAIXA </strong></h3>
-              <hr />        
-              <form [formGroup]="lancerFormCreditoCaixa" (ngSubmit)="efetuarCreditoCaixa()">
-                    <div class="container">
-                      
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="form-label" style="opacity: 100%;">
-                                    Informe a data:                                      
-                                </label>
-                                </div>
-                                <div class="col-md-6">
-                                <input class="form-control" type="date" name="dataLancamentoSaida" formControlName="dataLancamentoSaida" [(ngModel)]="datalancamentoSaida">                                  
-                            </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                              <div class="col-md-4">
-                                  <label class="form-label" style="opacity: 100%;">
-                                     Valor do lançamento:                                      
-                                  </label>
-                                  </div>
-                                  <div class="col-md-6">
-                                  <input class="form-control" type="text" name="valorlancamentoSainda" formControlName="valorlancamentoSainda" [(ngModel)]="valorlancamentoSaida" mask="separator.2" thousandSeparator="." required/>                                  
-                              </div>
-                              
-                            </div>
-                            <br>
-                            <div class="row">
-                              <div class="col-md-4">                                
-                                <input type="checkbox" for="contaEntrada" class="control-label" (change)="acessoDigitarLancamentoEntrada()"/>Desejo Digitar
-                                  </div>
-
-                                  <div class="col-md-4" *ngIf="checkDigitarLancamento == true && selecionadoServicoEFornecedor == false">
-                                    <input type="text"  class="form-control"  [(ngModel)]="fornecedor" formControlName="fornecedorSelecionado"/>
-                                    <input type="checkbox" (change)="salvarLancaMentoEntradaDigitada()"/>Salvar para lancamentos futuros
-                                 </div> 
-                                 <br>
-                                  <div class="col-md-7" *ngIf="checkDigitarLancamento == false && selecionadoServicoEFornecedor == false">
-                                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalSelecioneFornecedor">ESCOLHA FORNECEDOR</button>
-                              <br>                         
-                            </div> 
-                            <br>    
-                            <div class="row" *ngIf="checkDigitarLancamento == false && selecionadoServicoEFornecedor == true">
-                              <div class="col-md-4">
-                                  <label class="form-label" style="opacity: 100%;">
-                                    <p style="color: blue;"> Fornecedor: </p>{{lancamentoSaidaCompleto.fornecedor}}                                       
-                                  </label>
-                                  <label class="form-label" style="opacity: 100%;">
-                                    <p style="color: blue;"> Serviço: </p>    {{lancamentoSaidaCompleto.servico}}                                   
-                                 </label>
-                                  </div>
-                                  <button class="btn btn-secondary" (click)="selecionarFornecedorEServicoNovamente()">Selecionar novamente</button>
-                            </div>                                                
-
-                            <div class="col-md-6">
-                              <br> 
-                               <button type="submit" class="btn btn-primary" style="margin-left: 50%; width: 100%;"   data-bs-toggle="modal" data-bs-target="#exampleModalRecarregarPagina" data-bs-dismiss="modal" (click)="lancarSaidaCompleta()">LANÇAR INFORMAÇÕES DE SAIDA</button>
-                            </div>
-                            </div>
-                          </div>
-
-
-
-                          </form>
-                </div>---------->
                         </div>
                       </div>
                     </div>
 </div>
 
+<!-- MODAL RECUPERAR CONTAS CADASTRADAS -->
+<div class="modal fade" style="margin: 1%;" id="modalRecuperarContasCadastradas" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>CONTAS CADASTRADAS</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table" >
+          <thead>
+            <tr>
+              <th scope="col">CODIGO</th>
+              <th scope="col">DESCRIÇÃO</th>
+              <th scope="col">HISTORICO</th>
+              <th scope="col">SELECT</th>              
+            </tr>
+          </thead>
+          <tr *ngIf="verificaMostaEmpresas == true">
+            <div class="form-control">
+              <h3>CLIENTE NÃO POSSUI EMPRESA(AS) CADASTRADA(AS)</h3>
+              </div>
+
+             </tr>
+
+          <tbody *ngFor="let ContasCadastradas of contasCadastradasRecuperadas">
+            <tr>
+              <th scope="row">{{ContasCadastradas.codigoConta}}</th>
+              <td>{{ContasCadastradas.descricao}}</td>
+              <td>{{ContasCadastradas.historico}}</td>             
+              <td>
+                <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalLancarEntradaEmpresaSelecionadas" (click)="contaCadastradaSelecionada(ContasCadastradas.codigoConta, ContasCadastradas.historico)">SELECIONAR</button>
+
+              </td>
+              
+            </tr>
+            
+          </tbody>
+        </table> 
 
 
+
+    
+
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+<!-- MODAL RECUPERAR CONTAS CADASTRADAS PARA BANCO -->
+<div class="modal fade" style="margin: 1%;" id="modalRecuperarContasCadastradasParaBanco" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>CONTAS CADASTRADAS</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table" >
+          <thead>
+            <tr>
+              <th scope="col">CODIGO</th>
+              <th scope="col">DESCRIÇÃO</th>
+              <th scope="col">HISTORICO</th>
+              <th scope="col">SELECT</th>              
+            </tr>
+          </thead>
+          <tr *ngIf="verificaMostaEmpresas == true">
+            <div class="form-control">
+              <h3>CLIENTE NÃO POSSUI EMPRESA(AS) CADASTRADA(AS)</h3>
+              </div>
+
+             </tr>
+
+          <tbody *ngFor="let ContasCadastradas of contasCadastradasRecuperadas">
+            <tr>
+              <th scope="row">{{ContasCadastradas.codigoConta}}</th>
+              <td>{{ContasCadastradas.descricao}}</td>
+              <td>{{ContasCadastradas.historico}}</td>             
+              <td>
+                <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalLancarEntradaEmpresaSelecionadas" (click)="contaCadastradaSelecionadaParaBanco(ContasCadastradas.codigoConta, ContasCadastradas.historico)">SELECIONAR</button>
+
+              </td>
+              
+            </tr>
+            
+          </tbody>
+        </table> 
+
+
+
+    
+
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+<!-- MODAL RECUPERAR CONTAS CADASTRADAS BANCO EMPRESA CLIENTE -->
+<div class="modal fade" style="margin: 1%;" id="modalRecuperaContasBancoCadastrada" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>CONTAS BANCOS CADASTRADAS</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table" >
+          <thead>
+            <tr>
+              <th scope="col">CODIGO</th>
+              <th scope="col">AGENCIA</th>
+              <th scope="col">HISTORICO</th>
+              <th scope="col">CONTA</th> 
+              <th scope="col">SELECT</th>                 
+            </tr>
+          </thead>
+          <tr *ngIf="verificaMostaEmpresas == true">
+            <div class="form-control">
+              <h3>CLIENTE NÃO POSSUI EMPRESA(AS) CADASTRADA(AS)</h3>
+              </div>
+
+             </tr>
+
+          <tbody *ngFor="let ContaEntradaBanco of contasBancoCadastradaCliente">
+            <tr>
+              <th scope="row">{{ContaEntradaBanco.codigoContaBanco}}</th>
+              <td>{{ContaEntradaBanco.agencia}}</td>
+              <td>{{ContaEntradaBanco.historico}}</td>  
+              <td>{{ContaEntradaBanco.conta}}</td>  
+                    
+              <td>
+                <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalLancarEntradaEmpresaSelecionadas" (click)="selecionarContaBancoEmpresaCliente(ContaEntradaBanco)">SELECIONAR</button>
+
+              </td>
+              
+            </tr>
+            
+          </tbody>
+        </table> 
+
+
+
+    
+
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+<!-- MODAL RECUPERAR CONTAS CADASTRADAS BANCO EMPRESA CLIENTE SAIDA -->
+<div class="modal fade" style="margin: 1%;" id="modalRecuperaContasBancoCadastradaSaida" tabindex="-1" aria-labelledby="exampleModalLabelLancarSaida" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title " id="exampleModalLabelLancarSaida"><strong>CONTAS BANCOS CADASTRADAS</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table" >
+          <thead>
+            <tr>
+              <th scope="col">CODIGO</th>
+              <th scope="col">AGENCIA</th>
+              <th scope="col">HISTORICO</th>
+              <th scope="col">CONTA</th> 
+              <th scope="col">SELECT</th>                 
+            </tr>
+          </thead>
+          <tr *ngIf="verificaMostaEmpresas == true">
+            <div class="form-control">
+              <h3>CLIENTE NÃO POSSUI EMPRESA(AS) CADASTRADA(AS)</h3>
+              </div>
+
+             </tr>
+
+          <tbody *ngFor="let ContaEntradaBanco of contasBancoCadastradaClienteSaida">
+            <tr>
+              <th scope="row">{{ContaEntradaBanco.codigoContaBanco}}</th>
+              <td>{{ContaEntradaBanco.agencia}}</td>
+              <td>{{ContaEntradaBanco.historico}}</td>  
+              <td>{{ContaEntradaBanco.conta}}</td>  
+                    
+              <td>
+                <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalLancarEntradaEmpresaSelecionadas" (click)="selecionarContaBancoEmpresaClienteSaida(ContaEntradaBanco)">SELECIONAR</button>
+
+              </td>
+              
+            </tr>
+            
+          </tbody>
+        </table> 
+
+
+
+    
+
+                        </div>
+                      </div>
+                    </div>
+</div>
 
 
 
@@ -1746,7 +1873,7 @@
                         
                 
                           <div class="col-3">
-                            <label for="inputCep" class="form-label">CEP <strong><span style="color: red;">*</span></strong></label>
+                            <label for="inputCep" class="form-label">CEP</label>
                             <input type="text" class="form-control" id="inputCep"[disabled]="editarClienteSelecionado == false"
                             [(ngModel)]="clienteSelecionadoRecuperarInformacoes.cep"/> 
                            <!--- [(ngModel)]="clienteSelecionadoRecuperarInformacoes.cep"            
@@ -1836,10 +1963,10 @@
                               <td>{{EmpresaModel.saldoCaixa}}</td>
                               <td>{{EmpresaModel.saldoBanco}}</td>
                               <td>
-                                <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#modalLancarEntradaEmpresaSelecionadas" (click)="lancarEntradaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">LANÇAR ENTRADA</button>
+                                <button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#modalLancarEntradaEmpresaSelecionadas" (click)="lancarEntradaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">EFETUAR LANÇAMENTO ENTRADA</button>
                 
                               </td>
-                              <td><button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalQualEmpresaLancaCredito" (click)="lancarSaidaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">LANÇAR SAIDA</button></td>
+                              <td><button type="button" class="btn btn-primary" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModalQualEmpresaLancaCreditos" (click)="lancarSaidaEmpresaCliente(EmpresaModel.cnpj, EmpresaModel.identificadorCliente)">EFETUAR LANÇAMENTO SAIDA</button></td>
                             </tr>
                             
                           </tbody>
@@ -1852,7 +1979,7 @@
                                               
                                               <div class="container" style="margin-top: 5px;">
                                                 <div class="text-center">
-                                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" (click)="contaCaixaSelecionadoLancamento($event)">
                                               <label class="form-check-label" for="inlineRadio1">CONTA CAIXA</label>
 
                                                   <h2>LANÇAR ENTRADA CAIXA:</h2> 
@@ -1863,7 +1990,8 @@
   
                                                   </div>
                                                   <div class="col-8">
-                                                    <input type="date" class="form-control" >
+                                                    <input type="date" class="form-control" [disabled]="desabilitarLadoContaCaixa == false"
+                                                    [(ngModel)]="lancamentoEntradaCaixa.data" >
                                                   </div>
   
                                                 </div>
@@ -1873,9 +2001,38 @@
   
                                                   </div>
                                                   <div class="col-8">
-                                                    <input type="number" class="form-control" >
+                                                    <input type="number" class="form-control" [disabled]="desabilitarLadoContaCaixa == false" 
+                                                    [(ngModel)]="lancamentoEntradaCaixa.valor" >
+                                                  </div>  
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-4">
+                                                    <h3>COD.</h3>  
+                                                  </div>
+                                                  <div class="col-4">
+                                                    <input type="text" class="form-control" [disabled]="desabilitarLadoContaCaixa == false"
+                                                    [(ngModel)]="lancamentoEntradaCaixa.codigoSaida"
+                                                    (blur)="consultarContaCodigo($event)">
+                                                  </div>  
+                                                  <div class="col-4">
+                                                    <button type="text" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRecuperarContasCadastradas" [disabled]="desabilitarLadoContaCaixa == false" 
+                                                     (click)="pesquisarContasCadastradas()">PESQUISAR</button>
+                                                  </div> 
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-4">
+                                                    <h3>HISTORICO:</h3>  
+                                                  </div>
+                                                  <div class="col-8">
+                                                    <input type="text" name="historico"class="form-control" [disabled]="desabilitarLadoContaCaixa == false"
+                                                    [(ngModel)]="lancamentoEntradaCaixa.historico">
                                                   </div>
   
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-12">
+                                                    <button class="btn btn-primary" (click)="lancarEntradaContaCaixaCompleta()">LANÇAR ENTRADA NO CAIXA</button>
+                                                  </div>
                                                 </div>
 
                                               </div>
@@ -1886,57 +2043,116 @@
                                             <div class="form-check form-check-inline" style="border-radius: 12px; width: 400px; background: steelblue;">
                                               <div class="container"  style="margin-top: 5px;">
                                                 <div class="text-center">
-                                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"(click)="contaBancoSelecionadoLancamento($event)" >
                                               <label class="form-check-label" for="inlineRadio1">CONTA BANCO</label>
 
                                                   <h2>LANÇAR ENTRADA BANCO:</h2> 
                                                 </div>
                                                 <div class="row">
+                                                  <div class="col-12">
+                                                    <button class="btn btn-info" [disabled]="desabilitarLadoContaBanco == false" (click)="recuperarContasBancoEmpresaCliente()" data-bs-toggle="modal" data-bs-target="#modalRecuperaContasBancoCadastrada"
+                                                    >
+                                                       SELECIONAR BANCO
+                                                     </button>
+                                                  </div>
+                                                </div>
+
+                                               
+
+                                             <!-----------  <select class="col-md-12" [(ngModel)]="contaBancoSelecionadaBancoDados" (ngModelChange)="contaBancoSelecionada(contaBancoSelecionadaBancoDados)">
+                                                  <option [value]="1">
+                                                    Escolha uma conta
+                                                  </option> 
+                                                  <option *ngFor="let ContaEntradaBanco of contabancoRecuperada" [value]="ContaEntradaBanco.codigoConta">
+                                                    {{ContaEntradaBanco.historico}}
+                                                  </option> 
+                                                </select>------------> 
+                                                <div class="row" *ngIf="mostradadosBancoSelecionado == true">
                                                   <div class="col-4">
-                                                    <label>DATA:</label>
+                                                    <h3>AGÊNCIA:</h3>
   
                                                   </div>
                                                   <div class="col-8">
-                                                    <input type="date" class="form-control" >
+                                                   <h3>
+                                                    {{contaBancoSelecionadaEmpresaCliente.agencia}}
+                                                   </h3>
                                                   </div>
   
                                                 </div>
-                                                <div class="row">
+                                                <div class="row" *ngIf="mostradadosBancoSelecionado == true">
                                                   <div class="col-4">
-                                                    <label>VALOR:</label>
+                                                    <h3>COD:</h3>
   
                                                   </div>
                                                   <div class="col-8">
-                                                    <input type="number" class="form-control" >
+                                                    <h3>
+                                                      {{contaBancoSelecionadaEmpresaCliente.codigoContaBanco}}
+                                                    </h3>
+                                                  </div>
+  
+                                                </div>
+                                                <div class="row" *ngIf="mostradadosBancoSelecionado == true">
+                                                  <div class="col-4">
+                                                    <h3>HISTORICO:</h3>
+  
+                                                  </div>
+                                                  <div class="col-8">
+                                                    <h3>
+                                                      {{contaBancoSelecionadaEmpresaCliente.historico}}
+                                                    </h3>
                                                   </div>
   
                                                 </div>
 
-                                                <div class="row">
-                                                  <div class="col-10">
-                                                    <label>CONTA ENTRADA:</label>
+                                                <div class="row" >
+                                                  <div class="col-4">
+                                                    <h3>DATA:</h3>
   
                                                   </div>
-                                                  <div class="col-4">
-                                                    <input type="number" class="form-control" >
-                                                  </div>
                                                   <div class="col-8">
-                                                    <input type="text" class="form-control" >
+                                                    <input type="date" class="form-control" [disabled]="desabilitarLadoContaBanco == false"
+                                                    [(ngModel)]="lancamentoEntradaBanco.data">
                                                   </div>
   
                                                 </div>
                                                 <div class="row">
-                                                  <div class="col-10">
-                                                    <label>CONTA SAIDA:</label>
-  
-                                                  </div>
                                                   <div class="col-4">
-                                                    <input type="number" class="form-control" >
+                                                    <h3>VALOR:</h3>
+  
                                                   </div>
                                                   <div class="col-8">
-                                                    <input type="text" class="form-control" >
+                                                    <input type="number" class="form-control" [disabled]="desabilitarLadoContaBanco == false"
+                                                    [(ngModel)]="lancamentoEntradaBanco.valor">
+                                                  </div>  
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-4">
+                                                    <h3>COD.</h3>  
+                                                  </div>
+                                                  <div class="col-4">
+                                                    <input type="text" class="form-control" [disabled]="desabilitarLadoContaBanco == false"
+                                                    [(ngModel)]="lancamentoEntradaBanco.codigoSaida"
+                                                    (blur)="consultarContaCodigoBanco($event)">
+                                                  </div>
+                                                  <div class="col-4">
+                                                    <button type="text" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRecuperarContasCadastradasParaBanco" [disabled]="desabilitarLadoContaBanco == false" 
+                                                     (click)="pesquisarContasCadastradas()">PESQUISAR</button>
+                                                  </div>   
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-4">
+                                                    <h3>HISTORICO:</h3>  
+                                                  </div>
+                                                  <div class="col-8">
+                                                    <input type="text" class="form-control" [disabled]="desabilitarLadoContaBanco == false"
+                                                    [(ngModel)]="lancamentoEntradaBanco.historico">
                                                   </div>
   
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-12">
+                                                    <button class="btn btn-secondary" (click)="lancarEntradaContaBancoCompleta()">LANÇAR ENTRADA NO BANCO</button>
+                                                  </div>
                                                 </div>
 
                                               </div>
@@ -1948,6 +2164,200 @@
                 
                                         
                   </div>
+
+
+
+                  <div *ngIf="lancarSaida == true "  style="background: white; border-radius: 7px;">
+                    <div>
+
+                      <div class="form-check form-check-inline" style="border-radius: 12px; width: 400px; background: lightcoral;">
+                        
+                        <div class="container" style="margin-top: 5px;">
+                          <div class="text-center">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" (click)="contaBancoSelecionadoLancamentoCaixaSaida($event)">
+                        <label class="form-check-label" for="inlineRadio1">CONTA CAIXA</label>
+
+                            <h2>LANÇAR SAIDA CAIXA:</h2> 
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <h3>DATA:</h3>
+
+                            </div>
+                            <div class="col-8">
+                              <input type="date" class="form-control" [disabled]="desabilitarLadoContaCaixaSaida == false"
+                              [(ngModel)]="lancamentoSaidaCaixaCompleto.data" >
+                            </div>
+
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <h3>VALOR:</h3>
+
+                            </div>
+                            <div class="col-8">
+                              <input type="number" class="form-control" [disabled]="desabilitarLadoContaCaixaSaida == false" 
+                              [(ngModel)]="lancamentoSaidaCaixaCompleto.valor" >
+                            </div>  
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <h3>COD.</h3>  
+                            </div>
+                            <div class="col-4">
+                              <input type="text" class="form-control" [disabled]="desabilitarLadoContaCaixaSaida == false"
+                              [(ngModel)]="lancamentoSaidaCaixaCompleto.codigoSaida"
+                              (blur)="consultarContaCodigo($event)">
+                            </div>  
+                            <div class="col-4">
+                              <button type="text" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRecuperarContasCadastradas" [disabled]="desabilitarLadoContaCaixa == false" 
+                               (click)="pesquisarContasCadastradas()">PESQUISAR</button>
+                            </div> 
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <h3>HISTORICO:</h3>  
+                            </div>
+                            <div class="col-8">
+                              <input type="text" name="historico"class="form-control" [disabled]="desabilitarLadoContaCaixaSaida == false"
+                              [(ngModel)]="lancamentoSaidaCaixaCompleto.historico">
+                            </div>
+
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <button class="btn btn-primary" (click)="lancarSaidaContaCaixaCompleta()">LANÇAR SAIDA NO CAIXA</button>
+                            </div>
+                          </div>
+
+                        </div>
+                       
+
+                        
+                      </div>
+                      <div class="form-check form-check-inline" style="border-radius: 12px; width: 400px; background: violet;">
+                        <div class="container"  style="margin-top: 5px;">
+                          <div class="text-center">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"(click)="contaBancoSelecionadoLancamentoBancoSaida($event)" >
+                        <label class="form-check-label" for="inlineRadio1">CONTA BANCO</label>
+
+                            <h2>LANÇAR SAIDA BANCO:</h2> 
+                          </div>
+
+                          <div class="row">
+                            <div class="col-12">
+                              <button class="btn btn-info" [disabled]="desabilitarLadoContaBancoSaida == false" (click)="recuperarContasBancoEmpresaClienteSaida()" data-bs-toggle="modal" data-bs-target="#modalRecuperaContasBancoCadastrada"
+                              data-bs-toggle="modal" data-bs-target="#modalRecuperaContasBancoCadastradaSaida">
+                                 SELECIONAR BANCO
+                               </button>
+                            </div>
+                          </div>
+<!-----------
+                          <select class="col-md-12" [(ngModel)]="contaBancoRecuperadaSelecionada" (ngModelChange)="contaBancoSelecionada($event)">
+                            <option [value]="1">
+                              Escolha uma conta
+                            </option> 
+                            <option *ngFor="let ContaEntradaBanco of contabancoRecuperada" [value]="ContaEntradaBanco.codigoConta">
+                              {{ContaEntradaBanco.historico}}
+                            </option> 
+                          </select>-->
+                          <div class="row" *ngIf="mostradadosBancoSelecionadoSaida == true">
+                            <div class="col-4">
+                              <h3>AGÊNCIA:</h3>
+
+                            </div>
+                            <div class="col-8">
+                             <h3>
+                              {{contaBancoSelecionadaEmpresaClienteSaida.agencia}}
+                             </h3>
+                            </div>
+
+                          </div>
+                          <div class="row" *ngIf="mostradadosBancoSelecionadoSaida == true">
+                            <div class="col-4">
+                              <h3>COD:</h3>
+
+                            </div>
+                            <div class="col-8">
+                              <h3>
+                                {{contaBancoSelecionadaEmpresaClienteSaida.codigoContaBanco}}
+                              </h3>
+                            </div>
+
+                          </div>
+                          <div class="row" *ngIf="mostradadosBancoSelecionadoSaida == true">
+                            <div class="col-4">
+                              <h3>HISTORICO:</h3>
+
+                            </div>
+                            <div class="col-8">
+                              <h3>
+                                {{contaBancoSelecionadaEmpresaClienteSaida.historico}}
+                              </h3>
+                            </div>
+
+                          </div>
+
+                          <div class="row">
+                            <div class="col-4">
+                              <h3>DATA:</h3>
+
+                            </div>
+                            <div class="col-8">
+                              <input type="date" class="form-control" [disabled]="desabilitarLadoContaBancoSaida == false"
+                              [(ngModel)]="lancamentoSaidaCaixaCompleto.data">
+                            </div>
+
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <h3>VALOR:</h3>
+
+                            </div>
+                            <div class="col-8">
+                              <input type="number" class="form-control" [disabled]="desabilitarLadoContaBancoSaida == false"
+                              [(ngModel)]="lancamentoSaidaCaixaCompleto.valor">
+                            </div>  
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <h3>COD.</h3>  
+                            </div>
+                            <div class="col-4">
+                              <input type="text" class="form-control" [disabled]="desabilitarLadoContaBancoSaida == false"
+                              [(ngModel)]="lancamentoSaidaBancoCompleto.codigoSaida"
+                              (blur)="consultarContaCodigoBanco($event)">
+                            </div>
+                            <div class="col-4">
+                              <button type="text" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRecuperarContasCadastradasParaBanco" [disabled]="desabilitarLadoContaBanco == false" 
+                               (click)="pesquisarContasCadastradas()">PESQUISAR</button>
+                            </div>   
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <h3>HISTORICO:</h3>  
+                            </div>
+                            <div class="col-8">
+                              <input type="text" class="form-control" [disabled]="desabilitarLadoContaBancoSaida == false"
+                              [(ngModel)]="lancamentoSaidaBancoCompleto.historico">
+                            </div>
+
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <button class="btn btn-secondary" (click)="lancarSaidaContaBancoCompleta()">LANÇAR SAIDA NO BANCO</button>
+                            </div>
+                          </div>
+
+                        </div>
+                       
+
+                      </div>
+                     
+                  </div>
+
+                  
+</div>
                
 <!-------------
                   <div class="row" *ngIf="verificaClientesCadastrados == false">

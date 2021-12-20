@@ -21,12 +21,10 @@ export class HeaderComponent implements OnInit {
       console.log('Dashboard: user', user);
 
       if (user) {
-        let emailLower = user.email;
-        let emailFormat = emailLower?.toUpperCase();
-        this.user = this.firestore.collection('users').doc(emailFormat).valueChanges();
-        let nomeDisplay = user.displayName        
-       
-        console.log("Entrou um header: " + nomeDisplay)                    
+        let emailLower = user.email.toLowerCase();
+              this.user = this.firestore.collection('users').doc(emailLower).valueChanges(); 
+                   // get the user's doc in Cloud Firestore      
+                         
       }
   });
   }

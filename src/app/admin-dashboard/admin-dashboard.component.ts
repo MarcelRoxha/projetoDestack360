@@ -14,8 +14,7 @@ import { state, trigger, style, transition, animate } from '@angular/animations'
     trigger('childAnimation', [
       // ...
       state('open', style({
-        width: '1250px',
-        
+        width: '1250px',        
         padding: '33px',
         backgroundColor: 'white',
         transform: 'translateX(-190px)'
@@ -39,7 +38,10 @@ export class AdminDashboardComponent implements OnInit {
   user: Observable<any>; 
   isOpen = false; 
   isDisabled = false;
-  clickCliente = false;            // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
+  clickCliente = false;   
+  sideBarOpen = true;
+  verificaUser = false;
+          // Example: store the user's info here (Cloud Firestore: collection is 'users', docId is the user's email, lower case)
 
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router : Router) {
     this.router.navigate(['/admin']);
@@ -64,6 +66,8 @@ this.isOpen = !this.isOpen;
 clickcliente(){
 return this.clickCliente = !this.clickCliente;
 }
-
+sideBarToggler() {
+  this.sideBarOpen = !this.sideBarOpen;
+}
 
 }

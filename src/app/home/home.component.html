@@ -1,7 +1,7 @@
 <!----------------*ngIf="(user | async)?.accountType !== 'admin' && (user | async)?.accountType !== 'endUser'; "------->
 
 <div >
-    <body class="text-center">
+    <body class="text-center" style="padding-top: 50px; padding-bottom: 100px;">
         <main class="form-signin">
          
                 <div class="mt-4">
@@ -39,8 +39,10 @@
 </div>
 <div *ngIf="(user | async)?.accountType == 'admin';">
     <router-outlet>
+        <app-header></app-header>
         <app-admin-dashboard></app-admin-dashboard>
-    </router-outlet>
+        <app-sidenav></app-sidenav>
+    </router-outlet>    
     
     <br>
 </div>

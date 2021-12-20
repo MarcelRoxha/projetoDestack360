@@ -1,9 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
    background: linear-gradient(90deg,  #323232, #01637f, #666666);  
   }
+
+  .open-close-container{
+    margin-top: 2%;
+    margin-left: 5%;
+    border-radius: 30px;
+    opacity: 100%;
+}
 
 .form-signin {
     background: white;

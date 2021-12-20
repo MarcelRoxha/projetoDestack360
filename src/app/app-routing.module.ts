@@ -1,3 +1,12 @@
+import { TelaTransferenciasComponent } from './telasprincipais/tela-transferencias/tela-transferencias.component';
+import { TelaSaidasComponent } from './telasprincipais/tela-saidas/tela-saidas.component';
+import { TelaEntradasComponent } from './telasprincipais/tela-entradas/tela-entradas.component';
+import { TelaBancosComponent } from './telasprincipais/tela-bancos/tela-bancos.component';
+import { TelaFornecedoresComponent } from './telasprincipais/tela-fornecedores/tela-fornecedores.component';
+import { TelaClientesComponent } from './telasprincipais/tela-clientes/tela-clientes.component';
+import { TelaEmpresasComponent } from './telasprincipais/tela-empresas/tela-empresas.component';
+import { TelaAcessoComponent } from './telasprincipais/tela-acesso/tela-acesso.component';
+import { TelaCadastroComponent } from './cadastro/tela-cadastro/tela-cadastro.component';
 import { MovimentacaoComponent } from './movimentacao/movimentacao.component';
 import { FormularioCadastroClienteComponent } from './formularios/formulario-cadastro-cliente/formulario-cadastro-cliente.component';
 import { FornecedorListaComponent } from './fornecedor-lista/fornecedor-lista.component';
@@ -43,7 +52,16 @@ const routes: Routes = [
     { path: 'fornecedor', component: FornecedorComponent, canActivate: [AuthGuard]},
     { path: 'fornecedorlista', component: FornecedorListaComponent},
     { path: 'formulario', component: FormularioCadastroClienteComponent},
-    { path: 'movimentacao', component: MovimentacaoComponent}
+    { path: 'movimentacao', component: MovimentacaoComponent},
+    { path: 'cadastro', component: TelaCadastroComponent},
+    { path: 'acesso', component: TelaAcessoComponent, canActivate: [AuthGuard]},
+    { path: 'empresas', component: TelaEmpresasComponent, canActivate: [AuthGuard]},
+    { path: 'clientes', component: TelaClientesComponent, canActivate: [AuthGuard]},  
+    { path: 'fornecedores', component: TelaFornecedoresComponent, canActivate: [AuthGuard]},  
+    { path: 'bancos', component: TelaBancosComponent, canActivate: [AuthGuard]},
+    { path: 'entradas', component: TelaEntradasComponent, canActivate: [AuthGuard]},
+    { path: 'saidas', component: TelaSaidasComponent, canActivate: [AuthGuard]},
+    { path: 'transferencias', component: TelaTransferenciasComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

@@ -1,0 +1,236 @@
+<!---------------MODAL CADASTRAR INFORMAÇÕES USUARIO--------------------->
+
+
+<div class="modal fade" style="background: black !important;" id="modalCadastrarUsuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalCadastrarUsuario">CADASTRAR USUARIO</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+        <form class="row g-3">
+
+          <div class="col-md-6">            
+
+            <label for="inputEmail4" class="form-label">NOME</label>
+            <input autocomplete="off" name="nome" type="text" class="form-control"  id="inputEmail4"
+            [(ngModel)]="usuarioCadastro.nome">
+          </div>
+         
+
+
+          <div class="col-6">
+            <label for="cnpj" class="form-label">NOME USUARIO <strong><span style="color: red;">*</span></strong></label>
+            <input type="text" class="form-control" name="nomeusuario"
+            [(ngModel)]="usuarioCadastro.nomeusuario">                         
+          </div>
+
+          <div class="col-6">
+            <label for="email" class="form-label">E-MAIL</label>
+            <input type="email" name="email" class="form-control"  id="codigoCaixa" [(ngModel)]="usuarioCadastro.email">
+          </div>        
+
+          <div class="col-12 text-center" >
+
+            <h2 class="form-label">NIVEL DE ACESSO</h2>           
+          </div>
+          <hr />
+          <div style="display: block; align-items: center;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+              (click)="admin()" value="option1"
+              [(ngModel)]="selecionadoAdmin">
+              <label class="form-check-label" for="inlineRadio1">ADMIN(TUDO).</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+              (click)="gerencia()" value="option2"
+              [(ngModel)]="selecionadoGerencia">
+              <label class="form-check-label" for="inlineRadio2">GEREN(LANC/EDIT/UPDATE).</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+              (click)="supervisor()" value="option3"
+              [(ngModel)]="selecionadoSupervisor">
+              <label class="form-check-label" for="inlineRadio3">SUPV(LANC).</label>
+            </div>
+
+          </div>
+             
+        </form>
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="cadastrarCliente(usuarioCadastro)">CONFIRMAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!---------------MENU SUSPENSO------------------------>
+<nav class="navbar navbar-expand navbar-dark" style="background: black">
+    <div class="container-fluid">
+      <div class="logo">
+          <img src="../../assets/imagens/65ab872f-fa8e-4b2b-bdd4-376c93f02752_uploads_destacklogo.png" width="170px" alt="Destack 360">
+          </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="menu_topo_admin">
+        <ul class="navbar-nav me-auto  mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="../../assets/imagens/icone_pequeno.jpg" width="20" height="20">
+              {{ (user | async)?.displayName }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Perfil</a></li>
+              <li><a class="dropdown-item" href="#">Clientes</a></li>
+              <li><a class="dropdown-item" href="#">Fornecedores</a></li>
+              <li><a class="dropdown-item" href="#"(click)="logout()">Sair</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!---------------MENU LATERAL--------------------->
+  <div class="d-flex">
+    <div class="check-menu">
+      <input type="checkbox" id="chec"  class="checkmenu">        
+      <label for="chec" ><mat-icon (click)="toggle()" style="font-size: 50px; margin-left: 200px;">menu</mat-icon></label>
+      <nav class="menu-lateral">
+        <ul class="list-unstyled">
+          <li><a style="background: red;" routerLink="/admin">DASHBOARD</a></li>
+          <li>
+          
+          <!--------------
+          <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
+  
+  
+  
+            <!-------------------------------  MENU CADASTRO     ----------------------------------------------->
+  
+            <li class="cliente-nav dropdown"> 
+              <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                CADASTRO
+              </a>                 
+                                 
+                <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                  <li><a class="dropdown-item" routerLink="/acesso">ACESSO</a></li>
+    
+                 <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                 <li><a class="dropdown-item" routerLink="/empresas">EMPRESAS</a></li>
+                 <li><a class="dropdown-item" routerLink="/clientes">CLIENTES</a></li>
+                 <li><a class="dropdown-item" routerLink="/fornecedores">FORNECEDORES</a></li>
+                 <li><a class="dropdown-item" routerLink="/bancos">BANCOS</a></li>
+                 <li><a class="dropdown-item" routerLink="/entradas">ENTRADAS</a></li>
+                 <li><a class="dropdown-item" routerLink="/saidas">SAÍDAS</a></li>
+                 <li><a class="dropdown-item" routerLink="/transferencia">TRANSFERÊNCIAS</a></li>                                    
+                </ul>
+              </li>  
+            
+          <li class="cliente-nav dropdown"> 
+            <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              LANÇAMENTOS
+            </a>                 
+                               
+              <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                <li><a class="dropdown-item" routerLink="/#">ENTRADAS</a></li>
+  
+               <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                <li><a routerLink="/#">SAIDAS</a></li>
+                <li><a class="dropdown-item" routerLink="#">TRANSFERÊNCIAS</a></li>                               
+              </ul>
+            </li>     
+          <li class="cliente-nav dropdown">
+            <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+              RELATÓRIOS</a>           
+                            
+            <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+              <li><a class="dropdown-item" routerLink="/#">VISÃO GERAL</a></li>
+             
+  
+             <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+              <li><a class="dropdown-item" routerLink="/#">RELATÓRIO MENSAL</a></li>     
+              <li><a class="dropdown-item" routerLink="/#">RELATÓRIO TRIMESTRAL</a></li>
+              <li><a class="dropdown-item" routerLink="/#">RELATÓRIO ANUAL</a></li>                                                            
+            </ul>            
+          </li>     
+        </ul>
+      </nav>
+    </div>
+
+<!---------------CORPO PAGINA--------------------->
+
+    <section>
+      <div class="container">
+        <label class="pgnAdmin">
+          <div [@childAnimation]="isOpen ? 'open' : 'closed'"
+          class="open-close-container">
+          <div class="row">
+            <div class="col-md-9">
+              <h2> TELA USUARIOS </h2>
+            </div> 
+            <div class="col-md-3">
+              <button class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#modalCadastrarUsuario">CADASTRAR USUARIO</button>
+            </div> 
+
+          </div>
+            
+           
+            <hr /> 
+            
+            <div *ngIf="verificaUsuariosCadastrados == true">
+              <h3>{{mensagemCasoNaoTenhaUsuarioCadastro}}</h3>
+            </div>
+
+            <div *ngIf="verificaUsuariosCadastrados == false">
+
+              <table class="table table-dark table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">NOME</th>
+                    <th scope="col">EMAIL</th>
+                    <th scope="col">CREATION</th>
+                    <th scope="col">MODIFICATION</th>
+                    <th scope="col">EMPRESAS VINCULADAS</th>
+                    <th scope="col">NIVEL DE ACESSO</th>
+                    <th scope="col">CONFIGURAÇÃO</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let Usuario of usuarioBanco">
+                  <tr>
+                    <th scope="row">{{Usuario.nome}}</th>
+                    <td class="linhatabela">{{Usuario.email}}</td>
+                    <td class="linhatabela">{{Usuario.created}}</td>
+                    <td class="linhatabela">{{Usuario.modified}}</td>
+                    <td class="linhatabela">{{Usuario.quantidadeEmpresasVinculada}}</td>
+                    <td class="linhatabela">{{Usuario.nivelAcesso}}</td>
+                    <td>
+                      <div class="container">
+                        <div class="btn-group-vertical">
+                          <button type="button" class="btn btn-secondary" (click)="atualizarCliente()">ATUALIZAR</button>
+                          <button type="button" class="btn btn-secondary" (click)="deletarCliente()">DELETAR</button>
+                          <button type="button" class="btn btn-secondary" (click)="vincularEmpresa()">VINC.EMPRESA</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+
+           
+
+     
+              

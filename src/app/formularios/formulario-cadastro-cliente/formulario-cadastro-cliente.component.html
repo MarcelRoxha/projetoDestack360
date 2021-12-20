@@ -1,0 +1,155 @@
+<div class="modal fade" style="margin-top: 4%;" id="exampleModal" tabindex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cadastrar Cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input class="form-control" >
+        <input class="form-control" >
+        <input class="form-control" >
+        <input class="form-control" >
+        <input class="form-control" >
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<form class="row">
+
+  <div class="row">
+    <div class="col-md-6">  
+            <label for="inputEmail4" class="form-label">NOME CLIENTE</label>
+            <input autocomplete="off" name="nomeEmpresa" type="text" class="form-control"  id="inputEmail4"
+            [(ngModel)]="clienteCadastroCompleto.nome">
+    </div>
+    <div class="col-md-6">
+      <label for="cnpj" class="form-label">CPF <strong><span style="color: red;">*</span></strong></label>
+      <input type="text" class="form-control" name="cnpj"  id="cnpj" mask="CPF_CNPJ"
+      [(ngModel)]="clienteCadastroCompleto.cpf">
+
+    </div>
+  </div>
+
+   
+    <div class="row">
+      <div class="col-md-6">
+                                
+      </div>
+      <div class="col-md-6">
+                                
+      </div>
+    </div>
+   
+    <button type="button" class="btn btn-success" style="margin: 10px;"  data-bs-toggle="modal" data-bs-target="#exampleModal">MODAL</button>
+
+   
+
+    <div class="col-6">
+      <label for="email" class="form-label">E-MAIL</label>
+      <input type="email" name="email" class="form-control"  id="codigoCaixa" [(ngModel)]="clienteCadastroCompleto.emailCliente">
+    </div>
+
+    <div class="col-6">
+      <label for="email" class="form-label">USUÁRIO:</label>
+      <input type="email" name="email" class="form-control"  id="codigoCaixa" [(ngModel)]="clienteCadastroCompleto.usuariocliente">
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+                                
+      </div>
+      <div class="col-md-6">
+                                
+      </div>
+    </div>
+
+    <div class="col-4">
+      <label for="telefone" class="form-label">TELEFONE</label>
+      <input type="text" name="telefone" class="form-control" id="telefone"
+      [(ngModel)]="clienteCadastroCompleto.telefone"
+      prefix="55+" mask="(00) 0000 0000">
+    </div>
+      <div class="col-4">           
+        <label for="celular" class="form-label" >CELULAR<strong><span style="color: red;">*</span></strong></label>
+        (+ WHATSAPP)
+         <input class="form-check-input" type="checkbox" style="margin-top: 8px; margin-left: 2px;"id="whatsapp" (click)="numeroWhatsapp()">
+         
+        
+          <input type="text" name="celular" class="form-control" id="celular"
+          [(ngModel)]="clienteCadastroCompleto.celular"
+          prefix="55+" mask="(00) 0 0000 0000">
+         
+          </div>                               
+          <div class="col-4">           
+              
+            <label for="whatsapp" class="form-label">WHATSAPP <strong><span style="color: red;">*</span></strong></label>
+              <input type="text" [disabled]="verificaCelularWhats === true" name="whatsapp" 
+              class="form-control" id="whatsapp" [(ngModel)]="clienteCadastroCompleto.whatsapp"
+              prefix="55+" mask="(00) 0 0000 0000">
+              </div>
+              
+
+    <div class="col-3">
+      <label for="inputCep" class="form-label">CEP</label>
+      <input type="text" class="form-control" id="inputCep"
+      [ngModel] 
+      name="cep"
+      [(ngModel)]="clienteCadastroCompleto.cep"            
+      (blur)="consultarCEP($event)"/>                                  
+    </div>
+    
+    <div class="col-md-3">
+      <label for="cidade" class="form-label">CIDADE</label>
+      <input type="text" name="cidade" class="form-control" id="cidade" 
+      [(ngModel)]="clienteCadastroCompleto.cidade">
+    </div>
+
+
+    <div class="col-md-3">
+      <label for="estado" class="form-label">ESTADO</label>
+      <input type="text" name="estado" class="form-control" id="estado"
+      [(ngModel)]="clienteCadastroCompleto.estado">
+    </div>
+
+
+    <div class="col-3">
+      <label for="bairro" class="form-label">BAIRRO</label>
+      <input type="text" name="bairro" class="form-control" id="bairro" 
+      [(ngModel)]="clienteCadastroCompleto.bairro">
+    </div>
+
+
+
+    <div class="col-4">
+      <label for="bairro" class="form-label">ENDEREÇO</label>
+      <input type="text" name="endereco" class="form-control" id="endereco" 
+      [(ngModel)]="clienteCadastroCompleto.endereco">
+    </div>
+    <div class="col-4">
+      <label for="numero" class="form-label">NUMERO</label>
+      <input type="text" name="numero" class="form-control" id="numero" 
+      [(ngModel)]="clienteCadastroCompleto.numero">            
+    </div>
+
+    <div class="col-4">
+      <label for="complemento" class="form-label">COMPLEMENTO</label>
+      <input type="text" name="complemento" class="form-control" id="complemento"
+      [(ngModel)]="clienteCadastroCompleto.complemento">
+    </div>
+ 
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary" (click)="cadastrarCliente(clienteCadastroCompleto)">Cadastrar</button>
+    </div>    
+  </form>

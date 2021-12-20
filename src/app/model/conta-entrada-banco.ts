@@ -4,7 +4,7 @@ export class ContaEntradaBanco {
     historico: string;
     agencia: string;
     conta: string;
-    codigoContaBanco: number;
+    codigoContaBanco: string;
     saldoBanco: string;
 }
 

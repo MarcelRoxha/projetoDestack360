@@ -1,3 +1,4 @@
+import { Cliente } from './../../models/clienteModel';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,13 +9,37 @@ import { Component, OnInit } from '@angular/core';
 export class FormularioCadastroClienteComponent implements OnInit {
   
   sideBarOpen = true;
+  clienteCadastroCompleto: Cliente;
+
+
+  //VALIDAÇÕES VERADEIRO E FALSO
+
+  //check-box:
+
+  verificaCelularWhats : boolean = false;
+
+
   constructor() { }
 
   ngOnInit(): void {
+    this.clienteCadastroCompleto = new Cliente();
   }
+
+  
 
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
+  }
+
+  consultarCEP($event: any){
+
+  }
+
+  cadastrarCliente(clienteRecebido: Cliente){
+
+  }
+  numeroWhatsapp(){
+    
   }
 
 }

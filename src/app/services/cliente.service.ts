@@ -1,3 +1,4 @@
+import { ContaBancoModel } from './../models/contaBancoModel';
 import { Cliente } from './../models/clienteModel';
 import { ContaEntrada } from './../models/contaEntradaModel';
 import { EmpresaModel } from './../models/empresaModel';
@@ -8,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserModel } from '../models/UserModel';
 import { ContaEntradaCaixa } from '../model/conta-entrada-caixa';
 import { RecuperarInformacoesCixaEmpresaCliente } from '../model/recuperarInformacoesCaixaEmpresaCliente';
+import { ContaEntradaBanco } from '../model/conta-entrada-banco';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +30,12 @@ export class ClienteService {
 
   recuperarInformacoesCliente(identificardo: string) : Observable<Cliente>{
     return this.http.post<Cliente>('https://destack360.herokuapp.com/api/recuperarInformacoesCliente', identificardo)
+  }
+
+  recuperarListaContasBancoCadastradas(identificadorEmpresa: string, identificadorCliente: string): Observable<any[]> {
+    return this.firebase.collection("CLIENTES-CADASTRADOS").doc(identificadorCliente)
+    .collection("EMPRESAS-CLIENTE").doc(identificadorEmpresa).collection("CONTA-BANCO").valueChanges();
+
   }
 
   recuperarEmpresaCadastradasCliente(identificardo: string) : Observable<EmpresaModel[]>{
