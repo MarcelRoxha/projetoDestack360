@@ -27,69 +27,69 @@
     </div>
   </nav>
   
- <!---------------MENU LATERAL--------------------->
- <div class="d-flex">
-  <div class="check-menu">
-    <input type="checkbox" id="chec"  class="checkmenu">        
-    <label for="chec" ><mat-icon (click)="toggle()" style="font-size: 50px; margin-left: 200px;">menu</mat-icon></label>
-    <nav class="menu-lateral">
-      <ul class="list-unstyled">
-        <li><a style="background: red;" routerLink="/admin">DASHBOARD</a></li>
-        <li>
-        
-        <!--------------
-        <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
-
-
-
-          <!-------------------------------  MENU CADASTRO     ----------------------------------------------->
-
+   <!---------------MENU LATERAL--------------------->
+   <div class="d-flex">
+    <div class="check-menu">
+      <input type="checkbox" id="chec"  class="checkmenu">        
+      <label for="chec" ><mat-icon (click)="toggle()" style="font-size: 50px; margin-left: 200px;">menu</mat-icon></label>
+      <nav class="menu-lateral">
+        <ul class="list-unstyled">
+          <li><a style="background: red;" routerLink="/admin">DASHBOARD</a></li>
+          <li>
+          
+          <!--------------
+          <a class="pagina-selecionada" href="paginaAdminClientes.php">CLIENTES</a>----------->
+  
+  
+  
+            <!-------------------------------  MENU CADASTRO     ----------------------------------------------->
+  
+            <li class="cliente-nav dropdown"> 
+              <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                CADASTRO
+              </a>                 
+                                 
+                <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
+                  <li><a class="dropdown-item" routerLink="/acesso">ACESSO</a></li>
+    
+                 <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
+                 <li><a class="dropdown-item" routerLink="/empresas">EMPRESAS</a></li>
+                 <li><a class="dropdown-item" routerLink="/clientes">CLIENTES</a></li>
+                 <li><a class="dropdown-item" routerLink="/fornecedores">FORNECEDORES</a></li>
+                 <li><a class="dropdown-item" routerLink="/bancos">BANCOS</a></li>
+                 <li><a class="dropdown-item" routerLink="/entradas">ENTRADAS</a></li>
+                 <li><a class="dropdown-item" routerLink="/saidas">SAÍDAS</a></li>
+                 <li><a class="dropdown-item" routerLink="/transferencia">TRANSFERÊNCIAS</a></li>                                    
+                </ul>
+              </li>  
+            
           <li class="cliente-nav dropdown"> 
             <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              CADASTRO
+              LANÇAMENTOS
             </a>                 
                                
               <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
-                <li><a class="dropdown-item" routerLink="/dashboard">ACESSO</a></li>
+                <li><a class="dropdown-item" routerLink="/#">ENTRADAS</a></li>
   
                <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
-               <li><a class="dropdown-item" routerLink="/empresas">EMPRESAS</a></li>
-               <li><a class="dropdown-item" routerLink="/clientes">CLIENTES</a></li>
-               <li><a class="dropdown-item" routerLink="/fornecedores">FORNECEDORES</a></li>
-               <li><a class="dropdown-item" routerLink="/bancos">BANCOS</a></li>
-               <li><a class="dropdown-item" routerLink="/entradas">ENTRADAS</a></li>
-               <li><a class="dropdown-item" routerLink="/saidas">SAÍDAS</a></li>
-               <li><a class="dropdown-item" routerLink="/transferencia">TRANSFERÊNCIAS</a></li>                                    
+                <li><a routerLink="/#">SAIDAS</a></li>
+                <li><a class="dropdown-item" routerLink="#">TRANSFERÊNCIAS</a></li>                               
               </ul>
-            </li>  
-          
-        <li class="cliente-nav dropdown"> 
-          <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            LANÇAMENTOS
-          </a>                 
-                             
+            </li>     
+          <li class="cliente-nav dropdown">
+            <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+              RELATÓRIOS</a>           
+                            
             <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
-              <li><a class="dropdown-item" routerLink="/#">ENTRADAS</a></li>
-
+              <li><a class="dropdown-item" routerLink="/#">VISÃO GERAL</a></li>
+             
+  
              <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
-              <li><a routerLink="/#">SAIDAS</a></li>
-              <li><a class="dropdown-item" routerLink="#">TRANSFERÊNCIAS</a></li>                               
-            </ul>
+              <li><a class="dropdown-item" routerLink="/#">RELATÓRIO MENSAL</a></li>     
+              <li><a class="dropdown-item" routerLink="/#">RELATÓRIO TRIMESTRAL</a></li>
+              <li><a class="dropdown-item" routerLink="/#">RELATÓRIO ANUAL</a></li>                                                            
+            </ul>            
           </li>     
-        <li class="cliente-nav dropdown">
-          <a class="dropdown-toggle" id="navbarDropdownCliente" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-            RELATÓRIOS</a>           
-                          
-          <ul class="menu-cliente dropdown-menu" style="background: red;" aria-labelledby="navbarDropdownCliente">
-            <li><a class="dropdown-item" routerLink="/#">VISÃO GERAL</a></li>
-           
-
-           <!-------<li><a type="button" (click)="clickcliente()" data-bs-toggle="modal" data-bs-target="#exampleModal">CADASTRAR</a></li>----> 
-            <li><a class="dropdown-item" routerLink="/#">RELATÓRIO MENSAL</a></li>     
-            <li><a class="dropdown-item" routerLink="/#">RELATÓRIO TRIMESTRAL</a></li>
-            <li><a class="dropdown-item" routerLink="/#">RELATÓRIO ANUAL</a></li>                                                            
-          </ul>            
-        </li>     
-      </ul>
-    </nav>
-  </div>
+        </ul>
+      </nav>
+    </div>
