@@ -1,7 +1,7 @@
 import { Usuario } from './../../model/usuario';
 import { Component, OnInit } from '@angular/core';
 import { state, trigger, style, transition, animate } from '@angular/animations';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
@@ -57,6 +57,10 @@ export class TelaAcessoComponent implements OnInit {
   selecionadoAdmin: boolean = false;
   selecionadoGerencia: boolean = false;
   selecionadoSupervisor: boolean = false;
+
+  selecionadoAdminAtualizar: boolean = false;
+  selecionadoGerenciaAtualizar: boolean = false;
+  selecionadoSupervisorAtualizar: boolean = false;
 
 
   constructor(private afAuth: AngularFireAuth, 
@@ -132,13 +136,46 @@ toggle(){
 
    //---------------------------------------------ATUALIZAR USUARIO-------------------------------------------------//
 
-  atualizarCliente(){
+  atualizarCliente(usuarioRecuperadoAtualiza: Usuario){
+    this.usuarioService.atualizarUsuarioService(usuarioRecuperadoAtualiza)
+    .subscribe( resultadoAtualizacao=>{
 
+      if(resultadoAtualizacao == 33){
+       
+        Swal.fire({
+          position: 'top',
+          icon: 'success',
+          title: 'Sucesso ao atualizar usuario',
+          showConfirmButton: true,          
+        })
+        this.usuarioAtualiza= new Usuario();
+        this.recuperarListaClientesCadastras()
+      }else{
+        Swal.fire({
+          position: 'top',
+          icon: 'error',
+          title: 'Erro ao atualizar usuario, verifique a conexão e tente novamente',
+          showConfirmButton: true,          
+        })
+      }
+    })
+
+    console.log("usuario Atualizado Recuperado: ", usuarioRecuperadoAtualiza)
   }
 
    //---------------------------------------------DELETAR USUARIO-------------------------------------------------//
 
-  deletarCliente(){
+  deletarUsuario(usuarioDelete: Usuario){
+    this.usuarioService.deletarUsuarioService(usuarioDelete).then(()=>{
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Sucesso ao deletar usuario',
+        showConfirmButton: true,          
+      })
+      this.usuarioDeleta= new Usuario();
+      this.recuperarListaClientesCadastras()
+    })
 
   }
 
@@ -200,4 +237,62 @@ this.usuarioService.recuperarUsuariosService().subscribe(resultadoLista=>{
 
   }
 
+
+    //---------------------------------------------RECUPERAR INFORMAÇÕES ATUALIZAR USUARIO-------------------------------------------------//
+
+
+    abrirModalAtualizarUsuario(usuarioRecuperadoAtualiza: Usuario){
+      if(usuarioRecuperadoAtualiza.nivelAcesso == "ADMIN"){
+        this.selecionadoAdminAtualizar = true;
+        
+      }else if(usuarioRecuperadoAtualiza.nivelAcesso == "GERENCIA"){
+        this.selecionadoGerenciaAtualizar = true;
+        
+      }else if(usuarioRecuperadoAtualiza.nivelAcesso == "SUPERVISOR"){
+        this.selecionadoSupervisorAtualizar = true;
+      }      
+
+      console.log("Usuario recuperado: ", usuarioRecuperadoAtualiza)
+      this.usuarioAtualiza = usuarioRecuperadoAtualiza;
+    }
+
+    adminAtualiza(){
+ 
+      this.usuarioAtualiza.nivelAcesso = "ADMIN"
+    }
+    gerenciaAtualiza(){
+   
+      this.usuarioAtualiza.nivelAcesso = "GERENCIA"
+    }
+    supervisorAtualiza(){
+      this.usuarioAtualiza.nivelAcesso = "SUPERVISOR"
+  
+    }
+
+    cancelarAtualizacao(){
+      this.usuarioAtualiza = new Usuario();
+    }
+
+    //---------------------------------------------RECUPERAR INFORMAÇÕES DELETAR USUARIO-------------------------------------------------//
+
+
+    abrirModalDeletarUsuario(usuarioDeletarRecebido: Usuario){
+
+      if(usuarioDeletarRecebido.nivelAcesso == "ADMIN"){
+        this.selecionadoAdminAtualizar = true;
+        
+      }else if(usuarioDeletarRecebido.nivelAcesso == "GERENCIA"){
+        this.selecionadoGerenciaAtualizar = true;
+        
+      }else if(usuarioDeletarRecebido.nivelAcesso == "SUPERVISOR"){
+        this.selecionadoSupervisorAtualizar = true;
+      }      
+
+      console.log("Usuario recuperado: ", usuarioDeletarRecebido)
+      this.usuarioDeleta = usuarioDeletarRecebido;
+
+    }
+    cancelarDelete(){
+      this.usuarioDeleta = new Usuario();
+    }
 }

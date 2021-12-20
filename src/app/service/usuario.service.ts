@@ -20,11 +20,16 @@ return this.http.post<Usuario>('https://destack360.herokuapp.com/api/recuperarIn
 
   }
 
-  atualizarUsuarioService(){
+  atualizarUsuarioService(usuarioAtualiza: Usuario) : Observable<any>{
+    //return this.http.post<Usuario>('https://destack360.herokuapp.com/api/atualizar-usuario', usuarioFormulario)
 
+    return this.http.post<Usuario>('http://localhost:8080/api/atualizar-usuario', usuarioAtualiza)
   }
 
-  deletarUsuarioService(){
+  deletarUsuarioService(usuarioDeleta: Usuario){
+    return this.db.collection("USUARIOS-CADASTRADOS")
+    .doc(usuarioDeleta.email)
+    .delete()
 
   }
 

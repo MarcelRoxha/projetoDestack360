@@ -1,6 +1,5 @@
 <!---------------MODAL CADASTRAR INFORMAÇÕES USUARIO--------------------->
 
-
 <div class="modal fade" style="background: black !important;" id="modalCadastrarUsuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -70,6 +69,179 @@
   </div>
 </div>
 
+<!---------------MODAL ATUALIZAR INFORMAÇÕES USUARIO--------------------->
+
+<div class="modal fade" style="background: black !important;" id="modalAtualizarUsuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalCadastrarUsuario">ATUALIZAR USUARIO</h2>
+        
+      </div>
+      <div class="modal-body">
+      
+        <form class="row g-3">
+
+          <div class="col-md-6">            
+
+            <label for="inputEmail4" class="form-label">NOME</label>
+            <input autocomplete="off" name="nome" type="text" class="form-control"  id="inputEmail4"
+            [(ngModel)]="usuarioAtualiza.nome">
+          </div>
+         
+
+
+          <div class="col-6">
+            <label for="cnpj" class="form-label">NOME USUARIO <strong><span style="color: red;">*</span></strong></label>
+            <input type="text" class="form-control" name="nomeusuario"
+            [(ngModel)]="usuarioAtualiza.nomeusuario">                         
+          </div>
+
+          <div class="col-6">
+            <label for="email" class="form-label">E-MAIL</label>
+            <input type="email" name="email" [disabled]="true" class="form-control"  id="codigoCaixa" [(ngModel)]="usuarioAtualiza.email">
+          </div>        
+
+          <div class="col-12 text-center" >
+
+            <h2 class="form-label">NIVEL DE ACESSO</h2>           
+          </div>
+          <hr />
+          <div style="display: block; align-items: center;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+              (click)="adminAtualiza()" value="option1"
+              
+              [checked]="selecionadoAdminAtualizar == true">
+              <label class="form-check-label" for="inlineRadio1">ADMIN(TUDO).</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+              (click)="gerenciaAtualiza()" value="option2"
+            
+              [checked]="selecionadoGerenciaAtualizar == true">
+              <label class="form-check-label" for="inlineRadio2">GEREN(LANC/EDIT/UPDATE).</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+              (click)="supervisorAtualiza()" value="option3"
+              
+              [checked]="selecionadoSupervisorAtualizar == true">
+              <label class="form-check-label" for="inlineRadio3">SUPV(LANC).</label>
+            </div>
+
+          </div>
+             
+        </form>
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelarAtualizacao()">CANCELAR</button>
+        <button type="button" class="btn btn-primary" (click)="atualizarCliente(usuarioAtualiza)">SALVAR ALTERAÇÕES</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---------------MODAL DELETAR INFORMAÇÕES USUARIO--------------------->
+
+<div class="modal fade" style="background: black !important;" id="modalDeletarUsuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalDeletarUsuario">DELETAR O USUARIO PERMANENTEMENTE?</h2>
+        
+      </div>
+      <div class="modal-body">
+      
+        <form class="row g-3">
+
+          <div class="col-md-6">            
+
+            <label for="nome" 
+            class="form-label">NOME</label>
+            <input autocomplete="off"
+            name="nome" 
+            [disabled]="true" 
+            type="text" 
+            class="form-control"  
+            id="nome"
+            [(ngModel)]="usuarioDeleta.nome">
+          </div>
+         
+
+
+          <div class="col-6">
+            <label for="nomeusuario" class="form-label">NOME USUARIO</label>
+            <input type="text" class="form-control" [disabled]="true" name="nomeusuario"
+            [(ngModel)]="usuarioDeleta.nomeusuario"
+            id="nomeusuario">                         
+          </div>
+
+          <div class="col-6">
+            <label for="email" class="form-label">E-MAIL</label>
+            <input type="email" name="email" [disabled]="true" class="form-control"  id="email" [(ngModel)]="usuarioDeleta.email">
+          </div> 
+          
+          <div class="col-6">
+            <label for="nivelacesso" class="form-label">NIVEL ACESSO</label>
+            <input type="email" name="nivelAcesso" [disabled]="true" class="form-control"  id="nivelacesso" [(ngModel)]="usuarioDeleta.nivelAcesso">
+          </div> 
+          <div class="col-6">
+            <label for="quantempresasvinculadas" class="form-label">QNT. EMPRESAS VINCULADAS</label>
+            <input type="email" name="quantEmpresasVinculada" [disabled]="true" class="form-control"  id="quantempresasvinculadas" [(ngModel)]="usuarioDeleta.quantidadeEmpresasVinculada">
+          </div>  
+          <div class="col-6">
+            <label for="created" class="form-label">CRIADO EM:</label>
+            <input type="email" name="created" [disabled]="true" class="form-control"  id="created" [(ngModel)]="usuarioDeleta.created">
+          </div> 
+          <div class="col-12">
+            <label for="modified" class="form-label">MODIFICAÇÕES</label>
+            <textarea type="text" name="modified" [disabled]="true" class="form-control"  id="modified" [(ngModel)]="usuarioDeleta.modified"></textarea>
+          </div> 
+<!----------
+
+          <div class="col-12 text-center" >
+            <h2 class="form-label">NIVEL DE ACESSO</h2>           
+          </div>
+          <hr />
+          
+          <div style="display: block; align-items: center;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+              (click)="adminAtualiza()" value="option1"
+              
+              [checked]="selecionadoAdminAtualizar == true"
+              [disabled]="true">
+              <label class="form-check-label" for="inlineRadio1">ADMIN(TUDO).</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+              (click)="gerenciaAtualiza()" value="option2"
+              [disabled]="true"
+              [checked]="selecionadoGerenciaAtualizar == true">
+              <label class="form-check-label" for="inlineRadio2">GEREN(LANC/EDIT/UPDATE).</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+              (click)="supervisorAtualiza()" value="option3"
+              [disabled]="true"
+              [checked]="selecionadoSupervisorAtualizar == true">
+              <label class="form-check-label" for="inlineRadio3">SUPV(LANC).</label>
+            </div>
+
+          </div>--------->
+             
+        </form>
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelarDelete()">CANCELAR</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deletarUsuario(usuarioDeleta)">DELETAR</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -220,8 +392,8 @@
                     <td>
                       <div class="container">
                         <div class="btn-group-vertical">
-                          <button type="button" class="btn btn-secondary" (click)="atualizarCliente()">ATUALIZAR</button>
-                          <button type="button" class="btn btn-secondary" (click)="deletarCliente()">DELETAR</button>
+                          <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalAtualizarUsuario" (click)="abrirModalAtualizarUsuario(Usuario)">ATUALIZAR</button>
+                          <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalDeletarUsuario" (click)="abrirModalDeletarUsuario(Usuario)">DELETAR</button>
                           <button type="button" class="btn btn-secondary" (click)="vincularEmpresa()">VINC.EMPRESA</button>
                         </div>
                       </div>
