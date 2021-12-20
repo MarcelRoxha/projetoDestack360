@@ -15,15 +15,15 @@ export class UsuarioService {
 
 
   cadastrarUsuarioService(usuarioFormulario: Usuario) : Observable<any>{
-return this.http.post<Usuario>('https://destack360.herokuapp.com/api/recuperarInformacoesCliente', usuarioFormulario)
+return this.http.post<Usuario>('https://destack360.herokuapp.com/api/cadastrar-usuario', usuarioFormulario)
 //return this.http.post<Usuario>('http://localhost:8080/api/cadastrar-usuario', usuarioFormulario)
 
   }
 
   atualizarUsuarioService(usuarioAtualiza: Usuario) : Observable<any>{
-    //return this.http.post<Usuario>('https://destack360.herokuapp.com/api/atualizar-usuario', usuarioFormulario)
+    return this.http.post<Usuario>('https://destack360.herokuapp.com/api/atualizar-usuario', usuarioAtualiza)
 
-    return this.http.post<Usuario>('http://localhost:8080/api/atualizar-usuario', usuarioAtualiza)
+    //return this.http.post<Usuario>('http://localhost:8080/api/atualizar-usuario', usuarioAtualiza)
   }
 
   deletarUsuarioService(usuarioDeleta: Usuario){
