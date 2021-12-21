@@ -1,3 +1,4 @@
+import { Empresa } from './../model/empresa';
 import { ContaEntradaCaixa } from './../model/conta-entrada-caixa';
 import { ContaEntradaBanco } from './../model/conta-entrada-banco';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -16,10 +17,10 @@ export class EmpresaService {
 
   constructor(private db: AngularFirestore,  private http : HttpClient) { }
 
-  cadastrarEmpresa(empresa: EmpresaModel) : Observable<EmpresaModel>{
+  cadastrarEmpresa(empresa: Empresa) : Observable<any>{
 
-    return this.http.post<EmpresaModel>('https://destack360.herokuapp.com/api/cadastrar-empresa-cliente', empresa)
-
+    return this.http.post<Empresa>('https://destack360.herokuapp.com/api/cadastrar-empresa', empresa)
+    //return this.http.post<Empresa>('http://localhost:8080/api/cadastrar-empresa', empresa)
 /**
 
     this.db.collection("CLIENTES-CADASTRADOS").doc(empresa.identificadorCliente)
@@ -56,5 +57,10 @@ export class EmpresaService {
   cadastrarEmpresaClienteAPI(empresa: EmpresaModel): Observable<EmpresaModel>{
     return this.http.post<EmpresaModel>("https://destack360.herokuapp.com/api/cadastrar-empresa-cliente", empresa);
   }
+
+  recuperarEmpresaService() : Observable<any[]>{    
+    return this.db.collection("EMPRESAS-CADASTRADAS").valueChanges()
+ 
+   }
 
 }

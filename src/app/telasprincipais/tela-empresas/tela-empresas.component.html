@@ -1,3 +1,154 @@
+<!-- Modal Cadastrar empresa cliente -->
+<div class="modal fade" style="background: black !important;" id="modalCadastrarEmpresa" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content" style="background:#c6c2c4 !important;">
+      <div class="modal-header" >
+        <h3 class="modal-title " id="exampleModalLabelLancarEntrada">CADASTRAR EMPRESA </h3>
+        
+      </div>
+      <div class="modal-body">      
+       
+         
+          <form class="row g-3">
+
+          <div class="col-md-6">            
+
+            <label for="inputEmail4" class="form-label">NOME EMPRESA</label>
+            <input autocomplete="off" name="nomeEmpresa" type="text" class="form-control"  id="inputEmail4"
+            [(ngModel)]="empresaCadastra.nomeEmpresa"
+
+            >
+          </div>
+          <div class="col-md-6">
+            <label for="razaosocial" class="form-label">RAZÃO SOCIAL </label>
+            <input type="text" name="razaosocial"  class="form-control" id="razaosocial"
+            [(ngModel)]="empresaCadastra.razaoSocial"
+            />
+            
+          </div>
+
+          
+
+          <div class="col-6">
+            <label for="cnpj" class="form-label">CNPJ <strong><span style="color: red;">*</span></strong></label>
+            <input type="text" class="form-control" name="cnpj"  id="cnpj" placeholder="Caso seja pessoa fisíca use o CPF" mask="CPF_CNPJ"
+            [(ngModel)]="empresaCadastra.cnpj">
+            
+          </div>
+
+          <div class="col-6">
+            <label for="email" class="form-label">E-MAIL</label>
+            <input type="email" name="email" class="form-control"  id="codigoCaixa" [(ngModel)]="empresaCadastra.email">
+          </div>
+
+          <div class="col-4">
+            <label for="telefone" class="form-label">TELEFONE</label>
+            <input type="text" name="telefone" class="form-control" id="telefone" 
+            [(ngModel)]="empresaCadastra.telefone"
+            prefix="55+" mask="(00) 0000 0000">
+          </div>
+
+          <div class="col-4">           
+            <label for="telefone" class="form-label">CELULAR</label>
+              <input type="text" name="celular" class="form-control" id="celular" 
+              [(ngModel)]="empresaCadastra.celular"
+              prefix="55+" mask="(00) 0 0000 0000">
+              </div>
+              <div class="col-4">           
+                <input class="form-check-input" type="checkbox" style="margin-right: 2px;"id="whatsapp" [checked]="chackDesabilteBox == true" (click)="numeroWhatsapp()"> 
+                <h4 for="whatsapp" class="form-label">WHATSAPP <strong><span style="color: red;">*</span></strong>( MESMO QUE O CELULAR)</h4>
+                  <input type="text" [disabled]="verificaCelularWhats === true" name="whatsapp" class="form-control" id="whatsapp" 
+                  [(ngModel)]="empresaCadastra.whatsapp"
+                  prefix="55+" mask="(00) 0 0000 0000">
+                  </div>
+
+          
+
+         
+
+          <div class="col-4">
+            <label for="saldoCaixa" class="form-label">SALDO CAIXA</label>
+            <input type="text" name="saldoCaixa" autocomplete="off" class="form-control" id="saldoCaixa"  placeholder="0,00" [(ngModel)]="empresaCadastra.saldoCaixa">
+          </div>
+       
+         
+                   
+       
+          
+
+
+
+
+        
+
+          <div class="col-4">
+            <label for="saldoBancoCadastrar" class="form-label">SALDO BANCO</label>
+            <input type="text" name="saldoBancoCadastrar" class="form-control" id="saldoBancoCadastrar" [(ngModel)]="empresaCadastra.saldoBanco">
+          </div>
+          <div class="col-3">
+            <label for="inputCep" class="form-label">CEP </label>
+            <input type="text" class="form-control" id="inputCep"
+            [ngModel] 
+            name="cep"
+            [(ngModel)]="empresaCadastra.cep"            
+            (blur)="consultarCEP($event)"/>
+                     
+          </div>
+          
+          <div class="col-md-3">
+            <label for="cidade" class="form-label">CIDADE</label>
+            <input type="text" name="cidade" class="form-control" id="cidade" 
+            [(ngModel)]="empresaCadastra.cidade">
+          </div>
+
+
+          <div class="col-md-3">
+            <label for="estado" class="form-label">ESTADO</label>
+            <input type="text" name="estado" class="form-control" id="estado"
+            [(ngModel)]="empresaCadastra.estado">
+          </div>
+
+
+          <div class="col-3">
+            <label for="bairro" class="form-label">BAIRRO</label>
+            <input type="text" name="bairro" class="form-control" id="bairro" 
+            [(ngModel)]="empresaCadastra.bairro">
+          </div>
+
+
+
+          <div class="col-4">
+            <label for="bairro" class="form-label">ENDEREÇO</label>
+            <input type="text" name="endereco" class="form-control" id="endereco" 
+            [(ngModel)]="empresaCadastra.endereco">
+          </div>
+          <div class="col-4">
+            <label for="numero" class="form-label">NUMERO</label>
+            <input type="text" name="numero" class="form-control" id="numero" 
+            [(ngModel)]="empresaCadastra.numero">            
+          </div>
+
+          <div class="col-4">
+            <label for="complemento" class="form-label">COMPLEMENTO</label>
+            <input type="text" name="complemento" class="form-control" id="complemento"
+            [(ngModel)]="empresaCadastra.complemento">
+          </div>
+       
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary" (click)="cadastrarEmpresa(empresaCadastra)">CADASTRAR</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelarCadastroEmpresa()" aria-label="Close">CANCELAR</button>
+          </div>        
+        </form>
+              
+                        </div>
+                      </div>
+                    </div>
+</div>
+
+
+
+
+
 
 <!---------------MENU SUSPENSO------------------------>
 <nav class="navbar navbar-expand navbar-dark" style="background: black">
@@ -93,3 +244,61 @@
         </ul>
       </nav>
     </div>
+
+    <section>
+      <div class="container">
+        <label class="pgnAdmin">
+          <div [@childAnimation]="isOpen ? 'open' : 'closed'"
+          class="open-close-container">
+          <div class="row">
+            <div class="col-md-9">
+              <h2> TELA EMPRESAS </h2>
+            </div> 
+            <div class="col-md-3">
+              <button class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#modalCadastrarEmpresa">CADASTRAR EMPRESA</button>
+            </div> 
+
+          </div>
+            
+           
+            <hr /> 
+            
+            <div *ngIf="verificaEmpresasCadastradas == true">
+              <h3>{{mensagemCasoNaoTenhaEmpresaCadastrada}}</h3>
+            </div>
+
+            <div *ngIf="verificaEmpresasCadastradas == false">
+
+              <table class="table table-dark table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">NOME</th>
+                    <th scope="col">RAZÃO SOCIAL</th>
+                    <th scope="col">CNPJ</th>
+                    <th scope="col">SALDO CAIXA</th>
+                    <th scope="col">SALDO BANCO</th>
+                    <th scope="col">CONFIGURAÇÃO</th>
+                    <th scope="col">INFO.COMPLETA</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let Empresa of empresasBanco">
+                  <tr>
+                    <th scope="row">{{Empresa.nomeEmpresa}}</th>
+                    <td class="linhatabela">{{Empresa.razaoSocial}}</td>
+                    <td class="linhatabela">{{Empresa.cnpj}}</td>
+                    <td class="linhatabela">{{Empresa.saldoCaixa}}</td>
+                    <td class="linhatabela">{{Empresa.saldoBanco}}</td>                    
+                    <td>
+                      <div class="container">
+                        <div class="btn-group-vertical">
+                          <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalAtualizarUsuario">ATUALIZAR</button>
+                          <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalDeletarUsuario">DELETAR</button>                          
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+
+
+    

@@ -859,7 +859,7 @@ verificaRaZaoSocialDigitado($event: any){
   
 }
 
-
+/**
 cadastrarEmpresa(empresaRecebendo: EmpresaModel){
   this.validarCampoRazaoSocial;
   this.validacaoCNPJ();
@@ -1030,7 +1030,7 @@ cadastrarEmpresa(empresaRecebendo: EmpresaModel){
 
   
 }
-
+ */
 @ViewChild('exampleModalLancars') exampleModalLancars: any;
 
 lancarEntradaContaBanco(){
